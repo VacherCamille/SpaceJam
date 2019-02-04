@@ -19,8 +19,7 @@ class Tireur(Monstre):
         Monstre.__init__(self)
 
 
-class Coureur\
-            (Monstre):
+class Coureur(Monstre):
 
     def __init__(self):
         Monstre.__init__(self)
