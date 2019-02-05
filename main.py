@@ -30,10 +30,13 @@ while continuer:
         #         position_perso = position_perso.move(-5,0)
         #     if event.key == K_UP:
         #         position_perso = position_perso.move(0,-5)
-        if event.type == MOUSEBUTTONDOWN:
-            if event.button == 1:
-                perso_x = event.pos[0]
-                perso_y = event.pos[1]
+        # if event.type == MOUSEBUTTONDOWN:
+        #     if event.button == 1:
+        #         perso_x = event.pos[0]
+        #         perso_y = event.pos[1]
+        if event.type == MOUSEMOTION:
+            perso_x = event.pos[0]
+            perso_y = event.pos[1]
 
     fenetre.blit(fond, (0,0))
     fenetre.blit(perso, (perso_x, perso_y))

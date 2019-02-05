@@ -13,10 +13,10 @@ class Arme:
 
 
 class Joueur:
-    def __init__(self):
-        self.posx = 0
-        self.posy = 0
+    def __init__(self,x,y):
+        self.posx = x
+        self.posy = y
         self.speedx = 0
-        self.speedx = 0
+        self.speedy = 0
         self.arme = Arme()
         self.vaisseau = Vaisseau()
