@@ -1,4 +1,5 @@
 import pygame
+from personnage import *
 
 from pygame.locals import *
 
@@ -6,16 +7,19 @@ pygame.init()
 
 fenetre = pygame.display.set_mode((1024,768))
 fond = pygame.image.load("fond.png").convert()
+perso_img = pygame.image.load("perso.png").convert()
+#p_img = perso_img.get_rect()
 fenetre.blit(fond, (0,0))
 
-perso = pygame.image.load("perso.png").convert_alpha()
-position_perso = pygame.transform.scale(perso, (70,90))
-perso_x = 0
-perso_y = 0
+# perso = pygame.image.load("perso.png").convert_alpha()
+# position_perso = pygame.transform.scale(perso, (70,90))
+# perso_x = 0
+# perso_y = 0
+#
+# position_perso = perso.get_rect()
+perso = Joueur(30,30, perso_img, perso_img, perso_img, perso_img)
 
-position_perso = perso.get_rect()
-
-fenetre.blit(perso, position_perso)
+fenetre.blit(perso.direction, (perso.posx, perso.posy))
 # fenetre.blit(perso, (perso_x, perso_y))
 
 pygame.display.flip()
@@ -31,9 +35,11 @@ def gerer_joueur_events():
     ## Pour le clavier (keyboard)
     clavier = pygame.key.get_pressed()
     if clavier[pygame.K_UP]:
-        position_perso.y -= 50
+        perso.deplacement('haut')
+        print("haut")
     if clavier[pygame.K_DOWN]:
-        position_perso.y += 50
+        perso.deplacement('bas')
+        print("bas")
 
     # ## Pour la souris (mouse)
     # if pygame.mouse.get_focused():
@@ -52,6 +58,6 @@ while continuer:
     gerer_joueur_events()
     pygame.display.flip()
     # fenetre.blit(fond, (0,0))
-    fenetre.blit(perso, position_perso)
+    fenetre.blit(perso.direction, (perso.posx, perso.posy))
 
 pygame.quit()
