@@ -12,8 +12,8 @@ class Arme:
         self.recul = 10
 
 
-class Joueur:
-    def __init__(self,x,y):
+class Joueur(object):
+    def __init__(self,x,y,width,height,vel):
         # # Sprites du personnage
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -21,8 +21,9 @@ class Joueur:
         # self.bas = pygame.image.load(bas).convert_alpha()
         self.posx = x
         self.posy = y
-        self.speedx = 0
-        self.speedy = 0
+        self.width = width
+        self.height = height
+        self.vel = vel
         self.arme = Arme()
         self.vaisseau = Vaisseau()
         self.points = 0
