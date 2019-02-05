@@ -14,20 +14,20 @@ class Monstre:
         self.distance = 10
         self.x = 0
         self.y = 0
-        # self.direction = self.droite
+
 
     def attaque(self, perso):
         perso.perdPoints(self.degat)
         perso.reculer(self.distance)
 
     def deplacement(self, d):
-        if d == gauche :
+        if d == 'gauche' :
             self.x = self.x-1
 
-        else if d == droite :
+        else if d == 'droite' :
             self.x = self.x+1
 
-        else if d == haut :
+        else if d == 'haut' :
             self.y = self.y+1
 
         else
