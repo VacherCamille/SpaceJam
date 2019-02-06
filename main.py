@@ -21,18 +21,18 @@ def initialisation_jeu():
     vaisseau = pygame.image.load("vaisseau.png")
     vaisseau = pygame.transform.scale(vaisseau, (300,200))
     map0 = "map.png"
-    map1 = "map.png"
+    map1 = Map(1,"map.png",asteroides_map1)
     map2 = "map.png"
     map3 = "map.png"
     map4 = "map.png"
     map5 = "map.png"
     map6 = "map.png"
 
-    hero = Joueur(100, 400, 30, 68, 30, 1)
+    hero = Joueur(100, 400, 30, 68, 30, map1)
 
     #asteroides
     #map1
-    asteroides_map1 = [Asteroide(10, 10, 2)]
+    asteroides_map1 = [Asteroide(10, 10, 2), ]
 
     maps = [Map(0, map0), Map(1, map1), Map(2, map2), Map(3, map3), Map(4, map4), Map(5, map5), Map(6, map6)]
     bullets = []
@@ -42,7 +42,6 @@ def initialisation_jeu():
 
 def deplacement(hero):
 
-    lastKey = ''
     keys = pygame.key.get_pressed()
 
     # definition des changement de maps
@@ -123,6 +122,21 @@ def deplacement(hero):
             bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , lastKey))
             hero.recul(lastKey)
             #hero.posx -= 10
+
+    for bullet in bullets:
+        if bullet.dir == "up" and bullet.posy < 768 and bullet.posy > 0:
+            bullet.posy -= bullet.vel
+
+        elif bullet.dir == "down" and bullet.posy < 768 and bullet.posy > 0:
+            bullet.posy += bullet.vel
+
+        elif bullet.dir == "right" and bullet.posx < 1024 and bullet.posx > 0:
+            bullet.posx += bullet.vel
+
+        elif bullet.dir == "left" and bullet.posx < 1024 and bullet.posx > 0:
+            bullet.posx -= bullet.vel
+        else:
+            bullets.pop(bullets.index(bullet))
 
 def shoot(bullets):
     for bullet in bullets:
