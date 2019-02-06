@@ -28,8 +28,7 @@ def initialisation_jeu():
     map5 = "map.png"
     map6 = "map.png"
 
-    vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 30, 0, vassal)
+    hero = Joueur(100, 400, 30, 68, 30, 1)
 
     maps = [Map(0, map0), Map(1, map1), Map(2, map2), Map(3, map3), Map(4, map4), Map(5, map5), Map(6, map6)]
     bullets = []
