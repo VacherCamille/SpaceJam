@@ -4,11 +4,11 @@ from pygame import *
 class Vaisseau:
     def __init__(self, name):
         self.name = name
-        self.depotItem = []
+        self.items = []
         self.cobalt = 0
 
     def depotItem(self, nomPiece):
-        self.depotItem.pop(nomPiece)
+        self.items.pop(nomPiece)
 
     def depotCobalt(self, nbCobalt):
         self.cobalt += nbCobalt
