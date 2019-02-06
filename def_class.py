@@ -116,7 +116,15 @@ class Map(object):
             fenetre.blit(vaisseau, (30,320))
 
     def init_grille(self):
-        pass
+        for aster in self.asteroides :
+            varx = (aster.posx//20)
+            vary = (aster.posy//20)
+            for i in range(len(aster.grille)) :
+                for j in range(len(aster.grille[0])):
+                    self.grille[vary+i][varx+j] = aster.grille[i][j]
+
+        print (self.grille)
+
 
 
 
@@ -146,8 +154,6 @@ class Asteroide ():
             self.grille[3][2] = 1
             self.grille[4][2] = 1
 
-            print(self.grille)
-
         elif type ==2 :
             self.grille[0][0] = 1
             self.grille[0][1] = 1
@@ -158,16 +164,12 @@ class Asteroide ():
             self.grille[2][2] = 1
             self.grille[3][1] = 1
 
-            print(self.grille)
-
         elif type == 3 :
             self.grille[0][1] = 1
             self.grille[1][0] = 1
             self.grille[1][1] = 1
             self.grille[1][2] = 1
             self.grille[1][3] = 1
-
-            print(self.grille)
 
         elif type == 4 :
             self.grille[0][0] = 1
