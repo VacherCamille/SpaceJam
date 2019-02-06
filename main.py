@@ -6,7 +6,7 @@ pygame.init()
 # Fonctions
 
 def redraw():
-    fenetre.blit(fond, (0,0))
+    hero.map.draw(fenetre, vaisseau)
     hero.draw(fenetre)
     fenetre.blit(text,(100,100))
     for bullet in bullets:
@@ -15,16 +15,18 @@ def redraw():
 
 
 def initialisation_jeu():
-    global hero, maps, lastKey, bullets, run, fenetre, fond
+    global hero, maps, lastKey, bullets, run, fenetre, fond, vaisseau
     fenetre = pygame.display.set_mode((1024, 768))
-    fond = pygame.image.load("fond.png").convert()
-    map0 = "fond.png"
-    map1 = "fond.png"
-    map2 = "fond.png"
-    map3 = "fond.png"
-    map4 = "fond.png"
-    map5 = "fond.png"
-    map6 = "fond.png"
+    fond = pygame.image.load("map.png").convert()
+    vaisseau = pygame.image.load("vaisseau.png")
+    vaisseau = pygame.transform.scale(vaisseau, (300,200))
+    map0 = "map.png"
+    map1 = "map.png"
+    map2 = "map.png"
+    map3 = "map.png"
+    map4 = "map.png"
+    map5 = "map.png"
+    map6 = "map.png"
 
     hero = Joueur(100, 400, 30, 68, 30, 1)
 
@@ -45,35 +47,35 @@ def deplacement(hero):
         lastKey = "left"
     elif keys[pygame.K_LEFT]:
         lastKey = "left"
-        if hero.map == 1:
-            hero.map = 0
+        if hero.map.num == 1:
+            hero.map.num = 0
             hero.posx = 1024
-        elif hero.map == 3:
-            hero.map = 2
+        elif hero.map.num == 3:
+            hero.map.num = 2
             hero.posx = 1024
-        elif hero.map == 4:
-            hero.map = 1
+        elif hero.map.num == 4:
+            hero.map.num = 1
             hero.posx = 1024
-        elif hero.map == 5:
-            hero.map = 6
+        elif hero.map.num == 5:
+            hero.map.num = 6
             hero.posx = 1024
 
     if keys[pygame.K_RIGHT] and hero.posx < 1024-30:
         hero.posx += hero.vel
         lastKey="right"
     elif keys[pygame.K_RIGHT]:
-        lastkey="right"
-        if hero.map == 0:
-            hero.map = 1
+        lastKey="right"
+        if hero.map.num == 0:
+            hero.map.num = 1
             hero.posx = 0
-        elif hero.map == 1:
-            hero.map = 4
+        elif hero.map.num == 1:
+            hero.map.num = 4
             hero.posx = 0
-        elif hero.map == 2:
-            hero.map = 3
+        elif hero.map.num == 2:
+            hero.map.num = 3
             hero.posx = 0
-        elif hero.map == 6:
-            hero.map = 5
+        elif hero.map.num == 6:
+            hero.map.num = 5
             hero.posx = 0
 
     if keys[pygame.K_DOWN] and hero.posy < 768-  hero.height:
@@ -81,17 +83,17 @@ def deplacement(hero):
         lastKey = "down"
     elif keys[pygame.K_DOWN]:
         lastKey = "down"
-        if hero.map == 1:
-            hero.map = 6
+        if hero.map.num == 1:
+            hero.map.num = 6
             hero.posy = 0
-        elif hero.map == 2:
-            hero.map = 1
+        elif hero.map.num == 2:
+            hero.map.num = 1
             hero.posy = 0
-        elif hero.map == 3:
-            hero.map = 4
+        elif hero.map.num == 3:
+            hero.map.num = 4
             hero.posy = 0
-        elif hero.map == 4:
-            hero.map = 5
+        elif hero.map.num == 4:
+            hero.map.num = 5
             hero.posy = 0
 
     if keys[pygame.K_UP] and hero.posy > 0:
@@ -99,17 +101,17 @@ def deplacement(hero):
         lastKey="up"
     elif keys[pygame.K_UP]:
         lastKey="up"
-        if hero.map == 1:
-            hero.map = 2
+        if hero.map.num == 1:
+            hero.map.num = 2
             hero.posy = 768
-        elif hero.map == 4:
-            hero.map = 3
+        elif hero.map.num == 4:
+            hero.map.num = 3
             hero.posy = 768
-        elif hero.map == 6:
-            hero.map = 1
+        elif hero.map.num == 6:
+            hero.map.num = 1
             hero.posy = 768
-        elif hero.map == 5:
-            hero.map = 4
+        elif hero.map.num == 5:
+            hero.map.num = 4
             hero.posy = 768
 
     if keys[pygame.K_SPACE]:
@@ -148,7 +150,7 @@ initialisation_jeu()
 while run:
     # Indicateur
     font = pygame.font.Font('American_Captain.ttf', 100)
-    text = font.render(str(hero.map),True,(255,0,0))
+    text = font.render(str(hero.map.num),True,(255,0,0))
 
     pygame.time.delay(100)
     for event in pygame.event.get():
