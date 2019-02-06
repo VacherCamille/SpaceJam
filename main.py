@@ -59,7 +59,7 @@ def initialisation_jeu():
     imageVaisseau = pygame.image.load("vaisseau.png")
     imageVaisseau = pygame.transform.scale(imageVaisseau, (300,200))
 
-    asteroides_map1 = [Asteroide(10, 10, 2)]
+    asteroides_map1 = [Asteroide(450, 350, 1)]
 
     map0 = Map(0,"map.png",asteroides_map1)
     map1 = Map(1,"map.png",asteroides_map1)
@@ -70,7 +70,7 @@ def initialisation_jeu():
     map6 = Map(6,"map.png",asteroides_map1)
 
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 30, map1, vassal)
+    hero = Joueur(100, 400, 30, 68, 7, map1, vassal)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
@@ -205,7 +205,7 @@ while run:
     font = pygame.font.Font('American_Captain.ttf', 50)
     text = font.render("Numero map:"+str(hero.map.num),True,(255,0,0))
 
-    pygame.time.delay(100)
+    pygame.time.delay(15)
     for event in pygame.event.get():
         if event.type == QUIT:
             run = False
