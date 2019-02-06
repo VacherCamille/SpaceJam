@@ -44,6 +44,12 @@ def redraw():
 
     pygame.display.flip()
 
+#fin D'UNE partie du jeux
+def gameover():
+    global fenetre, input_text, nameTxt, start, credits, hscores, quiter, font
+    fenetre = pygame.display.set_mode((1024, 768))
+    redraw()
+
 redraw()
 running = True
 clickEnterName = False
@@ -56,9 +62,12 @@ while (running):
             if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
                 print('start')
                 game()
-                running = False
+                #####pour tout fermer à la fin du jeux
+                # running = False
+                # break
+                #####
+                gameover()
                 break
-
             if credits.get_rect(topleft=(390,350)).collidepoint(x, y):
                 print('crédits')
 

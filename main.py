@@ -1,7 +1,6 @@
 import pygame
 from pygame import *
 from def_class import *
-pygame.init()
 
 # Fonctions
 
@@ -30,7 +29,6 @@ def redraw():
     fenetre.blit(itemSacTxt, (10, 75))
     fenetre.blit(cobaltSacTxt, (10, 95))
 
-
     #affichage du contenu du vaisseau quand il est dedans
     if hero.map.num == 0:
         font = pygame.font.Font('American_Captain.ttf', 25)
@@ -39,7 +37,7 @@ def redraw():
         cobaltVaisseauTxt = font.render("cobalt : " + str(hero.vaisseau.cobalt), True, (250, 128, 114))
 
         pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75))
-        fenetre.blit(vaisseauTxt, (60, 130))
+        fenetre.blit(vaisseauTxt, (40, 130))
         fenetre.blit(itemVaisseauTxt, (10, 155))
         fenetre.blit(cobaltVaisseauTxt, (10, 175))
 
