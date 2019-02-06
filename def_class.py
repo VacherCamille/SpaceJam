@@ -109,8 +109,8 @@ class Map(object):
         #     aster.draw()
         if self.num == 1:
             fenetre.blit(vaisseau, (30,320))
-        for aster in Asteroide :
-            aster.draw()
+        # for aster in Asteroide :
+        #     aster.draw()
 
 
 
