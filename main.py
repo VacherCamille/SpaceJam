@@ -154,10 +154,11 @@ def deplacement(hero):
             hero.posy = 768
 
     if keys[pygame.K_SPACE]:
+        print(lastKey)
         if len(bullets) < 25:
             bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , lastKey))
             hero.recul(lastKey)
-            #hero.posx -= 10
+
 
 def shoot(bullets):
     for bullet in bullets:
@@ -172,6 +173,23 @@ def shoot(bullets):
 
         elif bullet.dir=="left" and bullet.posx < 1024 and bullet.posx > 0:
             bullet.posx -= bullet.vel
+
+        elif bullet.dir == "up-right" and bullet.posx < 1024 and bullet.posx > 0 and bullet.posy < 768 and bullet.posy > 0:
+            bullet.posy -= bullet.vel
+            bullet.posx += bullet.vel
+
+        elif bullet.dir == "up-left" and bullet.posx < 1024 and bullet.posx > 0 and bullet.posy < 768 and bullet.posy > 0:
+            bullet.posy -= bullet.vel
+            bullet.posx -= bullet.vel
+
+        elif bullet.dir == "down-right" and bullet.posx < 1024 and bullet.posx > 0 and bullet.posy < 768 and bullet.posy > 0:
+            bullet.posy += bullet.vel
+            bullet.posx += bullet.vel
+
+        elif bullet.dir == "down-left" and bullet.posx < 1024 and bullet.posx > 0 and bullet.posy < 768 and bullet.posy > 0:
+            bullet.posy += bullet.vel
+            bullet.posx -= bullet.vel
+
         else:
             bullets.pop(bullets.index(bullet))
 
@@ -206,8 +224,111 @@ while run:
             run = False
 
     shoot(bullets)
-    deplacement(hero)
 
+    keys = pygame.key.get_pressed()
+
+    # definition des changement de maps
+    if keys[pygame.K_LEFT] and hero.posx > 0:
+        hero.posx -= hero.vel
+        lastKey = "left"
+    elif keys[pygame.K_LEFT]:
+        lastKey = "left"
+        if hero.map.num == 1:
+            hero.map.num = 0
+            hero.posx = 1024
+        elif hero.map.num == 3:
+            hero.map.num = 2
+            hero.posx = 1024
+        elif hero.map.num == 4:
+            hero.map.num = 1
+            hero.posx = 1024
+        elif hero.map.num == 5:
+            hero.map.num = 6
+            hero.posx = 1024
+
+    if keys[pygame.K_RIGHT] and hero.posx < 1024 - 30:
+        hero.posx += hero.vel
+        lastKey = "right"
+    elif keys[pygame.K_RIGHT]:
+        lastKey = "right"
+        if hero.map.num == 0:
+            hero.map.num = 1
+            hero.posx = 0
+        elif hero.map.num == 1:
+            hero.map.num = 4
+            hero.posx = 0
+        elif hero.map.num == 2:
+            hero.map.num = 3
+            hero.posx = 0
+        elif hero.map.num == 6:
+            hero.map.num = 5
+            hero.posx = 0
+
+    if keys[pygame.K_DOWN] and hero.posy < 768 - hero.height:
+        hero.posy += hero.vel
+        lastKey = "down"
+    elif keys[pygame.K_DOWN]:
+        lastKey = "down"
+        if hero.map.num == 1:
+            hero.map.num = 6
+            hero.posy = 0
+        elif hero.map.num == 2:
+            hero.map.num = 1
+            hero.posy = 0
+        elif hero.map.num == 3:
+            hero.map.num = 4
+            hero.posy = 0
+        elif hero.map.num == 4:
+            hero.map.num = 5
+            hero.posy = 0
+
+    if keys[pygame.K_UP] and hero.posy > 0:
+        hero.posy -= hero.vel
+        lastKey = "up"
+    elif keys[pygame.K_UP]:
+        lastKey = "up"
+        if hero.map.num == 1:
+            hero.map.num = 2
+            hero.posy = 768
+        elif hero.map.num == 4:
+            hero.map.num = 3
+            hero.posy = 768
+        elif hero.map.num == 6:
+            hero.map.num = 1
+            hero.posy = 768
+        elif hero.map.num == 5:
+            hero.map.num = 4
+            hero.posy = 768
+
+    if keys[pygame.K_SPACE] and not ( keys[pygame.K_UP] and keys[pygame.K_RIGHT]) and not (keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]) and not (keys[pygame.K_LEFT] and keys[pygame.K_UP]) and not (keys[pygame.K_LEFT] and keys[pygame.K_DOWN]):
+        print(lastKey)
+        if len(bullets) < 25:
+            bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
+                                     (120, 154, 66), 45, lastKey))
+            hero.recul(lastKey)
+    if keys[pygame.K_SPACE] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
+        print("up-right")
+        if len(bullets) < 25:
+            bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "up-right")) #vitesse 45
+            hero.recul("up-right")
+
+    if keys[pygame.K_SPACE] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+        print("down right")
+        if len(bullets) < 25:
+            bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "down-right")) #vitesse 45
+            hero.recul("down-right")
+
+    if keys[pygame.K_SPACE] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
+        print("up-left")
+        if len(bullets) < 25:
+            bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "up-left"))  # vitesse 45
+            hero.recul("up-left")
+
+    if keys[pygame.K_SPACE] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
+        print("down-left")
+        if len(bullets) < 25:
+            bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
+            hero.recul("down-left")
     redraw()
 pygame.quit()
 
