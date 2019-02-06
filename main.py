@@ -53,29 +53,24 @@ def initialisation_jeu():
     score = 0
 
     fenetre = pygame.display.set_mode((1024, 768))
-
     fond = pygame.image.load("map.png").convert()
 
     imageVaisseau = pygame.image.load("vaisseau.png")
     imageVaisseau = pygame.transform.scale(imageVaisseau, (300,200))
 
-    map0 = "map.png"
-    map1 = "map.png"
-    map2 = "map.png"
-    map3 = "map.png"
-    map4 = "map.png"
-    map5 = "map.png"
-    map6 = "map.png"
-
-    vassal = Vaisseau("Aurora")
-    beginTime = pygame.time.get_ticks()
-
-    #asteroides
-    #map1
     asteroides_map1 = [Asteroide(10, 10, 2)]
 
-    maps = [Map(0, map0, []), Map(1, map1, asteroides_map1), Map(2, map2, asteroides_map1), Map(3, map3, asteroides_map1), Map(4, map4, asteroides_map1), Map(5, map5, asteroides_map1), Map(6, map6, asteroides_map1)]
-    hero = Joueur(100, 400, 30, 68, 30, maps[1], vassal)
+    map0 = Map(0,"map.png",asteroides_map1)
+    map1 = Map(1,"map.png",asteroides_map1)
+    map2 = Map(2,"map.png",asteroides_map1)
+    map3 = Map(3,"map.png",asteroides_map1)
+    map4 = Map(4,"map.png",asteroides_map1)
+    map5 = Map(5,"map.png",asteroides_map1)
+    map6 = Map(6,"map.png",asteroides_map1)
+
+    vassal = Vaisseau("Aurora")
+    hero = Joueur(100, 400, 30, 68, 30, map1, vassal)
+    beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
     run = True
@@ -83,7 +78,6 @@ def initialisation_jeu():
 
 def deplacement(hero):
 
-    lastKey = ''
     keys = pygame.key.get_pressed()
 
     # definition des changement de maps
