@@ -8,6 +8,7 @@ pygame.init()
 def redraw():
     hero.map.draw(fenetre, imageVaisseau)
     hero.draw(fenetre)
+
     fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
 
@@ -99,7 +100,7 @@ def deplacement(hero):
             hero.map.num = 6
             hero.posx = 1024
 
-    if keys[pygame.K_RIGHT] and hero.posx < 1024-30:
+    if keys[pygame.K_RIGHT] and hero.posx < 1024-50:
         hero.posx += hero.vel
         lastKey="right"
     elif keys[pygame.K_RIGHT]:
@@ -212,7 +213,11 @@ while run:
     if seconds == 0 and min == 0:
         run = False
     font = pygame.font.Font('American_Captain.ttf', 50)
-    timerTxt = font.render(str(min)+":"+str(seconds), True, (250, 128, 114))
+
+    if seconds<10:
+        timerTxt = font.render(str(min) + ":0" + str(seconds), True, (250, 128, 114))
+    else:
+        timerTxt = font.render(str(min)+":"+str(seconds), True, (250, 128, 114))
 
     # Indicateur (numéro de carte)
     font = pygame.font.Font('American_Captain.ttf', 50)
