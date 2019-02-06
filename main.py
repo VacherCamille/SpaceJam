@@ -45,6 +45,7 @@ def initialisation_jeu():
 
 def deplacement(hero):
     lastKey=''
+
     keys = pygame.key.get_pressed()
 
      # definition des changement de maps
