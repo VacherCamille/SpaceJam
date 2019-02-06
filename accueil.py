@@ -56,6 +56,8 @@ while (running):
             if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
                 print('start')
                 game()
+                running = False
+                break
 
             if credits.get_rect(topleft=(390,350)).collidepoint(x, y):
                 print('crédits')
