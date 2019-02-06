@@ -15,7 +15,7 @@ class Vaisseau:
 
 
 class Joueur(object):
-    def __init__(self, x, y, width, height, vel, map, vaisseau):
+    def __init__(self, x, y, width, height, vel, num):
         # # Sprites du personnage
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -26,8 +26,8 @@ class Joueur(object):
         self.width = width
         self.height = height
         self.vel = vel
-        self.vaisseau = vaisseau # pas de vaisseau pour le moment
-        self.map = map
+        # self.arme = Arme()
+        self.map = Map(num, "map.png")
         self.points = 0
         self.hitbox = (self.posx, self.posy, 50, 75)
         self.perso = pygame.image.load("perso.png")
@@ -103,10 +103,14 @@ class Map(object):
         self.fond = pygame.image.load(bg)
         self.asteroides = []
 
-    def draw(self, fenetre):
+    def draw(self, fenetre, vaisseau):
         fenetre.blit(self.fond, (0, 0))
-        for aster in Asteroide :
-            aster.draw()
+        # for aster in asteroides :
+        #     aster.draw()
+        if self.num == 1:
+            fenetre.blit(vaisseau, (30,320))
+        # for aster in Asteroide :
+        #     aster.draw()
 
 
 
