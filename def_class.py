@@ -4,11 +4,11 @@ from pygame import *
 class Vaisseau:
     def __init__(self, name):
         self.name = name
-        self.depotItem = []
+        self.items = []
         self.cobalt = 0
 
     def depotItem(self, nomPiece):
-        self.depotItem.pop(nomPiece)
+        self.items.pop(nomPiece)
 
     def depotCobalt(self, nbCobalt):
         self.cobalt += nbCobalt
@@ -111,7 +111,7 @@ class Map(object):
     def draw(self, fenetre, vaisseau):
         fenetre.blit(self.fond, (0, 0))
         for aster in self.asteroides :
-            aster.draw()
+            aster.draw(fenetre)
         if self.num == 1:
             fenetre.blit(vaisseau, (30,320))
 
@@ -138,8 +138,8 @@ class Asteroide ():
             self.grille[i] = 5 * [0]
         self.build_asteroide(type)
 
-    def draw(self):
-        pass
+    def draw(self, fenetre):
+        fenetre.blit(pygame.transform.scale(pygame.image.load("balle.png"),(80,80)),(self.posx,self.posy))
 
     def build_asteroide(self, type):
         if type==1 :
