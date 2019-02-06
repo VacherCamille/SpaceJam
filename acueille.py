@@ -3,6 +3,10 @@ import pygame
 pygame.init()
 fenetre = pygame.display.set_mode((1024,768))
 
+#image de fond
+fond = pygame.image.load("fond.png").convert()
+fenetre.blit(fond, (0,0))
+
 #coordonées start
 x_start = 300;
 y_start = 200;
@@ -21,6 +25,10 @@ fenetre.blit(start ,  ( x_start,y_start))
 credits = pygame.image.load("rectangle.png").convert()
 fenetre.blit(credits ,  ( x_c,y_c))
 
+#affichage du bouton quiter
+quiter = pygame.image.load("rectangle.png").convert()
+fenetre.blit(quiter ,  (900, 700))
+
 pygame.display.flip()
 
 running = True
@@ -38,6 +46,9 @@ while (running):
             if credits.get_rect(topleft=(30,600)).collidepoint(x, y):
                 print('crédits')
                 print(x, y)
+
+            if quiter.get_rect(topleft=(900,700)).collidepoint(x, y):
+                running = False
 
 #loop over, quite pygame
 pygame.quit()
