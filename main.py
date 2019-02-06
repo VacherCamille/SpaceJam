@@ -6,20 +6,24 @@ pygame.init()
 # Fonctions
 
 def redraw():
-    hero.map.draw(fenetre, vaisseau)
+    hero.map.draw(fenetre, imageVaisseau)
     hero.draw(fenetre)
-    fenetre.blit(text,(100,100))
+    fenetre.blit(text,(10,10))
+    fenetre.blit(timerTxt,(512,10))
     for bullet in bullets:
         bullet.draw(fenetre)
     pygame.display.update()
 
 
 def initialisation_jeu():
-    global hero, maps, lastKey, bullets, run, fenetre, fond, vaisseau
+    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, timerTxt, imageVaisseau
+
     fenetre = pygame.display.set_mode((1024, 768))
     fond = pygame.image.load("map.png").convert()
-    vaisseau = pygame.image.load("vaisseau.png")
-    vaisseau = pygame.transform.scale(vaisseau, (300,200))
+
+    imageVaisseau = pygame.image.load("vaisseau.png")
+    imageVaisseau = pygame.transform.scale(imageVaisseau, (300,200))
+
     map0 = "map.png"
     map1 = Map(1,"map.png",asteroides_map1)
     map2 = "map.png"
@@ -29,6 +33,10 @@ def initialisation_jeu():
     map6 = "map.png"
 
     hero = Joueur(100, 400, 30, 68, 30, map1)
+    vassal = Vaisseau("Aurora")
+    hero = Joueur(100, 400, 30, 68, 30, 1, vassal)
+
+    beginTime = pygame.time.get_ticks()
 
     #asteroides
     #map1
@@ -123,21 +131,6 @@ def deplacement(hero):
             hero.recul(lastKey)
             #hero.posx -= 10
 
-    for bullet in bullets:
-        if bullet.dir == "up" and bullet.posy < 768 and bullet.posy > 0:
-            bullet.posy -= bullet.vel
-
-        elif bullet.dir == "down" and bullet.posy < 768 and bullet.posy > 0:
-            bullet.posy += bullet.vel
-
-        elif bullet.dir == "right" and bullet.posx < 1024 and bullet.posx > 0:
-            bullet.posx += bullet.vel
-
-        elif bullet.dir == "left" and bullet.posx < 1024 and bullet.posx > 0:
-            bullet.posx -= bullet.vel
-        else:
-            bullets.pop(bullets.index(bullet))
-
 def shoot(bullets):
     for bullet in bullets:
         if bullet.dir=="up" and bullet.posy < 768 and bullet.posy > 0 :
@@ -166,9 +159,18 @@ initialisation_jeu()
 # Boucle principale
 
 while run:
-    # Indicateur
-    font = pygame.font.Font('American_Captain.ttf', 100)
-    text = font.render(str(hero.map.num),True,(255,0,0))
+    #chronomètre
+    seconds = int(180 - (pygame.time.get_ticks() - beginTime)/1000)
+    min = int(seconds/60)
+    seconds = int(seconds % 60)
+    if seconds == 0 and min == 0:
+        run = False
+    font = pygame.font.Font('American_Captain.ttf', 50)
+    timerTxt = font.render(str(min)+":"+str(seconds), True, (250, 128, 114))
+
+    # Indicateur (numéro de carte)
+    font = pygame.font.Font('American_Captain.ttf', 50)
+    text = font.render("Numero map:"+str(hero.map.num),True,(255,0,0))
 
     pygame.time.delay(100)
     for event in pygame.event.get():
