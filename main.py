@@ -11,13 +11,6 @@ perso = pygame.image.load("perso.png")
 
 clock = pygame.time.Clock()
 
-map0 = "fond.png"
-map1 = "fond.png"
-map2 = "fond.png"
-map3 = "fond.png"
-map4 = "fond.png"
-map5 = "fond.png"
-map6 = "fond.png"
 
 class Joueur(object):
     def __init__(self,x,y,width,height,vel,map):
@@ -88,13 +81,30 @@ class Monstre:
         pygame.draw.rect(fenetre, (255,0,0), self.hitbox,2)
 
 class Map(object):
-    def __init__(self,num,bg):
+    def __init__(self,num,bg,asteroides):
         self.num = num
         self.fond = pygame.image.load(bg)
-        self.meteor = []
+        self.asteroides = asteroides
 
     def draw(self,fenetre):
         fenetre.blit(self.fond, (0,0))
+        for aster in asteroides :
+            aster.draw()
+
+
+class Asteroid:
+    def __init__(self, posx, posy, composants):
+        self.posx = posx
+        self.posy = posy
+        self.composants = composants
+
+    def draw(self):
+        fenetre.blit()
+
+
+
+
+
 
 def redraw():
     fenetre.blit(fond, (0,0))
@@ -104,11 +114,28 @@ def redraw():
         bullet.draw(fenetre)
     pygame.display.update()
 
-hero = Joueur(100,400,30,68,30,1)
-maps = [Map(0,map0),Map(1,map1),Map(2,map2),Map(3,map3),Map(4,map4),Map(5,map5),Map(6,map6)]
-bullets =[]
-lastKey="right"
-run = True
+
+def initialisation_jeu():
+    map0 = "fond.png"
+    map1 = "fond.png"
+    map2 = "fond.png"
+    map3 = "fond.png"
+    map4 = "fond.png"
+    map5 = "fond.png"
+    map6 = "fond.png"
+
+    hero = Joueur(100, 400, 30, 68, 30, 1)
+
+    maps = [Map(0, map0), Map(1, map1), Map(2, map2), Map(3, map3), Map(4, map4), Map(5, map5), Map(6, map6)]
+    bullets = []
+    lastKey = "right"
+    run = True
+
+
+
+initialisation_jeu()
+
+
 while run:
     font = pygame.font.Font('American_Captain.ttf', 100)
     text = font.render(str(hero.map),True,(255,0,0))

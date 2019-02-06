@@ -113,11 +113,6 @@ class Object:
         self.nom = nom
 
 
-class Asteroid:
-    def __init__(self):
-        self.posx = random.randint(1, 100)
-        self.posy = random.randint(1, 100)
-
 
 class Projectil:
     def __init__(self,x,y,radius):
