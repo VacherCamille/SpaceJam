@@ -13,6 +13,26 @@ def redraw():
         bullet.draw(fenetre)
     pygame.display.update()
 
+
+def initialisation_jeu():
+    global hero, maps, lastKey, bullets, run
+
+    map0 = "fond.png"
+    map1 = "fond.png"
+    map2 = "fond.png"
+    map3 = "fond.png"
+    map4 = "fond.png"
+    map5 = "fond.png"
+    map6 = "fond.png"
+
+    hero = Joueur(100, 400, 30, 68, 30, 1)
+
+    maps = [Map(0, map0), Map(1, map1), Map(2, map2), Map(3, map3), Map(4, map4), Map(5, map5), Map(6, map6)]
+    bullets = []
+    lastKey = "right"
+    run = True
+
+
 def deplacement(hero):
 
     lastKey = ''
@@ -115,25 +135,7 @@ def shoot(bullets):
 
 # Instanciations
 
-pygame.display.set_caption("Le jeux vidéale")
-
-fenetre = pygame.display.set_mode((1024,768),RESIZABLE)
-fond = pygame.image.load("fond.png").convert()
-
-clock = pygame.time.Clock()
-
-map0 = "fond.png"
-map1 = "fond.png"
-map2 = "fond.png"
-map3 = "fond.png"
-map4 = "fond.png"
-map5 = "fond.png"
-map6 = "fond.png"
-
-hero = Joueur(100,400,30,68,30,1)
-maps = [Map(0,map0),Map(1,map1),Map(2,map2),Map(3,map3),Map(4,map4),Map(5,map5),Map(6,map6)]
-bullets =[]
-lastKey="right"
+initialisation_jeu()
 
 # Boucle principale
 
