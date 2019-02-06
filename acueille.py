@@ -12,8 +12,8 @@ x_start = 300;
 y_start = 200;
 
 #coordonées crédits
-x_c = 30;
-y_c = 600;
+x_c = 300;
+y_c = 350;
 
 pygame.display.set_caption('Menu Start')
 
@@ -29,6 +29,10 @@ fenetre.blit(credits ,  ( x_c,y_c))
 quiter = pygame.image.load("rectangle.png").convert()
 fenetre.blit(quiter ,  (900, 700))
 
+#affichage du bouton highscore
+hscores = pygame.image.load("rectangle.png").convert()
+fenetre.blit(hscores ,  (300, 500))
+
 pygame.display.flip()
 
 running = True
@@ -43,12 +47,15 @@ while (running):
                 print('start')
                 print(x, y)
 
-            if credits.get_rect(topleft=(30,600)).collidepoint(x, y):
+            if credits.get_rect(topleft=(300,350)).collidepoint(x, y):
                 print('crédits')
+                print(x, y)
+
+            if hscores.get_rect(topleft=(300,500)).collidepoint(x, y):
+                print('hscores')
                 print(x, y)
 
             if quiter.get_rect(topleft=(900,700)).collidepoint(x, y):
                 running = False
-
 #loop over, quite pygame
 pygame.quit()
