@@ -7,7 +7,7 @@ pygame.init()
 # Fonctions
 
 def redraw():
-    hero.map.draw(fenetre, vaisseau)
+    hero.map.draw(fenetre, imageVaisseau)
     hero.draw(fenetre)
     fenetre.blit(text,(100,100))
     fenetre.blit(timerTxt,(512,10))
@@ -17,11 +17,11 @@ def redraw():
 
 
 def initialisation_jeu():
-    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, chrono, timerTxt
+    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, chrono, timerTxt, imageVaisseau
     fenetre = pygame.display.set_mode((1024, 768))
     fond = pygame.image.load("map.png").convert()
-    vaisseau = pygame.image.load("vaisseau.png")
-    vaisseau = pygame.transform.scale(vaisseau, (300,200))
+    imageVaisseau = pygame.image.load("vaisseau.png")
+    imageVaisseau = pygame.transform.scale(imageVaisseau, (300,200))
     map0 = "map.png"
     map1 = "map.png"
     map2 = "map.png"
@@ -31,7 +31,7 @@ def initialisation_jeu():
     map6 = "map.png"
 
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 30, 0, vassal)
+    hero = Joueur(100, 400, 30, 68, 30, 1, vassal)
 
     beginTime = pygame.time.get_ticks()
     chrono = 180000
