@@ -198,12 +198,13 @@ def shoot(bullets):
 ################
 def game():
     # Instanciations
-    global run, text, timerTxt   # comprend pas pq mais ca marche
+    global run, text, timerTxt, score   # comprend pas pq mais ca marche
     initialisation_jeu()
 
     # Boucle principale
 
     while run:
+        score += 1 # à enlever quand systeme de point mis en place
         #chronomètre
         seconds = int(180 - (pygame.time.get_ticks() - beginTime)/1000)
         min = int(seconds/60)
@@ -333,6 +334,5 @@ def game():
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
                 hero.recul("down-left")
         redraw()
-    pygame.quit()
 
-
+    return score

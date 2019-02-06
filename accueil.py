@@ -17,6 +17,12 @@ def redraw():
 
     pygame.display.set_caption('Menu Start')
 
+    if score != None:
+        font = pygame.font.Font('American_Captain.ttf', 20)
+        fenetre.blit(font.render(input_text + ",", True, (250, 128, 114)), (10, 300))
+        fenetre.blit(font.render("votre dernier score est : ", True, (250, 128, 114)), (10, 320))
+        fenetre.blit(font.render(str(score), True, (250, 128, 114)), (50, 350))
+
     font = pygame.font.Font('American_Captain.ttf', 40)
     #affichage zone de text
     nameTxt = pygame.draw.rect(fenetre, (115, 194, 251), (387, 150, 250, 35))
@@ -46,10 +52,10 @@ def redraw():
 
 #fin D'UNE partie du jeux
 def gameover():
-    global fenetre, input_text, nameTxt, start, credits, hscores, quiter, font
     fenetre = pygame.display.set_mode((1024, 768))
     redraw()
 
+score = None
 redraw()
 running = True
 clickEnterName = False
@@ -61,7 +67,7 @@ while (running):
             x, y = event.pos
             if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
                 print('start')
-                game()
+                score = game()
                 #####pour tout fermer à la fin du jeux
                 # running = False
                 # break
