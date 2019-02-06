@@ -44,11 +44,11 @@ def initialisation_jeu():
 
 
 def deplacement(hero):
-    lastKey=''
 
+    lastKey = ''
     keys = pygame.key.get_pressed()
 
-     # definition des changement de maps
+    # definition des changement de maps
     if keys[pygame.K_LEFT] and hero.posx > 0:
         hero.posx -= hero.vel
         lastKey = "left"
@@ -123,27 +123,11 @@ def deplacement(hero):
 
     if keys[pygame.K_SPACE]:
         if len(bullets) < 25:
-            bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , lastKey)) #vitesse 50
+            bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , lastKey))
             hero.recul(lastKey)
             #hero.posx -= 10
 
-
-
-
-
-
-initialisation_jeu()
-
-
-while run:
-    font = pygame.font.Font('American_Captain.ttf', 100)
-    text = font.render(str(hero.map),True,(255,0,0))
-
-    pygame.time.delay(100)
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            run = False
-
+def shoot(bullets):
     for bullet in bullets:
         if bullet.dir=="up" and bullet.posy < 768 and bullet.posy > 0 :
             bullet.posy -= bullet.vel
@@ -159,12 +143,27 @@ while run:
         else:
             bullets.pop(bullets.index(bullet))
 
-    deplacement(hero)
+# Instanciations
 
-    # if keys[pygame.K_SPACE] and keys[pygame.K_UP]:
-    #     if len(bullets) < 25:
-    #         bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45,"up")) #vitesse 50
-    #         hero.posy -= 10
+hero = Joueur(100,400,30,68,30,1)
+maps = [Map(0,map0),Map(1,map1),Map(2,map2),Map(3,map3),Map(4,map4),Map(5,map5),Map(6,map6)]
+bullets =[]
+lastKey="right"
+
+initialisation_jeu()
+
+
+while run:
+    font = pygame.font.Font('American_Captain.ttf', 100)
+    text = font.render(str(hero.map),True,(255,0,0))
+
+    pygame.time.delay(100)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            run = False
+
+    shoot(bullets)
+    deplacement(hero)
 
     redraw()
 pygame.quit()
