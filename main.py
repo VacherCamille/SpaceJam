@@ -43,39 +43,8 @@ def initialisation_jeu():
     run = True
 
 
-
-initialisation_jeu()
-
-
-while run:
-    font = pygame.font.Font('American_Captain.ttf', 100)
-    text = font.render(str(hero.map),True,(255,0,0))
-
-    pygame.time.delay(100)
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            run = False
-
-    for bullet in bullets:
-        if bullet.dir=="up" and bullet.posy < 768 and bullet.posy > 0 :
-            bullet.posy -= bullet.vel
-
-        elif bullet.dir=="down" and bullet.posy < 768 and bullet.posy > 0 :
-            bullet.posy += bullet.vel
-
-        elif bullet.dir=="right" and bullet.posx < 1024 and bullet.posx > 0:
-            bullet.posx += bullet.vel
-
-        elif bullet.dir=="left" and bullet.posx < 1024 and bullet.posx > 0:
-            bullet.posx -= bullet.vel
-
-
-        else:
-            bullets.pop(bullets.index(bullet))
-
-
-
 def deplacement(hero):
+    lastKey=''
     keys = pygame.key.get_pressed()
 
      # definition des changement de maps
@@ -157,12 +126,14 @@ def deplacement(hero):
             hero.recul(lastKey)
             #hero.posx -= 10
 
-hero = Joueur(100,400,30,68,30,1)
-maps = [Map(0,map0),Map(1,map1),Map(2,map2),Map(3,map3),Map(4,map4),Map(5,map5),Map(6,map6)]
-bullets =[]
-lastKey="right"
 
-run = True
+
+
+
+
+initialisation_jeu()
+
+
 while run:
     font = pygame.font.Font('American_Captain.ttf', 100)
     text = font.render(str(hero.map),True,(255,0,0))
