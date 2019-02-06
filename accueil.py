@@ -51,16 +51,16 @@ while (running):
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
-            if start.get_rect(topleft=(300, 200)).collidepoint(x, y):
+            if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
                 print('start')
 
-            if credits.get_rect(topleft=(300,350)).collidepoint(x, y):
+            if credits.get_rect(topleft=(390,350)).collidepoint(x, y):
                 print('crédits')
 
-            if hscores.get_rect(topleft=(300,500)).collidepoint(x, y):
+            if hscores.get_rect(topleft=(390,500)).collidepoint(x, y):
                 print('hscores')
 
-            if quiter.get_rect(topleft=(900,700)).collidepoint(x, y):
+            if quiter.get_rect(topleft=(825,650)).collidepoint(x, y):
                 print('quitter')
                 running = False
 
@@ -73,5 +73,6 @@ while (running):
         if event.type == pygame.KEYDOWN and clickEnterName and len(input_text)<10:
             input_text = input_text + str(event.unicode)
             redraw()
+
 #loop over, quite pygame
 pygame.quit()
