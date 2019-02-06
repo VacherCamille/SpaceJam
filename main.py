@@ -71,9 +71,13 @@ class Monstre:
         pygame.draw.rect(fenetre, (255,0,0), self.hitbox,2)
 
 class Map(object):
-    def __init__(self,num):
+    def __init__(self,num,bg):
         self.num = num
+        self.fond = pygame.image.load(bg)
         self.meteor = []
+
+    def draw(self):
+        fenetre.blit(fond, (0,0))
 
 def redraw():
     fenetre.blit(fond, (0,0))
@@ -99,27 +103,73 @@ while run:
         else:
             bullets.pop(bullets.index(bullet))
 
-
-
     keys = pygame.key.get_pressed()
 
+     # definition des changement de maps
     if keys[pygame.K_LEFT] and hero.posx > 0:
         hero.posx -= hero.vel
     elif keys[pygame.K_LEFT]:
-        hero.posx = 1024
+        if hero.map == 1:
+            hero.map = 0
+            hero.posx = 1024
+        elif hero.map == 3:
+            hero.map = 2
+            hero.posx = 1024
+        elif hero.map == 4:
+            hero.map = 1
+            hero.posx = 1024
+        elif hero.map == 5:
+            hero.map = 6
+            hero.posx = 1024
 
     if keys[pygame.K_RIGHT] and hero.posx < 1024-30:
         hero.posx += hero.vel
     elif keys[pygame.K_RIGHT]:
-        hero.posx = 0
+        if hero.map == 0:
+            hero.map = 1
+            hero.posx = 0
+        elif hero.map == 1:
+            hero.map = 4
+            hero.posx = 0
+        elif hero.map == 2:
+            hero.map = 3
+            hero.posx = 0
+        elif hero.map == 6:
+            hero.map = 5
+            hero.posx = 0
+
     if keys[pygame.K_DOWN] and hero.posy < 768:
         hero.posy += hero.vel
     elif keys[pygame.K_DOWN]:
-        hero.posy = 0
+        if hero.map == 1:
+            hero.map = 6
+            hero.posy = 0
+        elif hero.map == 2:
+            hero.map = 1
+            hero.posy = 0
+        elif hero.map == 3:
+            hero.map = 4
+            hero.posy = 0
+        elif hero.map == 4:
+            hero.map = 5
+            hero.posy = 0
+
     if keys[pygame.K_UP] and hero.posy > 0:
         hero.posy -= hero.vel
     elif keys[pygame.K_UP]:
-        hero.posy = 768
+        if hero.map == 1:
+            hero.map = 2
+            hero.posy = 768
+        elif hero.map == 4:
+            hero.map = 3
+            hero.posy = 768
+        elif hero.map == 6:
+            hero.map = 1
+            hero.posy = 768
+        elif hero.map == 5:
+            hero.map = 4
+            hero.posy = 768
+
     if keys[pygame.K_SPACE]:
         if len(bullets) < 25:
             bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),10))
@@ -127,39 +177,5 @@ while run:
 
     redraw()
 pygame.quit()
-
-# perso = pygame.image.load("perso.png").convert_alpha()
-# perso_x = 0
-# perso_y = 0
-# fenetre.blit(perso, (perso_x, perso_y))
-#
-# pygame.display.flip()
-# pygame.key.set_repeat(400,30)
-
-# continuer = 1
-# while continuer:
-#     for event in pygame.event.get():
-#         if event.type == QUIT:
-#              continuer = 0
-#         # if event.type == KEYDOWN:
-#         #     if event.key == K_DOWN:
-#         #         position_perso = position_perso.move(0,5)
-#         #     if event.key == K_RIGHT:
-#         #         position_perso = position_perso.move(5,0)
-#         #     if event.key == K_LEFT:
-#         #         position_perso = position_perso.move(-5,0)
-#         #     if event.key == K_UP:
-#         #         position_perso = position_perso.move(0,-5)
-#         # if event.type == MOUSEBUTTONDOWN:
-#         #     if event.button == 1:
-#         #         perso_x = event.pos[0]
-#         #         perso_y = event.pos[1]
-#         if event.type == MOUSEMOTION:
-#             perso_x = event.pos[0]
-#             perso_y = event.pos[1]
-#
-#     fenetre.blit(fond, (0,0))
-#     fenetre.blit(perso, (perso_x, perso_y))
-#     pygame.display.flip()
 
 
