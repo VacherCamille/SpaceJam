@@ -11,11 +11,13 @@ perso = pygame.image.load("perso.png")
 
 clock = pygame.time.Clock()
 
-x = 0
-y = 200
-vel = 5
-width = 1024
-height = 768
+map0 = "fond.png"
+map1 = "fond.png"
+map2 = "fond.png"
+map3 = "fond.png"
+map4 = "fond.png"
+map5 = "fond.png"
+map6 = "fond.png"
 
 class Joueur(object):
     def __init__(self,x,y,width,height,vel,map):
@@ -76,22 +78,26 @@ class Map(object):
         self.fond = pygame.image.load(bg)
         self.meteor = []
 
-    def draw(self):
-        fenetre.blit(fond, (0,0))
+    def draw(self,fenetre):
+        fenetre.blit(self.fond, (0,0))
 
 def redraw():
     fenetre.blit(fond, (0,0))
     hero.draw(fenetre)
+    fenetre.blit(text,(100,100))
     for bullet in bullets:
         bullet.draw(fenetre)
     pygame.display.update()
 
 hero = Joueur(100,400,30,68,30,1)
-maps = [Map(0),Map(1),Map(2),Map(3),Map(4),Map(5),Map(6)]
+maps = [Map(0,map0),Map(1,map1),Map(2,map2),Map(3,map3),Map(4,map4),Map(5,map5),Map(6,map6)]
 bullets =[]
 
 run = True
 while run:
+    font = pygame.font.Font('American_Captain.ttf', 100)
+    text = font.render(str(hero.map),True,(255,0,0))
+
     pygame.time.delay(100)
     for event in pygame.event.get():
         if event.type == QUIT:
