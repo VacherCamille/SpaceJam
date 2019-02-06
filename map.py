@@ -1,5 +1,4 @@
 import pygame
-from personnage import *
 
 from pygame.locals import *
 
