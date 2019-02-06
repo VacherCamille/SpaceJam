@@ -145,8 +145,8 @@ initialisation_jeu()
 
 # Boucle principale
 
-run = True
 while run:
+    # Indicateur
     font = pygame.font.Font('American_Captain.ttf', 100)
     text = font.render(str(hero.map),True,(255,0,0))
 
