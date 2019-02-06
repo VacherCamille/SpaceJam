@@ -1,9 +1,21 @@
 import pygame
 from pygame import *
 
+class Vaisseau:
+    def __init__(self, name):
+        self.name = name
+        self.depotItem = []
+        self.cobalt = 0
+
+    def depotItem(self, nomPiece):
+        self.depotItem.pop(nomPiece)
+
+    def depotCobalt(self, nbCobalt):
+        self.cobalt += nbCobalt
+
 
 class Joueur(object):
-    def __init__(self, x, y, width, height, vel, map):
+    def __init__(self, x, y, width, height, vel, map, vaisseau):
         # # Sprites du personnage
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -14,11 +26,13 @@ class Joueur(object):
         self.width = width
         self.height = height
         self.vel = vel
-        # self.arme = Arme()
+        self.vaisseau = vaisseau # pas de vaisseau pour le moment
         self.map = map
         self.points = 0
         self.hitbox = (self.posx, self.posy, 50, 75)
         self.perso = pygame.image.load("perso.png")
+        self.unePiece = None  # il ne peut transporter qu'une pièce
+        self.cobalt = 0 # est une quantité donc un nombre
 
     def draw(self, fenetre):
 
@@ -38,6 +52,14 @@ class Joueur(object):
 
         elif dir == "up":
             self.posy += 10
+
+    def depot(self):
+        if self.map == 0:
+            if self.unePiece != None:
+                self.vaisseau.depotItem(self.unePiece)
+            if self.cobalt > 0:
+                self.vaisseau.depotCobalt(self.cobalt)
+
 
 
 class Projectil(object):
@@ -67,9 +89,10 @@ class Monstreb:
         self.x = 0
         self.y = 0
         self.hitbox = (self.posx, self.posy, 50, 75)
+        self.skin = pygame.image.load("perso.png")
 
     def draw(self, fenetre):
-        fenetre.blit(perso, (self.x, self.y))
+        fenetre.blit(self.skin, (self.x, self.y))
         self.hitbox = (self.x, self.y, 50, 75)
         pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
@@ -82,7 +105,7 @@ class Map(object):
 
     def draw(self, fenetre):
         fenetre.blit(self.fond, (0, 0))
-        for aster in asteroides :
+        for aster in Asteroide :
             aster.draw()
 
 
