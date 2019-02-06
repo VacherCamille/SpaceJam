@@ -15,7 +15,7 @@ class Vaisseau:
 
 
 class Joueur(object):
-    def __init__(self, x, y, width, height, vel, map):
+    def __init__(self, x, y, width, height, vel, map, vaisseau):
         # # Sprites du personnage
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -33,6 +33,7 @@ class Joueur(object):
         self.perso = pygame.image.load("perso.png")
         self.unePiece = None  # il ne peut transporter qu'une pièce
         self.cobalt = 0 # est une quantité donc un nombre
+        self.vaisseau = vaisseau
 
     def draw(self, fenetre):
 
