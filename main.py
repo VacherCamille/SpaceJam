@@ -144,7 +144,6 @@ while run:
         hero.posx -= hero.vel
         lastKey = "left"
     elif keys[pygame.K_LEFT]:
-        hero.posx = 1024
         lastKey = "left"
         if hero.map == 1:
             hero.map = 0
@@ -162,12 +161,8 @@ while run:
     if keys[pygame.K_RIGHT] and hero.posx < 1024-30:
         hero.posx += hero.vel
         lastKey="right"
-
     elif keys[pygame.K_RIGHT]:
-        hero.posx = 0
         lastkey="right"
-
-    if keys[pygame.K_DOWN] and hero.posy < 768:
         if hero.map == 0:
             hero.map = 1
             hero.posx = 0
@@ -185,9 +180,7 @@ while run:
         hero.posy += hero.vel
         lastKey = "down"
     elif keys[pygame.K_DOWN]:
-        hero.posy = 0
         lastKey = "down"
-
         if hero.map == 1:
             hero.map = 6
             hero.posy = 0
@@ -205,9 +198,7 @@ while run:
         hero.posy -= hero.vel
         lastKey="up"
     elif keys[pygame.K_UP]:
-        hero.posy = 768
         lastKey="up"
-
         if hero.map == 1:
             hero.map = 2
             hero.posy = 768
