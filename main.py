@@ -17,11 +17,15 @@ def redraw():
 
 
 def initialisation_jeu():
-    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, chrono, timerTxt, imageVaisseau
+    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, timerTxt, imageVaisseau
+
     fenetre = pygame.display.set_mode((1024, 768))
+
     fond = pygame.image.load("map.png").convert()
+
     imageVaisseau = pygame.image.load("vaisseau.png")
     imageVaisseau = pygame.transform.scale(imageVaisseau, (300,200))
+
     map0 = "map.png"
     map1 = "map.png"
     map2 = "map.png"
@@ -34,7 +38,6 @@ def initialisation_jeu():
     hero = Joueur(100, 400, 30, 68, 30, 1, vassal)
 
     beginTime = pygame.time.get_ticks()
-    chrono = 180000
 
     #asteroides
     #map1
