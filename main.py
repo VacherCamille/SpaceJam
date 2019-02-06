@@ -134,6 +134,11 @@ def shoot(bullets):
         else:
             bullets.pop(bullets.index(bullet))
 
+
+################
+# MAIN PROG JEUX
+################
+
 # Instanciations
 
 initialisation_jeu()
