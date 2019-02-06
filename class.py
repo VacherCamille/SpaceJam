@@ -76,13 +76,13 @@ class Monstre:
         if d == 'gauche' :
             self.x = self.x-1
 
-        else if d == 'droite':
+        elif d == 'droite':
             self.x = self.x+1
 
-        else if d == 'haut':
+        elif d == 'haut':
             self.y = self.y+1
 
-        else
+        else:
             self.y = self.y-1
 
 
