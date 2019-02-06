@@ -1,19 +1,9 @@
 import pygame
 from pygame import *
-
 from def_class import *
-
 pygame.init()
 
-pygame.display.set_caption("Le jeux vidéale")
-
-fenetre = pygame.display.set_mode((1024,768),RESIZABLE)
-fond = pygame.image.load("fond.png").convert()
-
-clock = pygame.time.Clock()
-
-
-# ici était les classes
+# Fonctions
 
 def redraw():
     fenetre.blit(fond, (0,0))
@@ -25,8 +15,9 @@ def redraw():
 
 
 def initialisation_jeu():
-    global hero, maps, lastKey, bullets, run
-
+    global hero, maps, lastKey, bullets, run, fenetre, fond
+    fenetre = pygame.display.set_mode((1024, 768))
+    fond = pygame.image.load("fond.png").convert()
     map0 = "fond.png"
     map1 = "fond.png"
     map2 = "fond.png"
@@ -153,8 +144,10 @@ def shoot(bullets):
 
 initialisation_jeu()
 
+# Boucle principale
 
 while run:
+    # Indicateur
     font = pygame.font.Font('American_Captain.ttf', 100)
     text = font.render(str(hero.map),True,(255,0,0))
 
