@@ -116,10 +116,58 @@ class Map(object):
 
 
 class Asteroide ():
-    def __init__(self, posx, posy, composants):
+    def __init__(self, posx, posy, type):
         self.posx = posx
         self.posy = posy
-        self.composants = composants
+
+        self.grille = 5 * [0]
+        for i in range(len(self.grille)):
+            self.grille[i] = 5 * [0]
+        self.build_asteroide(type)
 
     def draw(self):
         pass
+
+    def build_asteroide(self, type):
+        if type==1 :
+            self.grille[0][2] = 1
+            self.grille[1][0] = 1
+            self.grille[1][1] = 1
+            self.grille[1][2] = 1
+            self.grille[2][1] = 1
+            self.grille[2][2] = 1
+            self.grille[2][3] = 1
+            self.grille[3][2] = 1
+            self.grille[3][2] = 1
+            self.grille[4][2] = 1
+
+            print(self.grille)
+
+        elif type ==2 :
+            self.grille[0][0] = 1
+            self.grille[0][1] = 1
+            self.grille[1][1] = 1
+            self.grille[1][2] = 1
+            self.grille[1][3] = 1
+            self.grille[2][1] = 1
+            self.grille[2][2] = 1
+            self.grille[3][1] = 1
+
+            print(self.grille)
+
+        elif type == 3 :
+            self.grille[0][1] = 1
+            self.grille[1][0] = 1
+            self.grille[1][1] = 1
+            self.grille[1][2] = 1
+            self.grille[1][3] = 1
+
+            print(self.grille)
+
+        elif type == 4 :
+            self.grille[0][0] = 1
+            self.grille[1][0] = 1
+            self.grille[1][1] = 1
+            self.grille[1][2] = 1
+            self.grille[2][1] = 1
+            self.grille[2][2] = 1
