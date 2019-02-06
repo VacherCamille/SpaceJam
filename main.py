@@ -15,8 +15,9 @@ def redraw():
 
 
 def initialisation_jeu():
-    global hero, maps, lastKey, bullets, run
-
+    global hero, maps, lastKey, bullets, run, fenetre, fond
+    fenetre = pygame.display.set_mode((1024, 768))
+    fond = pygame.image.load("fond.png").convert()
     map0 = "fond.png"
     map1 = "fond.png"
     map2 = "fond.png"
