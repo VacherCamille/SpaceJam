@@ -122,10 +122,7 @@ class Map(object):
             for i in range(len(aster.grille)) :
                 for j in range(len(aster.grille[0])):
                     self.grille[vary+i][varx+j] = aster.grille[i][j]
-
         print (self.grille)
-
-
 
 
 

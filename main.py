@@ -8,6 +8,7 @@ pygame.init()
 def redraw():
     hero.map.draw(fenetre, imageVaisseau)
     hero.draw(fenetre)
+
     fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
 
@@ -99,7 +100,7 @@ def deplacement(hero):
             hero.map.num = 6
             hero.posx = 1024
 
-    if keys[pygame.K_RIGHT] and hero.posx < 1024-30:
+    if keys[pygame.K_RIGHT] and hero.posx < 1024-50:
         hero.posx += hero.vel
         lastKey="right"
     elif keys[pygame.K_RIGHT]:
