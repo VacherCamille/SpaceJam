@@ -8,15 +8,24 @@ pygame.init()
 def redraw():
     hero.map.draw(fenetre, imageVaisseau)
     hero.draw(fenetre)
-    fenetre.blit(text,(10,10))
+    fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
+    fenetre.blit(scoreTxt, (10, 10))
+
+    #affichage sac
+    pygame.draw.rect(fenetre, (0, 255, 0), (5, 45, 150, 50))
+    fenetre.blit(itemSacTxt, (10, 50))
+    fenetre.blit(cobaltSacTxt, (10, 70))
+
     for bullet in bullets:
         bullet.draw(fenetre)
     pygame.display.update()
 
 
 def initialisation_jeu():
-    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, timerTxt, imageVaisseau
+    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, timerTxt, imageVaisseau, score, scoreTxt, itemSacTxt, cobaltSacTxt
+
+    score = 0
 
     fenetre = pygame.display.set_mode((1024, 768))
     fond = pygame.image.load("map.png").convert()
@@ -34,15 +43,14 @@ def initialisation_jeu():
 
     hero = Joueur(100, 400, 30, 68, 30, map1)
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 30, 1, vassal)
-
     beginTime = pygame.time.get_ticks()
 
     #asteroides
     #map1
     asteroides_map1 = [Asteroide(10, 10, 2), ]
 
-    maps = [Map(0, map0), Map(1, map1), Map(2, map2), Map(3, map3), Map(4, map4), Map(5, map5), Map(6, map6)]
+    maps = [Map(0, map0, []), Map(1, map1, asteroides_map1), Map(2, map2, asteroides_map1), Map(3, map3, asteroides_map1), Map(4, map4, asteroides_map1), Map(5, map5, asteroides_map1), Map(6, map6, asteroides_map1)]
+    hero = Joueur(100, 400, 30, 68, 30, maps[1], vassal)
     bullets = []
     lastKey = "right"
     run = True
@@ -167,6 +175,15 @@ while run:
         run = False
     font = pygame.font.Font('American_Captain.ttf', 50)
     timerTxt = font.render(str(min)+":"+str(seconds), True, (250, 128, 114))
+
+    # affichage score
+    font = pygame.font.Font('American_Captain.ttf', 30)
+    scoreTxt = font.render("score : "+str(score), True, (250, 128, 114))
+
+    #affichage sac
+    font = font = pygame.font.Font('American_Captain.ttf', 25)
+    cobaltSacTxt = font.render("cobalt : "+str(hero.cobalt), True, (250, 128, 114))
+    itemSacTxt = font.render("item : "+str(hero.unePiece), True, (250, 128, 114))
 
     # Indicateur (numéro de carte)
     font = pygame.font.Font('American_Captain.ttf', 50)

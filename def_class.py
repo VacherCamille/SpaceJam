@@ -15,7 +15,7 @@ class Vaisseau:
 
 
 class Joueur(object):
-    def __init__(self, x, y, width, height, vel, num, vaisseau):
+    def __init__(self, x, y, width, height, vel, map, vaisseau):
         # # Sprites du personnage
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -27,7 +27,7 @@ class Joueur(object):
         self.height = height
         self.vel = vel
         # self.arme = Arme()
-        self.map = Map(num, "map.png")
+        self.map = map
         self.points = 0
         self.hitbox = (self.posx, self.posy, 50, 75)
         self.perso = pygame.image.load("perso.png")
@@ -99,23 +99,32 @@ class Monstreb:
 
 
 class Map(object):
-    def __init__(self, num, bg):
+    def __init__(self, num, bg, asteroides):
         self.num = num
         self.fond = pygame.image.load(bg)
-        self.asteroides = []
+        self.asteroides = asteroides
+        self.grille = 38 * [0]
+        for i in range(len(self.grille)):
+            self.grille[i] = 51 * [0]
+        self.init_grille()
 
     def draw(self, fenetre, vaisseau):
         fenetre.blit(self.fond, (0, 0))
-        # for aster in asteroides :
-        #     aster.draw()
+        for aster in self.asteroides :
+            aster.draw()
         if self.num == 1:
             fenetre.blit(vaisseau, (30,320))
+
+    def init_grille(self):
+        pass
+
+
+
 
 class Asteroide ():
     def __init__(self, posx, posy, type):
         self.posx = posx
         self.posy = posy
-
         self.grille = 5 * [0]
         for i in range(len(self.grille)):
             self.grille[i] = 5 * [0]
