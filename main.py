@@ -9,7 +9,7 @@ pygame.init()
 def redraw():
     hero.map.draw(fenetre, imageVaisseau)
     hero.draw(fenetre)
-    fenetre.blit(text,(100,100))
+    fenetre.blit(text,(10,10))
     fenetre.blit(timerTxt,(512,10))
     for bullet in bullets:
         bullet.draw(fenetre)
@@ -168,8 +168,8 @@ while run:
     timerTxt = font.render(str(min)+":"+str(seconds), True, (250, 128, 114))
 
     # Indicateur (numéro de carte)
-    font = pygame.font.Font('American_Captain.ttf', 100)
-    text = font.render(str(hero.map.num),True,(255,0,0))
+    font = pygame.font.Font('American_Captain.ttf', 50)
+    text = font.render("Numero map:"+str(hero.map.num),True,(255,0,0))
 
     pygame.time.delay(100)
     for event in pygame.event.get():
