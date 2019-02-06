@@ -144,7 +144,7 @@ while run:
             hero.map = 5
             hero.posx = 0
 
-    if keys[pygame.K_DOWN] and hero.posy < 768:
+    if keys[pygame.K_DOWN] and hero.posy < 768-  hero.height:
         hero.posy += hero.vel
     elif keys[pygame.K_DOWN]:
         if hero.map == 1:
