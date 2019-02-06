@@ -53,7 +53,7 @@ class Projectil(object):
         pygame.draw.circle(fenetre, self.color, (self.posx, self.posy), self.radius)
 
 
-class Monstre:
+class Monstreb:
     def __init__(self):
         # # Sprites du monstre
         # self.droite = pygame.image.load(droite).convert_alpha()
@@ -78,7 +78,20 @@ class Map(object):
     def __init__(self, num, bg):
         self.num = num
         self.fond = pygame.image.load(bg)
-        self.meteor = []
+        self.asteroides = []
 
     def draw(self, fenetre):
         fenetre.blit(self.fond, (0, 0))
+        for aster in asteroides :
+            aster.draw()
+
+
+
+class Asteroide ():
+    def __init__(self, posx, posy, composants):
+        self.posx = posx
+        self.posy = posy
+        self.composants = composants
+
+    def draw(self):
+        pass

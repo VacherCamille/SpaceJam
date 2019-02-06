@@ -25,6 +25,8 @@ def redraw():
 
 
 def initialisation_jeu():
+    global hero, maps, lastKey, bullets, run
+
     map0 = "fond.png"
     map1 = "fond.png"
     map2 = "fond.png"
