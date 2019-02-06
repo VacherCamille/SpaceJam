@@ -1,6 +1,7 @@
 import pygame
 from pygame import *
 from def_class import *
+
 pygame.init()
 
 # Fonctions
@@ -9,13 +10,14 @@ def redraw():
     fenetre.blit(fond, (0,0))
     hero.draw(fenetre)
     fenetre.blit(text,(100,100))
+    fenetre.blit(timerTxt,(512,10))
     for bullet in bullets:
         bullet.draw(fenetre)
     pygame.display.update()
 
 
 def initialisation_jeu():
-    global hero, maps, lastKey, bullets, run, fenetre, fond
+    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, chrono, timerTxt
     fenetre = pygame.display.set_mode((1024, 768))
     fond = pygame.image.load("fond.png").convert()
     map0 = "fond.png"
@@ -28,6 +30,9 @@ def initialisation_jeu():
 
     vassal = Vaisseau("Aurora")
     hero = Joueur(100, 400, 30, 68, 30, 0, vassal)
+
+    beginTime = pygame.time.get_ticks()
+    chrono = 180000
 
     maps = [Map(0, map0), Map(1, map1), Map(2, map2), Map(3, map3), Map(4, map4), Map(5, map5), Map(6, map6)]
     bullets = []
@@ -147,7 +152,16 @@ initialisation_jeu()
 # Boucle principale
 
 while run:
-    # Indicateur
+    #chronomètre
+    seconds = int(180 - (pygame.time.get_ticks() - beginTime)/1000)
+    min = int(seconds/60)
+    seconds = int(seconds % 60)
+    if seconds == 0 and min == 0:
+        run = False
+    font = pygame.font.Font('American_Captain.ttf', 50)
+    timerTxt = font.render(str(min)+":"+str(seconds), True, (250, 128, 114))
+
+    # Indicateur (numéro de carte)
     font = pygame.font.Font('American_Captain.ttf', 100)
     text = font.render(str(hero.map),True,(255,0,0))
 
