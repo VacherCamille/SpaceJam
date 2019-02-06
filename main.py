@@ -194,7 +194,11 @@ while run:
     if seconds == 0 and min == 0:
         run = False
     font = pygame.font.Font('American_Captain.ttf', 50)
-    timerTxt = font.render(str(min)+":"+str(seconds), True, (250, 128, 114))
+
+    if seconds<10:
+        timerTxt = font.render(str(min) + ":0" + str(seconds), True, (250, 128, 114))
+    else:
+        timerTxt = font.render(str(min)+":"+str(seconds), True, (250, 128, 114))
 
     # Indicateur (numéro de carte)
     font = pygame.font.Font('American_Captain.ttf', 50)
