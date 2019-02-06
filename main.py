@@ -24,7 +24,7 @@ def redraw():
     cobaltSacTxt = font.render("cobalt : " + str(hero.cobalt), True, (250, 128, 114))
     itemSacTxt = font.render("item : " + str(hero.unePiece), True, (250, 128, 114))
 
-    pygame.draw.rect(fenetre, (97, 78, 26), (5, 45, 150, 75))
+    pygame.draw.rect(fenetre, (115, 194, 251), (5, 45, 150, 75))
     fenetre.blit(sacTxt, (60, 50))
     fenetre.blit(itemSacTxt, (10, 75))
     fenetre.blit(cobaltSacTxt, (10, 95))
@@ -37,7 +37,7 @@ def redraw():
         itemVaisseauTxt = font.render("item : " + str(hero.vaisseau.items), True, (250, 128, 114))
         cobaltVaisseauTxt = font.render("cobalt : " + str(hero.vaisseau.cobalt), True, (250, 128, 114))
 
-        pygame.draw.rect(fenetre, (97, 78, 26), (5, 125, 150, 75))
+        pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75))
         fenetre.blit(vaisseauTxt, (60, 130))
         fenetre.blit(itemVaisseauTxt, (10, 155))
         fenetre.blit(cobaltVaisseauTxt, (10, 175))
