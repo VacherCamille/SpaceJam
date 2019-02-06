@@ -28,13 +28,14 @@ def initialisation_jeu():
     map5 = "map.png"
     map6 = "map.png"
 
-    hero = Joueur(100, 400, 30, 68, 30, 1)
+
 
     #asteroides
     #map1
     asteroides_map1 = [Asteroide(10, 10, 2)]
 
-    maps = [Map(0, map0), Map(1, map1), Map(2, map2), Map(3, map3), Map(4, map4), Map(5, map5), Map(6, map6)]
+    maps = [Map(0, map0, []), Map(1, map1, asteroides_map1), Map(2, map2, asteroides_map1), Map(3, map3, asteroides_map1), Map(4, map4, asteroides_map1), Map(5, map5, asteroides_map1), Map(6, map6, asteroides_map1)]
+    hero = Joueur(100, 400, 30, 68, 30, maps[1])
     bullets = []
     lastKey = "right"
     run = True
