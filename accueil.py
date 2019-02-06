@@ -1,6 +1,8 @@
 import pygame
 from pygame import *
 
+from main import *
+
 pygame.init()
 fenetre = pygame.display.set_mode((1024,768))
 
@@ -53,6 +55,7 @@ while (running):
             x, y = event.pos
             if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
                 print('start')
+                game()
 
             if credits.get_rect(topleft=(390,350)).collidepoint(x, y):
                 print('crédits')
