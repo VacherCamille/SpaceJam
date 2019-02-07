@@ -42,7 +42,7 @@ class Joueur(object):
 
         fenetre.blit(self.perso, (self.posx-15, self.posy))
         self.hitbox = (self.posx, self.posy, 30, 75)
-        pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
+        #pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
     def recul(self, dir):
         if dir == "right":
@@ -178,7 +178,7 @@ class Monstre(object):
     def draw(self, fenetre):
         fenetre.blit(self.skin, (self.x, self.y))
         self.hitbox = (self.x, self.y, 50, 75)
-        pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
+        #pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
 
 
