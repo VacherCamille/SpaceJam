@@ -187,7 +187,7 @@ def initialisation_jeu():
 
 
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 10, map1, vassal)
+    hero = Joueur(100, 400, 30, 68, 7, map1, vassal)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
@@ -477,6 +477,7 @@ def game():
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
                                          (120, 154, 66), 45, lastKey))
                 hero.recul(lastKey)
+
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
             print("up-right")
             if len(bullets) < 25:
