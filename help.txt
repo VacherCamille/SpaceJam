@@ -5,9 +5,10 @@ Utiliser   "f"   pour deposer les objets dans le vaisseau
 
                     credit
 Equipe Space Jam :
+    - Tom PLAGNAT (graphiste)
     - Camille VACHIER
     - Mamoune BELLATIF
     - Florian DUBUIS
     - Teva GEITNER
     - Dorian BARET
-pour le developpement du jeux Space Walker
+pour le developpement du jeux << Space Walker >>
