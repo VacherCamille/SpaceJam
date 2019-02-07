@@ -54,20 +54,28 @@ def redraw():
     pygame.display.flip()
 
 def drawHScore():
+    global sortir
     # image de fond
     fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0, 0))
 
     pygame.display.set_caption('Menu Start : Hightscore')
+
+    # affichage du bouton quiter
+    sortir = pygame.image.load("bouton2.png").convert()
+    fenetre.blit(sortir, (825, 650))
+    fenetre.blit(font.render("sortir", True, (0, 0, 0)), (860, 670))
+
     fichier_score = open("score.txt", "r")
     n = 0
-    print("fichier ouvert")
     for line in fichier_score:
         n += 1
         line_split = line.split("|")
-        lineToScreen = str(n) + "  |  "+line_split[0]+" : "+line_split[1]
-        print(lineToScreen)
-        fenetre.blit(font.render(lineToScreen, True, (250, 128, 114)), (200, 80 + (20*n)))
+        lineToScreen = line_split[0]+" : "+line_split[1]
+        fenetre.blit(font.render(str(n), True, (250, 128, 114)), (200, 20 + (60*n)))
+        fenetre.blit(font.render("|", True, (250, 128, 114)), (230, 20 + (60 * n)))
+        fenetre.blit(font.render(lineToScreen, True, (250, 128, 114)), (250, 20 + (60*n)))
+    pygame.display.flip()
 
 
 #fin D'UNE partie du jeux
@@ -101,6 +109,7 @@ def gameover():
 score = None
 redraw()
 running = True
+accueil = True
 clickEnterName = False
 while (running):
     for event in pygame.event.get():
@@ -121,9 +130,13 @@ while (running):
                 print('crédits')
 
             if hscores.get_rect(topleft=(390,500)).collidepoint(x, y):
+                accueil = False
                 drawHScore()
 
-            if quiter.get_rect(topleft=(825,650)).collidepoint(x, y):
+            if sortir.get_rect(topleft=(825,650)).collidepoint(x, y) and not accueil:
+                redraw()
+                accueil = True
+            elif quiter.get_rect(topleft=(825,650)).collidepoint(x, y) and accueil:
                 running = False
 
             if nameTxt.collidepoint(x, y):
