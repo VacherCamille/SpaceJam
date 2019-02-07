@@ -7,6 +7,7 @@ pygame.init()
 
 def redraw():
     #print(hero.posx, hero.posy)
+    print(hero.map.num, hero.posx, hero.posy)
     hero.map.draw(fenetre, hero.map.bordure)
     hero.draw(fenetre)
     if not (hero.colision()):
@@ -92,7 +93,7 @@ def initialisation_jeu():
     map6 = Map(6, "images/map6.png", asteroides_map6, cobalt_map6, piece_map6)
 
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 5, map1, vassal)
+    hero = Joueur(100, 400, 30, 68, 10, map1, vassal)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
@@ -172,7 +173,64 @@ def rebond_ressort(keys):
         hero.applique_mouvements()
 
 
-
+# def controlMap(map):
+#     if map == 0:
+#         if hero.posx > 1024:
+#             hero.map = map1
+#             hero.posx = 310
+#     elif map == 1:
+#         if hero.posx >= 280 and hero.posx <= 340 and hero.posy <= 340 and hero.posy >= 310:
+#             hero.map = map0
+#             hero.posx = 0
+#         elif hero.posx > 1024:
+#             hero.map = map4
+#             hero.posx = 0
+#         elif hero.posy < 0:
+#             hero.map = map2
+#             hero.posy = 728
+#         elif hero.posy > 728:
+#             hero.map = map6
+#             hero.posy = 0
+#     elif map == 2:
+#         if hero.posx > 1024:
+#             hero.map = map3
+#             hero.posx = 0
+#         elif hero.posy > 768:
+#             hero.map = map4
+#             hero.posy = 0
+#     elif map == 3:
+#         if hero.posx < 0:
+#             hero.map = map2
+#             hero.posx = 1024
+#         elif hero.posy > 768:
+#             hero.map = map4
+#             hero.posy = 0
+#     elif map == 4:
+#         if hero.posx < 0:
+#             hero.map = map1
+#             hero.posx = 1024
+#         elif hero.posy > 768:
+#             hero.map = map5
+#             hero.posy = 0
+#         elif hero.posy < 0:
+#             hero.map = map3
+#             hero.posy = 768
+#     elif map == 5:
+#         if hero.posx < 0:
+#             hero.map = map6
+#             hero.posx = 1024
+#         elif hero.posy < 0:
+#             hero.map = map4
+#             hero.posy = 768
+#     else:
+#         if hero.posx > 1024:
+#             hero.map = map5
+#             hero.posx = 0
+#         elif hero.posy < 0:
+#             hero.map = map1
+#             hero.posy = 768
+#
+#     redraw()
 
 ################
 # MAIN PROG JEUX
@@ -219,6 +277,28 @@ def game():
         shoot(bullets)
         keys = pygame.key.get_pressed()
         # definition des changement de maps
+
+        # Code pour fonction controlMap -> marche pas
+        # if keys[pygame.K_LEFT]:
+        #     hero.mouvement_horizontal(-hero.vel)
+        #     lastKey = "left"
+        #     controlMap(hero.map)
+        #
+        # if keys[pygame.K_RIGHT]:
+        #     hero.mouvement_horizontal(+hero.vel)
+        #     lastKey = "right"
+        #     controlMap(hero.map)
+        #
+        # if keys[pygame.K_UP]:
+        #     hero.mouvement_vertical(-hero.vel)
+        #     lastKey = "up"
+        #     controlMap(hero.map)
+        #
+        # if keys[pygame.K_DOWN]:
+        #     hero.mouvement_vertical(+hero.vel)
+        #     lastKey = "down"
+        #     controlMap(hero.map)
+
         if keys[pygame.K_LEFT] and hero.map.num == 1:
             if hero.posx >= 280 and hero.posx <= 340 and hero.posy <= 340 and hero.posy >= 310:
                 hero.map = map0
