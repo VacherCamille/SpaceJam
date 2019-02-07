@@ -2,7 +2,7 @@
 Utiliser les   fleches directionnel   pour vous diriger
 Utiliser   "ctrl"   pour tirer
 Utiliser   "x"   pour deposer et recuperer les objets
-Utiliser   "w"   pour utiliser les ressors et ce propulser d'une meteorite
+Utiliser   "w"   pour utiliser les ressors et se propulser d'une meteorite
 
                     credit
 Equipe Space Jam :
