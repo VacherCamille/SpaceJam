@@ -232,7 +232,7 @@ def game():
         font = pygame.font.Font('American_Captain.ttf', 50)
         text = font.render("Numero map:"+str(hero.map.num),True,(255,0,0))
 
-        pygame.time.delay(100)
+        pygame.time.delay(15)
         for event in pygame.event.get():
             if event.type == QUIT:
                 run = False
