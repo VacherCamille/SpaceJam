@@ -3,6 +3,9 @@ from pygame import *
 
 from main import *
 
+import operator
+from operator import itemgetter
+
 pygame.init()
 fenetre = pygame.display.set_mode((1024,768))
 
@@ -52,6 +55,29 @@ def redraw():
 
 #fin D'UNE partie du jeux
 def gameover():
+    fichier_score = open("score.txt", "r")
+    n = 0
+    tab_score = []
+    for line in fichier_score:
+        n += 1
+        line_split = line.split("|")
+        line_split[1] = int(line_split[1].split("\n")[0])
+        tab_score.append(line_split)
+
+    tab_score = sorted(tab_score, key=itemgetter(1), reverse=True)
+    for val in tab_score:
+        if val[1]<score:
+            tab_score.insert(tab_score.index(val), [input_text,str(score)])
+            break
+
+    if len(tab_score) >10:
+        tab_score.pop()
+
+    fichier_score = open("score.txt", "w")
+    for val in tab_score:
+        fichier_score.write(val[0]+"|"+str(val[1])+"\n")
+
+    fichier_score.close()
     fenetre = pygame.display.set_mode((1024, 768))
     redraw()
 
@@ -81,7 +107,6 @@ while (running):
                 print('hscores')
 
             if quiter.get_rect(topleft=(825,650)).collidepoint(x, y):
-                print('quitter')
                 running = False
 
             if nameTxt.collidepoint(x, y):

@@ -1,5 +1,6 @@
 import pygame
 from pygame import *
+
 from def_class import *
 
 # Fonctions
