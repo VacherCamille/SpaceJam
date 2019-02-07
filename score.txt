@@ -1,10 +1,1 @@
 dorian|12000
-test2|44
-sqddqfst|39
-sqddqfst|36
-sqddqfst|31
-sqddqfst|31
-sqddqfst|30
-sqddqfst|28
-test|21
-dorian|16
