@@ -189,19 +189,19 @@ def initialisation_jeu():
         elif typeAlien == 3:
             alien_map6.append(MonstreTireur(xAliens[i], yAliens[i]))
 
-    cobalt_map1 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map1 = [Ressource(600, 500, 13), Ressource(650, 130, 13)]
     cobalt_map2 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
-    cobalt_map3 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map3 = [Ressource(600, 500, 13), Ressource(200, 100, 13)]
     cobalt_map4 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
-    cobalt_map5 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
-    cobalt_map6 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map5 = [Ressource(100, 700, 13), Ressource(700, 100, 13)]
+    cobalt_map6 = [Ressource(150, 650, 13), Ressource(700, 100, 13)]
 
-    piece_map1 = [Piece("cle", 500, 500, 30)]
-    piece_map2 = [Piece("durite", 500, 500, 30)]
-    piece_map3 = [Piece("ecrou", 500, 500, 30)]
+    piece_map1 = [Piece("cle", 100, 100, 30)]
+    piece_map2 = [Piece("durite", 100, 350, 40)]
+    piece_map3 = [Piece("ecrou", 500, 500, 20)]
     piece_map4 = [Piece("extincteur", 500, 500, 30)]
-    piece_map5 = [Piece("piston", 500, 500, 30)]
-    piece_map6 = [Piece("volant", 500, 500, 30)]
+    piece_map5 = [Piece("piston", 500, 500, 70)]
+    piece_map6 = [Piece("volant", 500, 500, 50)]
 
     map0 = Map(0, "images/vaisseau_interieur.png", [], [], [], [])
     map1 = Map(1, "images/vaisseau.png", asteroides_map1, cobalt_map1, piece_map1, alien_map1)
