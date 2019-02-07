@@ -66,7 +66,7 @@ def redraw():
 def initialisation_jeu():
     global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, timerTxt, imageVaisseau, score
     global map0, map1, map2, map3, map4, map5, map6
-    global hg, hd, bg, bd
+    global hautgauche, hautdroite, basgauche, basdroite, droite, haut, bas, gauche
 
     score = 0
 
@@ -91,10 +91,14 @@ def initialisation_jeu():
     alien_map5 = []
     alien_map6 = []
 
-    hg = pygame.image.load("images/perso-haut-gauche.png")
-    bg = pygame.image.load("images/perso-bas-gauche.png")
-    hd = pygame.image.load("images/perso-haut-droit.png")
-    bd = pygame.image.load("images/perso-bas-droit.png")
+    gauche = pygame.image.load("images/perso-gauche.png")
+    basgauche = pygame.image.load("images/perso-bas-gauche.png")
+    droite = pygame.image.load("images/perso-droit.png")
+    basdroite = pygame.image.load("images/perso-bas-droit.png")
+    haut = pygame.image.load("images/perso-haut.png")
+    bas = pygame.image.load("images/perso-bas.png")
+    hautgauche = pygame.image.load("images/perso-haut-gauche.png")
+    hautdroite = pygame.image.load("images/perso-haut-droit.png")
 
     nbAliens = randint(2,5)
     xAliens = sample(range(10, 990), nbAliens)
@@ -211,7 +215,7 @@ def initialisation_jeu():
     map6.init_bordures()
 
     vassal = Vaisseau("Aurora")
-    hero = Joueur(400, 350, 30, 68, 5, map1, vassal, hd)
+    hero = Joueur(400, 350, 30, 68, 5, map1, vassal, droite)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
@@ -410,9 +414,11 @@ def game():
                 hero.posx = 1024
             elif hero.posx > 0:
                 hero.mouvement_horizontal(-hero.vel)
+                hero.perso = gauche
                 lastKey = "left"
         elif keys[pygame.K_LEFT] and hero.posx > 0:
             hero.mouvement_horizontal(-hero.vel)
+            hero.perso = gauche
             lastKey = "left"
         elif keys[pygame.K_LEFT]:
             lastKey = "left"
@@ -426,9 +432,9 @@ def game():
                 hero.map= map6
                 hero.posx = 1024
 
-
         if keys[pygame.K_RIGHT] and hero.posx < 1024-50:
             hero.mouvement_horizontal(hero.vel)
+            hero.perso = droite
             lastKey="right"
         elif keys[pygame.K_RIGHT]:
             lastKey="right"
@@ -485,9 +491,13 @@ def game():
         if keys[pygame.K_LCTRL] and not ( keys[pygame.K_UP] and keys[pygame.K_RIGHT]) and not (keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]) and not (keys[pygame.K_LEFT] and keys[pygame.K_UP]) and not (keys[pygame.K_LEFT] and keys[pygame.K_DOWN]):
             #print(lastKey)
             if lastKey == "right":
-                hero.perso = hd
+                hero.perso = droite
             elif lastKey == "left":
-                hero.perso = hg
+                hero.perso = gauche
+            elif lastKey == "up":
+                hero.perso = haut
+            elif lastKey == "down":
+                hero.perso = bas
 
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
@@ -495,7 +505,7 @@ def game():
                 hero.recul(lastKey)
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
-            hero.perso = hd
+            hero.perso = hautdroite
             print("up-right")
 
             if len(bullets) < 25:
@@ -503,21 +513,21 @@ def game():
                 hero.recul("up-right")
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
-            hero.perso = hg
+            hero.perso = hautgauche
             print("up-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "up-left"))  # vitesse 45
                 hero.recul("up-left")
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
-            hero.perso = bd
+            hero.perso = basdroite
             print("down right")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "down-right")) #vitesse 45
                 hero.recul("down-right")
 
         elif keys[pygame.K_LCTRL] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
-            hero.perso = bg
+            hero.perso = basgauche
             print("down-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
