@@ -203,7 +203,7 @@ def initialisation_jeu():
     piece_map5 = [Piece("piston", 500, 500, 30)]
     piece_map6 = [Piece("volant", 500, 500, 30)]
 
-    map0 = Map(0, "images/vaisseau.png", [], [], [], [])
+    map0 = Map(0, "images/vaisseau_interieur.png", [], [], [], [])
     map1 = Map(1, "images/vaisseau.png", asteroides_map1, cobalt_map1, piece_map1, alien_map1)
     map2 = Map(2, "images/map2.png", asteroides_map2, cobalt_map2, piece_map2, alien_map2)
     map3 = Map(3, "images/map3.png", asteroides_map3, cobalt_map3, piece_map3, alien_map3)
@@ -308,14 +308,14 @@ def interaction_item(keys):
         hero.depot()
 
 def alienLife():
-
-
+    global score
     for alien in hero.map.aliens:
         changex = randint(0, 25)
 
         if alien.pv <= 0:
             hero.map.aliens.pop(hero.map.aliens.index(alien))
-            hero.points += 100
+            print(alien.pv)
+            score += 60
 
         if changex==4:
             if alien.dirx == "plus":

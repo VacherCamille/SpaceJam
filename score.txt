@@ -1,2 +1,7 @@
 dorian|12000
+entrer votre nom|195
+entrer votre nom|180
+entrer votre nom|0
+entrer votre nom|-50
+entrer votre nom|-205
 teva|-12000

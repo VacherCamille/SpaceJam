@@ -13,4 +13,4 @@ Ainsi pour augmenter votre score, il faut ramener le plus de materiel
 que possible au vaisseau dans le temps imparti.
 
 Enfin gagner encore plus de score en tuant tous les aliens que vous
-rencontrerez.
+rencontrerez. Mais attention, s'il vous touche, vous en perdez.
