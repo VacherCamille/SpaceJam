@@ -108,7 +108,7 @@ def drawStory(img1="bouton2.png"):
     for line in fichier_credit:
         n += 1
         # 39 charactère peuvent être mis dans une ligne
-        fenetre.blit(font.render(line, True, (250, 128, 114)), (20, 20 + (n * 30)))
+        fenetre.blit(font.render(line, True, (250, 128, 114)), (20, 20 + (n * 35)))
 
     pygame.display.flip()
 
