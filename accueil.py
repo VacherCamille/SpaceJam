@@ -15,7 +15,7 @@ def redraw():
     global input_text, nameTxt, start, credits, hscores, quiter, font
 
     #image de fond
-    fond = pygame.image.load("fond.png").convert()
+    fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0,0))
 
     pygame.display.set_caption('Menu Start')

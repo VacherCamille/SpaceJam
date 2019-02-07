@@ -29,7 +29,7 @@ class Joueur(object):
         # self.arme = Arme()
         self.map = map
         self.points = 0
-        self.hitbox = (self.posx, self.posy, 50, 75)
+        self.hitbox = (self.posx -15, self.posy, 30, 75)
         self.perso = pygame.image.load("perso.png")
         self.unePiece = None  # il ne peut transporter qu'une pièce
         self.cobalt = 0 # est une quantité donc un nombre
@@ -37,8 +37,8 @@ class Joueur(object):
 
     def draw(self, fenetre):
 
-        fenetre.blit(self.perso, (self.posx, self.posy))
-        self.hitbox = (self.posx, self.posy, 50, 75)
+        fenetre.blit(self.perso, (self.posx-15, self.posy))
+        self.hitbox = (self.posx, self.posy, 30, 75)
         pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
     def recul(self, dir):
@@ -101,19 +101,20 @@ class Monstreb:
 class Map(object):
     def __init__(self, num, bg, asteroides):
         self.num = num
-        self.fond = pygame.image.load(bg)
+        self.bordure = pygame.image.load(bg)
+        self.fond = pygame.image.load("images/fond.png")
         self.asteroides = asteroides
         self.grille = 38 * [0]
         for i in range(len(self.grille)):
             self.grille[i] = 51 * [0]
         self.init_grille()
 
-    def draw(self, fenetre, vaisseau):
+    def draw(self, fenetre, bordure):
         fenetre.blit(self.fond, (0, 0))
+        fenetre.blit(pygame.transform.scale(bordure,(1024,768)), (0,0))
         for aster in self.asteroides :
             aster.draw(fenetre)
-        if self.num == 1:
-            fenetre.blit(vaisseau, (30,320))
+
 
     def init_grille(self):
         for aster in self.asteroides :
