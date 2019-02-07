@@ -66,7 +66,7 @@ def redraw(img1="bouton.png", img2="bouton.png", img3="bouton.png", img4='bouton
 
     # son menu start
     s_start = pygame.mixer.Sound("start.wav")
-    s_start.play()
+    s_start.play(1000)
 
     pygame.display.flip()
 

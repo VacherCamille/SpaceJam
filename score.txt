@@ -1,10 +1,11 @@
-dorian|12000
-entrer votre nom|2204
-entrer votre nom|1358
-entrer votre nom|1288
-entrer votre nom|832
-entrer votre nom|747
-entrer votre nom|153
+GOD|12000
+entrer votre nom|3266
+entrer votre nom|3238
+entrer votre nom|3165
+entrer votre nom|97
 entrer votre nom|93
 entrer votre nom|79
 entrer votre nom|52
+entrer votre nom|40
+entrer votre nom|39
+Kevin|0
