@@ -54,6 +54,22 @@ class Joueur(object):
         elif dir == "up":
             self.posy += 10
 
+        elif dir == "up-right":
+            self.posy += 10
+            self.posx -= 10
+
+        elif dir == "up-left":
+            self.posy += 10
+            self.posx += 10
+
+        elif dir == "down-left":
+            self.posy -= 10
+            self.posx += 10
+
+        elif dir == "down-right":
+            self.posy -= 10
+            self.posx -= 10
+
     def depot(self):
         if self.map == 0:
             if self.unePiece != None:
