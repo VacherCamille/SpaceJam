@@ -410,5 +410,5 @@ class Ressource(Object):
 class Piece(Object):
     def __init__(self, nom, x, y, point):
         super().__init__(nom, x, y)
-        self.image = "images/boulon.jpg"
+        self.image = "images/"+self.nom+".png"
         self.point = point

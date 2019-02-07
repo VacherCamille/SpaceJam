@@ -1,10 +1,2 @@
 dorian|12000
-entrer votre nom|2658
-entrer votre nom|2257
-entrer votre nom|2204
-Camille|2047
-entrer votre nom|1609
-entrer votre nom|1521
-entrer votre nom|1358
-entrer votre nom|1288
-CMAILLE|917
+teva|0

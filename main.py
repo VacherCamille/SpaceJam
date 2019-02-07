@@ -181,12 +181,12 @@ def initialisation_jeu():
     cobalt_map5 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
     cobalt_map6 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
 
-    piece_map1 = [Piece("filtre à air", 500, 500, 30)]
-    piece_map2 = [Piece("durite moteur", 500, 500, 30)]
-    piece_map3 = [Piece("generateur hydrogene", 500, 500, 30)]
-    piece_map4 = [Piece("filtre à eau", 500, 500, 30)]
-    piece_map5 = [Piece("tube incubation", 500, 500, 30)]
-    piece_map6 = [Piece("reserve helium", 500, 500, 30)]
+    piece_map1 = [Piece("cle", 500, 500, 30)]
+    piece_map2 = [Piece("durite", 500, 500, 30)]
+    piece_map3 = [Piece("ecrou", 500, 500, 30)]
+    piece_map4 = [Piece("extincteur", 500, 500, 30)]
+    piece_map5 = [Piece("piston", 500, 500, 30)]
+    piece_map6 = [Piece("volant", 500, 500, 30)]
 
     map0 = Map(0, "images/vaisseau.png", [], [], [], [])
     map1 = Map(1, "images/vaisseau.png", asteroides_map1, cobalt_map1, piece_map1, alien_map1)
