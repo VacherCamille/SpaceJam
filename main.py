@@ -6,11 +6,12 @@ from def_class import *
 pygame.init()
 
 def redraw():
+    print(hero.posx, hero.posy)
     hero.map.draw(fenetre, hero.map.bordure)
     hero.draw(fenetre)
     fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
-
+    pygame.display.set_caption('Space Walker')
 
     # affichage score
     font = pygame.font.Font('American_Captain.ttf', 30)
@@ -233,15 +234,19 @@ def game():
         shoot(bullets)
         keys = pygame.key.get_pressed()
         # definition des changement de maps
-        if keys[pygame.K_LEFT] and hero.posx > 0:
+        if keys[pygame.K_LEFT] and hero.map.num == 1:
+            if hero.posx >= 280 and hero.posx <= 340 and hero.posy <= 340 and hero.posy >= 310:
+                hero.map = map0
+                hero.posx = 1024
+            else:
+                hero.posx -= hero.vel
+                lastKey = "left"
+        elif keys[pygame.K_LEFT] and hero.posx > 0:
             hero.posx -= hero.vel
             lastKey = "left"
         elif keys[pygame.K_LEFT]:
             lastKey = "left"
-            if hero.map.num == 1:
-                hero.map = map0
-                hero.posx = 1024
-            elif hero.map.num == 3:
+            if hero.map.num == 3:
                 hero.map = map2
                 hero.posx = 1024
             elif hero.map.num == 4:
@@ -250,6 +255,7 @@ def game():
             elif hero.map.num == 5:
                 hero.map= map6
                 hero.posx = 1024
+
 
         if keys[pygame.K_RIGHT] and hero.posx < 1024-50:
             hero.posx += hero.vel

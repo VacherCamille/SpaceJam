@@ -1,8 +1,4 @@
 dorian|12000
-entrer votre nom|474
-entrer votre nom|395
-entrer votre nom|352
-entrer votre nom|291
-entrer votre nom|283
-entrer votre nom|196
+dorian|57
+dorian|42
 teva|0
