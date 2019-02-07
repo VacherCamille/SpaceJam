@@ -18,7 +18,12 @@ def redraw():
     fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0,0))
 
+    # titre
     pygame.display.set_caption('Space Walker : High')
+
+    titre = pygame.image.load("images/titre.png")
+    titre = pygame.transform.scale(titre, (800, 200))
+    fenetre.blit(titre, (140, -10))
 
     if score != None:
         font = pygame.font.Font('American_Captain.ttf', 20)
