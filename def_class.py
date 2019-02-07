@@ -189,7 +189,6 @@ class Monstre(object):
         self.skin = pygame.image.load("images/gros2.png")
         self.dirx ="plus"
         self.diry ="plus"
-        self.skin = pygame.image.load("images/gros.png")
         self.couldown = 0
         self.timeCouldown = 0
 
