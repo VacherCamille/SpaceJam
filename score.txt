@@ -1,2 +1,7 @@
 dorian|12000
+rghd|1235
+entrer votre nom|628
+entrer votre nom|222
+entrer votre nom|214
+entrer votre nom|133
 teva|0
