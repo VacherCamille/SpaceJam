@@ -293,6 +293,35 @@ def interaction_item(keys):
         score += hero.cobalt * 5
         hero.depot()
 
+def alienLife():
+
+
+    for alien in hero.map.aliens:
+        changex = randint(0, 25)
+        if changex==4:
+            if alien.dirx == "plus":
+               alien.dirx = "moins"
+            elif alien.dirx == "moins":
+               alien.dirx = "plus"
+
+        changey = randint(0, 20)
+        if changey == 2:
+            if alien.diry == "plus":
+                alien.diry = "moins"
+            elif alien.diry == "moins":
+               alien.diry = "plus"
+
+        if alien.dirx == "plus" and alien.x < 990:
+            alien.x += alien.speed
+        elif alien.dirx == "moins" and alien.x > 50:
+            alien.x -= alien.speed
+
+        if alien.diry == "plus" and alien.y < 680 :
+            alien.y += alien.speed
+        elif alien.diry == "moins" and alien.y > 50 :
+            alien.y -= alien.speed
+
+
 
 ################
 # MAIN PROG JEUX
@@ -484,19 +513,21 @@ def game():
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "up-right")) #vitesse 45
                 hero.recul("up-right")
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
-            print("down right")
-            if len(bullets) < 25:
-                bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "down-right")) #vitesse 45
-                hero.recul("down-right")
-
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
             print("up-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "up-left"))  # vitesse 45
                 hero.recul("up-left")
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
+        if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+            print("down right")
+            if len(bullets) < 25:
+                bullets.append(
+                    Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
+                              (120, 154, 66), 45, "down-right"))  # vitesse 45
+                hero.recul("down-right")
+
+        if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
             print("down-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
@@ -504,6 +535,7 @@ def game():
 
         rebond_ressort(keys)
         interaction_item(keys)
+        alienLife()
 
         redraw()
     return score

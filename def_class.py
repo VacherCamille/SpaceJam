@@ -180,13 +180,15 @@ class Monstre(object):
         # self.haut = pygame.image.load(haut).convert_alpha()
         # self.bas = pygame.image.load(bas).convert_alpha()
         self.pv = 1000
-        self.speed = 13
+        self.speed = 3
         self.degat = 100  # nombre de point qu'enlève le monstre au score du joueur
         self.distance = 150
         self.x = x
         self.y = y
         self.hitbox = (self.x, self.y, 50, 75)
         self.skin = pygame.image.load("images/gros.png")
+        self.dirx ="plus"
+        self.diry ="plus"
 
 
 
@@ -201,7 +203,7 @@ class MonstreTireur(Monstre):
      def __init__(self, x, y):
          super().__init__(x, y)
          self.pv = 200
-         self.speed = 5
+         self.speed = 2
          self.degat = 20
          self.skin = pygame.image.load("images/tireur.png")
 
@@ -209,7 +211,7 @@ class MonstreCoureur(Monstre):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.pv = 500
-        self.speed = 20
+        self.speed = 5
         self.degat = 10
         self.skin = pygame.image.load("images/coureur2.png")
         self.distance = 50
