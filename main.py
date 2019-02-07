@@ -58,6 +58,11 @@ def redraw():
 
 
     for bullet in bullets:
+        for monstre in hero.map.aliens:
+            if bullet.posx > monstre.x and bullet.posx < (monstre.x + 50) and bullet.posy > monstre.y and bullet.posy < (monstre.y + 75):
+                monstre.hit()
+                bullets.pop(bullets.index(bullet))
+
         if (bullet.colision(hero.map.grille)):
             bullets.pop(bullets.index(bullet))
         bullet.draw(fenetre)
@@ -307,6 +312,11 @@ def alienLife():
 
     for alien in hero.map.aliens:
         changex = randint(0, 25)
+
+        if alien.pv <= 0:
+            hero.map.aliens.pop(hero.map.aliens.index(alien))
+            hero.points += 100
+
         if changex==4:
             if alien.dirx == "plus":
                alien.dirx = "moins"
