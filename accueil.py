@@ -61,6 +61,11 @@ def redraw():
     aide = pygame.image.load("bouton2.png").convert()
     fenetre.blit(aide, (20, 650))
     fenetre.blit(font.render("aide", True, (0, 0, 0)), (70, 670))
+
+    # son menu start
+    s_start = pygame.mixer.Sound("start.wav")
+    s_start.play()
+
     pygame.display.flip()
 
 def drawHScore():
@@ -156,6 +161,10 @@ redraw()
 running = True
 accueil = True
 clickEnterName = False
+
+#son bouton
+ss = pygame.mixer.Sound("bouton2.wav")
+
 while (running):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -163,6 +172,8 @@ while (running):
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
             if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 print('start')
                 score = game()
                 #####pour tout fermer à la fin du jeux
@@ -172,21 +183,33 @@ while (running):
                 gameover()
                 break
             if histoire.get_rect(topleft=(390, 500)).collidepoint(x, y):
+            if help.get_rect(topleft=(390, 500)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 accueil = False
                 drawStory()
 
             if hscores.get_rect(topleft=(390,350)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 accueil = False
                 drawHScore()
 
             if aide.get_rect(topleft=(20, 650)).collidepoint(x, y):
+            if credit.get_rect(topleft=(20, 650)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 accueil = False
                 drawHelp()
 
             if sortir.get_rect(topleft=(825,650)).collidepoint(x, y) and not accueil:
+                ss.play()
+                pygame.time.delay(500)
                 redraw()
                 accueil = True
             elif quiter.get_rect(topleft=(825,650)).collidepoint(x, y) and accueil:
+                ss.play()
+                pygame.time.delay(500)
                 running = False
 
             if nameTxt.collidepoint(x, y):
