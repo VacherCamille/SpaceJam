@@ -12,7 +12,7 @@ fenetre = pygame.display.set_mode((1024,768))
 input_text = 'entrer votre nom'
 
 def redraw():
-    global input_text, nameTxt, start, credits, hscores, quiter, font, sortir
+    global input_text, nameTxt, start, help, hscores, quiter, font, sortir, credit
 
     #image de fond
     fond = pygame.image.load("images/fond.png").convert()
@@ -41,22 +41,26 @@ def redraw():
     fenetre.blit(start ,  ( 390,200))
     fenetre.blit(font.render("start", True, (250, 128, 114)), (480, 235))
 
-    #affichage du bouton crédits
-    credits = pygame.image.load("bouton.png").convert()
-    fenetre.blit(credits , ( 390,350))
-    fenetre.blit(font.render("credits", True, (250, 128, 114)), (460, 385))
-
     #affichage du bouton highscore
     hscores = pygame.image.load("bouton.png").convert()
-    fenetre.blit(hscores ,  (390, 500))
-    fenetre.blit(font.render(" highscore", True, (250, 128, 114)), (440, 535))
+    fenetre.blit(hscores ,  (390, 350))
+    fenetre.blit(font.render(" highscore", True, (250, 128, 114)), (445, 385))
 
-    #affichage du bouton quiter
+    # affichage du bouton crédits
+    help = pygame.image.load("bouton.png").convert()
+    fenetre.blit(help, (390, 500))
+    fenetre.blit(font.render("aide", True, (250, 128, 114)), (485, 535))
+
+    # affichage du bouton quiter
     sortir = pygame.image.load("bouton2.png").convert()
     quiter = pygame.image.load("bouton2.png").convert()
     fenetre.blit(quiter ,  (825, 650))
-    fenetre.blit(font.render("quitter", True, (0, 0, 0)), (860, 670))
+    fenetre.blit(font.render("quitter", True, (0, 0, 0)), (856, 670))
 
+    # affichage du bouton credit
+    credit = pygame.image.load("bouton2.png").convert()
+    fenetre.blit(credit, (20, 650))
+    fenetre.blit(font.render("credits", True, (0, 0, 0)), (50, 670))
     pygame.display.flip()
 
 def drawHScore():
@@ -83,6 +87,41 @@ def drawHScore():
         fenetre.blit(font.render(lineToScreen, True, (250, 128, 114)), (250, 20 + (60*n)))
     pygame.display.flip()
 
+def drawHelp():
+    fond = pygame.image.load("images/fond.png").convert()
+    fenetre.blit(fond, (0, 0))
+    pygame.display.set_caption('Menu Start : aide')
+
+    sortir = pygame.image.load("bouton2.png").convert()
+    fenetre.blit(sortir, (825, 650))
+    fenetre.blit(font.render("sortir", True, (0, 0, 0)), (860, 670))
+
+    fichier_credit = open("help.txt", "r")
+    n = 0
+    for line in fichier_credit:
+        n += 1
+        # 39 charactère peuvent être mis dans une ligne
+        fenetre.blit(font.render(line, True, (250, 128, 114)), (20, 20 + (n * 30)))
+
+    pygame.display.flip()
+
+def drawCredit():
+    fond = pygame.image.load("images/fond.png").convert()
+    fenetre.blit(fond, (0, 0))
+    pygame.display.set_caption('Menu Start : crédits')
+
+    sortir = pygame.image.load("bouton2.png").convert()
+    fenetre.blit(sortir, (825, 650))
+    fenetre.blit(font.render("sortir", True, (0, 0, 0)), (860, 670))
+
+    fichier_credit = open("credit.txt", "r")
+    n = 0
+    for line in fichier_credit:
+        n += 1
+        #39 charactère peuvent être mis dans une ligne
+        fenetre.blit(font.render(line, True, (250, 128, 114)), (20, 20 + (n*40)))
+
+    pygame.display.flip()
 
 #fin D'UNE partie du jeux
 def gameover():
@@ -132,12 +171,17 @@ while (running):
                 #####
                 gameover()
                 break
-            if credits.get_rect(topleft=(390,350)).collidepoint(x, y):
-                print('crédits')
+            if help.get_rect(topleft=(390, 500)).collidepoint(x, y):
+                accueil = False
+                drawHelp()
 
-            if hscores.get_rect(topleft=(390,500)).collidepoint(x, y):
+            if hscores.get_rect(topleft=(390,350)).collidepoint(x, y):
                 accueil = False
                 drawHScore()
+
+            if credit.get_rect(topleft=(20, 650)).collidepoint(x, y):
+                accueil = False
+                drawCredit()
 
             if sortir.get_rect(topleft=(825,650)).collidepoint(x, y) and not accueil:
                 redraw()
