@@ -186,7 +186,14 @@ class Asteroide ():
         self.build_asteroide(type)
 
     def draw(self, fenetre):
-        fenetre.blit(pygame.transform.scale(pygame.image.load("balle.png"),(80,80)),(self.posx,self.posy))
+        if type == 1:
+            fenetre.blit(pygame.transform.scale(pygame.image.load("images/type1.png"),(80,80)),(self.posx,self.posy))
+        elif type == 2:
+            fenetre.blit(pygame.transform.scale(pygame.image.load("images/type2.png"),(80,80)),(self.posx,self.posy))
+        elif type == 3:
+            fenetre.blit(pygame.transform.scale(pygame.image.load("images/type3.png"),(80,80)),(self.posx,self.posy))
+        else:
+            fenetre.blit(pygame.transform.scale(pygame.image.load("images/type4.png"),(80,80)),(self.posx,self.posy))
 
     def build_asteroide(self, type):
         if type==1 :
