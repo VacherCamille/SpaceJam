@@ -215,7 +215,7 @@ class MonstreCoureur(Monstre):
         self.distance = 50
 
 class Map(object):
-    def __init__(self, num, bg, asteroides, piece, ressource, aliens):
+    def __init__(self, num, bg, asteroides, pieces, ressources, aliens):
         self.num = num
         self.bordure = pygame.image.load(bg)
         self.fond = pygame.image.load("images/fond.png")
@@ -237,8 +237,6 @@ class Map(object):
         for item in self.item_a_ramasser:
             item.draw(fenetre)
 
-        for coba in self.ressources:
-            coba.draw(fenetre)
         for alien in self.aliens :
             alien.draw(fenetre)
 

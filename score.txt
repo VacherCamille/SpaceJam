@@ -1,2 +1,3 @@
 dorian|12000
+entrer votre nom|60
 teva|0
