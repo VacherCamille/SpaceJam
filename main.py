@@ -78,10 +78,10 @@ def initialisation_jeu():
 
     asteroides_map1 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(250, 630, 3), Asteroide(850, 50, 4), Asteroide(830, 620, 1)]
     asteroides_map2 = [Asteroide(220, 668, 1), Asteroide(900, 150, 2), Asteroide(100, 400, 3), Asteroide(500, 300, 4), Asteroide(800, 600, 1),Asteroide(200, 200, 2)]
-    asteroides_map3 = [Asteroide(400, 200, 1), Asteroide(650, 500, 2), Asteroide(600, 50, 3), Asteroide(80, 668, 4), Asteroide(400, 400, 1),Asteroide(300, 250, 2)]
-    asteroides_map4 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(00, 450, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map6 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map3 = [Asteroide(182, 415, 1), Asteroide(650, 500, 2), Asteroide(100, 150, 3), Asteroide(80, 668, 4), Asteroide(606, 244, 1),Asteroide(300, 250, 2)]
+    asteroides_map4 = [Asteroide(450, 350, 1), Asteroide(350, 250, 2), Asteroide(400, 550, 3), Asteroide(650, 450, 4), Asteroide(700, 200, 1),Asteroide(300, 100, 2)]
+    asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(350, 250, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2),Asteroide(750, 400, 2)]
+    asteroides_map6 = [Asteroide(100, 500, 1), Asteroide(900, 150, 2), Asteroide(400, 200, 3), Asteroide(700, 500, 4), Asteroide(250, 650, 1),Asteroide(400, 400, 2)]
 
 ## aliens
     alien_map1 = []
@@ -461,19 +461,19 @@ def game():
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "up-right")) #vitesse 45
                 hero.recul("up-right")
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
-            print("down right")
-            if len(bullets) < 25:
-                bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "down-right")) #vitesse 45
-                hero.recul("down-right")
-
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
             print("up-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "up-left"))  # vitesse 45
                 hero.recul("up-left")
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
+        if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+            print("down right")
+            if len(bullets) < 25:
+                bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "down-right")) #vitesse 45
+                hero.recul("down-right")
+
+        elif keys[pygame.K_LCTRL] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
             print("down-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
