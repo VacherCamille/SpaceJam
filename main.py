@@ -6,7 +6,7 @@ from def_class import *
 pygame.init()
 
 def redraw():
-    print(hero.posx, hero.posy)
+    #print(hero.posx, hero.posy)
     hero.map.draw(fenetre, hero.map.bordure)
     hero.draw(fenetre)
     hero.colision()
@@ -43,6 +43,8 @@ def redraw():
         fenetre.blit(cobaltVaisseauTxt, (10, 175))
 
     for bullet in bullets:
+        if (bullet.colision(hero.map.grille)):
+            bullets.pop(bullets.index(bullet))
         bullet.draw(fenetre)
     pygame.display.update()
 
@@ -124,7 +126,7 @@ def shoot(bullets):
 def game():
     global run, text, score, timerTxt
     initialisation_jeu()
-
+    lastKey = "right"
     # Boucle principale
 
     while run:
@@ -234,7 +236,7 @@ def game():
 
 
         if keys[pygame.K_LSHIFT] and not ( keys[pygame.K_UP] and keys[pygame.K_RIGHT]) and not (keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]) and not (keys[pygame.K_LEFT] and keys[pygame.K_UP]) and not (keys[pygame.K_LEFT] and keys[pygame.K_DOWN]):
-            print(lastKey)
+            #print(lastKey)
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
                                          (120, 154, 66), 45, lastKey))

@@ -125,6 +125,21 @@ class Projectil(object):
         pygame.draw.circle(fenetre, self.color, (self.posx, self.posy), self.radius)
 
 
+    def colision (self, grille):
+        varx = self.posx//20
+        vary = self.posy//20
+
+        if varx>(len(grille[0])-1):
+            varx = (len(grille[0])-1)
+        if vary>(len(grille)-1):
+            vary = (len(grille)-1)
+
+        if grille[vary][varx] == 1 :
+            return True
+        else :
+            return False
+
+
 class Monstreb:
     def __init__(self):
         # # Sprites du monstre
