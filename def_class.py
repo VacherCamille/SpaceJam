@@ -57,6 +57,22 @@ class Joueur(object):
         elif dir == "up":
             self.posy += 10
 
+        elif dir == "up-right":
+            self.posy += 10
+            self.posx -= 10
+
+        elif dir == "up-left":
+            self.posy += 10
+            self.posx += 10
+
+        elif dir == "down-left":
+            self.posy -= 10
+            self.posx += 10
+
+        elif dir == "down-right":
+            self.posy -= 10
+            self.posx -= 10
+
     def depot(self):
         if self.map == 0:
             if self.unePiece != None:
@@ -183,9 +199,17 @@ class Asteroide ():
         for i in range(len(self.grille)):
             self.grille[i] = 5 * [0]
         self.build_asteroide(type)
+        self.type = type
 
     def draw(self, fenetre):
-        fenetre.blit(pygame.transform.scale(pygame.image.load("balle.png"),(80,80)),(self.posx,self.posy))
+        if self.type == 1:
+            fenetre.blit(pygame.image.load("images/type1.png"),(self.posx,self.posy))
+        elif self.type == 2:
+            fenetre.blit(pygame.image.load("images/type2.png"), (self.posx, self.posy))
+        elif self.type == 3:
+            fenetre.blit(pygame.image.load("images/type3.png"), (self.posx, self.posy))
+        else:
+            fenetre.blit(pygame.image.load("images/type4.png"), (self.posx, self.posy))
 
     def build_asteroide(self, type):
         if type==1 :
