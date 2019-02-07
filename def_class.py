@@ -42,7 +42,7 @@ class Joueur(object):
 
         fenetre.blit(self.perso, (self.posx-15, self.posy))
         self.hitbox = (self.posx, self.posy, 30, 75)
-        pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
+        #pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
     def recul(self, dir):
         if dir == "right":
@@ -87,15 +87,11 @@ class Joueur(object):
                 self.map.item_a_ramasser.pop(numItem)
 
     def depot(self):
-        print("entrer dans depot")
         if self.map.num == 0:
-            print("map = 0")
             if self.unePiece != None:
-                print("depot de la piece")
                 self.vaisseau.depotItem(self.unePiece)
                 self.unePiece = None
             if self.cobalt > 0:
-                print("depot du cobalt")
                 self.vaisseau.depotCobalt(self.cobalt)
                 self.cobalt = 0
 
@@ -177,38 +173,56 @@ class Projectil(object):
 
 
 class Monstre(object):
-    def __init__(self, map):
+    def __init__(self, x, y):
         # # Sprites du monstre
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
         # self.haut = pygame.image.load(haut).convert_alpha()
         # self.bas = pygame.image.load(bas).convert_alpha()
-        self.pv = 100
-        self.speed = 10
-        self.degat = 1  # nombre de point qu'enlève le monstre au score du joueur
-        self.distance = 10
-        self.x = 0
-        self.y = 0
-        self.hitbox = (self.posx, self.posy, 50, 75)
-        self.skin = pygame.image.load("perso.png")
-        self.map = map
+        self.pv = 1000
+        self.speed = 13
+        self.degat = 100  # nombre de point qu'enlève le monstre au score du joueur
+        self.distance = 150
+        self.x = x
+        self.y = y
+        self.hitbox = (self.x, self.y, 50, 75)
+        self.skin = pygame.image.load("images/gros.png")
+
 
 
     def draw(self, fenetre):
         fenetre.blit(self.skin, (self.x, self.y))
         self.hitbox = (self.x, self.y, 50, 75)
-        pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
+        #pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
-    #def attack(self):
 
+
+class MonstreTireur(Monstre):
+     def __init__(self, x, y):
+         super().__init__(x, y)
+         self.pv = 200
+         self.speed = 5
+         self.degat = 20
+         self.skin = pygame.image.load("images/tireur.png")
+
+class MonstreCoureur(Monstre):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.pv = 500
+        self.speed = 20
+        self.degat = 10
+        self.skin = pygame.image.load("images/coureur2.png")
+        self.distance = 50
 
 class Map(object):
-    def __init__(self, num, bg, asteroides, pieces, ressources):
+    def __init__(self, num, bg, asteroides, piece, ressource, aliens):
         self.num = num
         self.bordure = pygame.image.load(bg)
         self.fond = pygame.image.load("images/fond.png")
         self.asteroides = asteroides
         self.grille = 38 * [0]
+        self.aliens =aliens
+
         for i in range(len(self.grille)):
             self.grille[i] = 51 * [0]
         self.init_grille()
@@ -222,6 +236,12 @@ class Map(object):
 
         for item in self.item_a_ramasser:
             item.draw(fenetre)
+
+        for coba in self.ressources:
+            coba.draw(fenetre)
+        for alien in self.aliens :
+            alien.draw(fenetre)
+
 
 
     def init_grille(self):
