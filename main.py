@@ -9,7 +9,8 @@ def redraw():
     #print(hero.posx, hero.posy)
     hero.map.draw(fenetre, hero.map.bordure)
     hero.draw(fenetre)
-    hero.colision()
+    if not (hero.colision()):
+        hero.applique_mouvements()
     fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
     pygame.display.set_caption('Space Walker')
@@ -78,7 +79,7 @@ def initialisation_jeu():
     map6 = Map(6,"images/map6.png",asteroides_map6)
 
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 7, map1, vassal)
+    hero = Joueur(100, 400, 30, 68, 5, map1, vassal)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
@@ -116,6 +117,48 @@ def shoot(bullets):
 
         else:
             bullets.pop(bullets.index(bullet))
+
+
+
+def rebond_ressort(keys):
+    if hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
+        print ("saut haut droite")
+        hero.vitessex = 17
+        hero.vitessey = -17
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
+        print ("saut haut gauche")
+        hero.vitessex = -17
+        hero.vitessey = -17
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]:
+        print ("saut bas droite")
+        hero.vitessex = 17
+        hero.vitessey = 17
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
+        print ("saut bas gauche")
+        hero.vitessex = -17
+        hero.vitessey = 17
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] :
+        print ("saut bas")
+        hero.vitessey = 25
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] :
+        print ("saut haut")
+        hero.vitessey = -25
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_RIGHT] :
+        print ("saut droite")
+        hero.vitessex = 25
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_LEFT]:
+        print ("saut gauche")
+        hero.vitessex = -25
+        hero.applique_mouvements()
+
+
 
 
 ################
@@ -265,6 +308,7 @@ def game():
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
                 hero.recul("down-left")
 
+        rebond_ressort(keys)
 
         redraw()
     return score

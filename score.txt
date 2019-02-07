@@ -1,2 +1,10 @@
 dorian|12000
+entrer votre nom|3849
+entrer votre nom|3584
+entrer votre nom|3309
+entrer votre nom|3282
+entrer votre nom|2997
+entrer votre nom|2919
+entrer votre nom|1978
+entrer votre nom|544
 teva|0

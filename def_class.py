@@ -87,6 +87,11 @@ class Joueur(object):
         vary2 = ceil((self.posy + self.height) / 20)
         coli = False
 
+        if varx2>(len(self.map.grille[0])-1):
+            varx2 = (len(self.map.grille[0])-1)
+        if vary2>(len(self.map.grille)-1):
+            vary2 = (len(self.map.grille)-1)
+
         for i in range(vary,vary2) :
             for j in range (varx, varx2):
                 if self.map.grille[i][j] == 1 :
@@ -97,19 +102,31 @@ class Joueur(object):
 
     def mouvement_horizontal(self, vel) :
         if self.vitessex != 0 :
-            vel /= 2
+            vel = vel//2
         if not(self.colision()):
             self.posx+=vel
 
 
     def mouvement_vertical(self, vel):
-        print("mouv")
+        #print("mouv")
         if self.vitessey != 0 :
-            vel /= 2
+            vel = vel//2
         if not(self.colision()):
             self.posy+=vel
-        else :
-            print("non")
+
+
+    def applique_mouvements(self):
+        self.posx += self.vitessex
+        self.posy += self.vitessey
+
+        if self.vitessex>0 :
+            self.vitessex -= 1
+        elif self.vitessex<0:
+            self.vitessex += 1
+        if self.vitessey>0 :
+            self.vitessey -= 1
+        elif self.vitessey<0:
+            self.vitessey += 1
 
 
 class Projectil(object):
