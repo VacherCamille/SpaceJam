@@ -67,7 +67,7 @@ def gameover():
     tab_score = sorted(tab_score, key=itemgetter(1), reverse=True)
     for val in tab_score:
         if val[1]<score:
-            tab_score.insert(tab_score.index(val), [input_text,str(score)])
+            tab_score.insert(tab_score.index(val), [input_text,score])
             break
 
     if len(tab_score) >10:
