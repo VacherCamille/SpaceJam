@@ -42,7 +42,7 @@ def redraw():
         font = pygame.font.Font('American_Captain.ttf', 25)
         vaisseauTxt = font.render("vaisseau", True, (250, 128, 114))
 
-        pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75 + (len(hero.vaisseau.items) * 40)))
+        pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75 + (len(hero.vaisseau.items) * 20)))
         cobaltVaisseauTxt = font.render("cobalt : " + str(hero.vaisseau.cobalt), True, (250, 128, 114))
         itemVaisseauTxt = font.render("item : ", True, (250, 128, 114))
         fenetre.blit(vaisseauTxt, (40, 130))
