@@ -210,7 +210,7 @@ def shoot(bullets):
 def game():
     global run, text, score, timerTxt
     initialisation_jeu()
-
+    lastKey="right"
     # Boucle principale
 
     while run:
