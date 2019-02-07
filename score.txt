@@ -1,5 +1,2 @@
 dorian|12000
-entrer votre nom|1078
-mamoune|43
-qhqeh|33
 teva|0

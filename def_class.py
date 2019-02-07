@@ -125,6 +125,21 @@ class Projectil(object):
         pygame.draw.circle(fenetre, self.color, (self.posx, self.posy), self.radius)
 
 
+    def colision (self, grille):
+        varx = self.posx//20
+        vary = self.posy//20
+
+        if varx>(len(grille[0])-1):
+            varx = (len(grille[0])-1)
+        if vary>(len(grille)-1):
+            vary = (len(grille)-1)
+
+        if grille[vary][varx] == 1 :
+            return True
+        else :
+            return False
+
+
 class Monstre(object):
     def __init__(self, map):
         # # Sprites du monstre
@@ -187,16 +202,17 @@ class Asteroide ():
         for i in range(len(self.grille)):
             self.grille[i] = 5 * [0]
         self.build_asteroide(type)
+        self.type = type
 
     def draw(self, fenetre):
-        if type == 1:
-            fenetre.blit(pygame.transform.scale(pygame.image.load("images/type1.png"),(80,80)),(self.posx,self.posy))
-        elif type == 2:
-            fenetre.blit(pygame.transform.scale(pygame.image.load("images/type2.png"),(80,80)),(self.posx,self.posy))
-        elif type == 3:
-            fenetre.blit(pygame.transform.scale(pygame.image.load("images/type3.png"),(80,80)),(self.posx,self.posy))
+        if self.type == 1:
+            fenetre.blit(pygame.image.load("images/type1.png"),(self.posx,self.posy))
+        elif self.type == 2:
+            fenetre.blit(pygame.image.load("images/type2.png"), (self.posx, self.posy))
+        elif self.type == 3:
+            fenetre.blit(pygame.image.load("images/type3.png"), (self.posx, self.posy))
         else:
-            fenetre.blit(pygame.transform.scale(pygame.image.load("images/type4.png"),(80,80)),(self.posx,self.posy))
+            fenetre.blit(pygame.image.load("images/type4.png"), (self.posx, self.posy))
 
     def build_asteroide(self, type):
         if type==1 :
