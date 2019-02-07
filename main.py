@@ -8,9 +8,11 @@ pygame.init()
 
 def redraw():
     #print(hero.posx, hero.posy)
+    print(hero.map.num, hero.posx, hero.posy)
     hero.map.draw(fenetre, hero.map.bordure)
     hero.draw(fenetre)
-    hero.colision()
+    if not (hero.colision()):
+        hero.applique_mouvements()
     fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
     pygame.display.set_caption('Space Walker')
@@ -154,32 +156,41 @@ def initialisation_jeu():
         typeAlien = randint(1,3)
         if typeAlien == 1:
             alien_map6.append(Monstre(xAliens[i], yAliens[i]))
-
         elif typeAlien == 2:
             alien_map6.append(MonstreCoureur(xAliens[i], yAliens[i]))
 
         elif typeAlien == 3:
             alien_map6.append(MonstreTireur(xAliens[i], yAliens[i]))
 
+    cobalt_map1 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map2 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map3 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map4 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map5 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map6 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+
+    piece_map1 = [Piece("filtre à air", 500, 500, 30)]
+    piece_map2 = [Piece("durite moteur", 500, 500, 30)]
+    piece_map3 = [Piece("generateur hydrogene", 500, 500, 30)]
+    piece_map4 = [Piece("filtre à eau", 500, 500, 30)]
+    piece_map5 = [Piece("tube incubation", 500, 500, 30)]
+    piece_map6 = [Piece("reserve helium", 500, 500, 30)]
+
+    map0 = Map(0, "images/vaisseau.png", [], [], [])
+    map1 = Map(1, "images/vaisseau.png", asteroides_map1, cobalt_map1, piece_map1, alien_map1)
+    map2 = Map(2, "images/map2.png", asteroides_map2, cobalt_map2, piece_map2, alien_map2)
+    map3 = Map(3, "images/map3.png", asteroides_map3, cobalt_map3, piece_map3, alien_map3)
+    map4 = Map(4, "images/map4.png", asteroides_map4, cobalt_map4, piece_map4, alien_map4)
+    map5 = Map(5, "images/map5.png", asteroides_map5, cobalt_map5, piece_map5, alien_map5)
+    map6 = Map(6, "images/map6.png", asteroides_map6, cobalt_map6, piece_map6, alien_map6)
 
 
-    map0 = Map(0,"images/vaisseau.png",[],[])
-    map1 = Map(1,"images/vaisseau.png",asteroides_map1, alien_map1)
-    map2 = Map(2,"images/map2.png",asteroides_map2, alien_map2)
-    map3 = Map(3,"images/map3.png",asteroides_map3, alien_map3)
-    map4 = Map(4,"images/map4.png",asteroides_map4, alien_map4)
-    map5 = Map(5,"images/map5.png",asteroides_map5, alien_map5)
-    map6 = Map(6,"images/map6.png",asteroides_map6, alien_map6)
 
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 7, map1, vassal)
+    hero = Joueur(100, 400, 30, 68, 10, map1, vassal)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
-
-
-
-
     run = True
 
 def shoot(bullets):
@@ -215,6 +226,105 @@ def shoot(bullets):
         else:
             bullets.pop(bullets.index(bullet))
 
+
+
+def rebond_ressort(keys):
+    if hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
+        print ("saut haut droite")
+        hero.vitessex = 17
+        hero.vitessey = -17
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
+        print ("saut haut gauche")
+        hero.vitessex = -17
+        hero.vitessey = -17
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]:
+        print ("saut bas droite")
+        hero.vitessex = 17
+        hero.vitessey = 17
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
+        print ("saut bas gauche")
+        hero.vitessex = -17
+        hero.vitessey = 17
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] :
+        print ("saut bas")
+        hero.vitessey = 25
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] :
+        print ("saut haut")
+        hero.vitessey = -25
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_RIGHT] :
+        print ("saut droite")
+        hero.vitessex = 25
+        hero.applique_mouvements()
+    elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_LEFT]:
+        print ("saut gauche")
+        hero.vitessex = -25
+        hero.applique_mouvements()
+
+
+# def controlMap(map):
+#     if map == 0:
+#         if hero.posx > 1024:
+#             hero.map = map1
+#             hero.posx = 310
+#     elif map == 1:
+#         if hero.posx >= 280 and hero.posx <= 340 and hero.posy <= 340 and hero.posy >= 310:
+#             hero.map = map0
+#             hero.posx = 0
+#         elif hero.posx > 1024:
+#             hero.map = map4
+#             hero.posx = 0
+#         elif hero.posy < 0:
+#             hero.map = map2
+#             hero.posy = 728
+#         elif hero.posy > 728:
+#             hero.map = map6
+#             hero.posy = 0
+#     elif map == 2:
+#         if hero.posx > 1024:
+#             hero.map = map3
+#             hero.posx = 0
+#         elif hero.posy > 768:
+#             hero.map = map4
+#             hero.posy = 0
+#     elif map == 3:
+#         if hero.posx < 0:
+#             hero.map = map2
+#             hero.posx = 1024
+#         elif hero.posy > 768:
+#             hero.map = map4
+#             hero.posy = 0
+#     elif map == 4:
+#         if hero.posx < 0:
+#             hero.map = map1
+#             hero.posx = 1024
+#         elif hero.posy > 768:
+#             hero.map = map5
+#             hero.posy = 0
+#         elif hero.posy < 0:
+#             hero.map = map3
+#             hero.posy = 768
+#     elif map == 5:
+#         if hero.posx < 0:
+#             hero.map = map6
+#             hero.posx = 1024
+#         elif hero.posy < 0:
+#             hero.map = map4
+#             hero.posy = 768
+#     else:
+#         if hero.posx > 1024:
+#             hero.map = map5
+#             hero.posx = 0
+#         elif hero.posy < 0:
+#             hero.map = map1
+#             hero.posy = 768
+#
+#     redraw()
 
 ################
 # MAIN PROG JEUX
@@ -261,6 +371,28 @@ def game():
         shoot(bullets)
         keys = pygame.key.get_pressed()
         # definition des changement de maps
+
+        # Code pour fonction controlMap -> marche pas
+        # if keys[pygame.K_LEFT]:
+        #     hero.mouvement_horizontal(-hero.vel)
+        #     lastKey = "left"
+        #     controlMap(hero.map)
+        #
+        # if keys[pygame.K_RIGHT]:
+        #     hero.mouvement_horizontal(+hero.vel)
+        #     lastKey = "right"
+        #     controlMap(hero.map)
+        #
+        # if keys[pygame.K_UP]:
+        #     hero.mouvement_vertical(-hero.vel)
+        #     lastKey = "up"
+        #     controlMap(hero.map)
+        #
+        # if keys[pygame.K_DOWN]:
+        #     hero.mouvement_vertical(+hero.vel)
+        #     lastKey = "down"
+        #     controlMap(hero.map)
+
         if keys[pygame.K_LEFT] and hero.map.num == 1:
             if hero.posx >= 280 and hero.posx <= 340 and hero.posy <= 340 and hero.posy >= 310:
                 hero.map = map0
@@ -369,6 +501,7 @@ def game():
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
                 hero.recul("down-left")
 
+        rebond_ressort(keys)
 
         redraw()
     return score
