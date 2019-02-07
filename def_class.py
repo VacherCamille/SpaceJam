@@ -181,7 +181,7 @@ class Monstre(object):
         # self.bas = pygame.image.load(bas).convert_alpha()
         self.pv = 1000
         self.speed = 3
-        self.degat = 100  # nombre de point qu'enlève le monstre au score du joueur
+        self.degat = 20  # nombre de point qu'enlève le monstre au score du joueur
         self.distance = 150
         self.x = x
         self.y = y
@@ -189,6 +189,8 @@ class Monstre(object):
         self.skin = pygame.image.load("images/gros2.png")
         self.dirx ="plus"
         self.diry ="plus"
+        self.couldown = 0
+        self.timeCouldown = 0
 
 
 
@@ -204,7 +206,7 @@ class MonstreTireur(Monstre):
          super().__init__(x, y)
          self.pv = 200
          self.speed = 2
-         self.degat = 20
+         self.degat = 10
          self.skin = pygame.image.load("images/tireur2.png")
 
 class MonstreCoureur(Monstre):
@@ -212,7 +214,7 @@ class MonstreCoureur(Monstre):
         super().__init__(x, y)
         self.pv = 500
         self.speed = 5
-        self.degat = 10
+        self.degat = 5
         self.skin = pygame.image.load("images/coureur2.png")
         self.distance = 50
 
@@ -223,7 +225,7 @@ class Map(object):
         self.fond = pygame.image.load("images/fond.png")
         self.asteroides = asteroides
         self.grille = 39 * [0]
-        self.aliens =aliens
+        self.aliens = aliens
 
         for i in range(len(self.grille)):
             self.grille[i] = 51 * [0]
@@ -406,7 +408,7 @@ class Ressource(Object):
     def __init__(self, x, y, quantite):
         super().__init__("cobalt", x, y)
         self.quantite = quantite
-        self.image = "images/cobalt.jpg"
+        self.image = "images/minerai.png"
 
 
 class Piece(Object):

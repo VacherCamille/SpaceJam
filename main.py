@@ -8,6 +8,7 @@ pygame.init()
 
 def redraw():
     #print(hero.posx, hero.posy)
+    #print(hero.map.num, hero.posx, hero.posy)
     hero.map.draw(fenetre, hero.map.bordure)
     hero.draw(fenetre)
     if not (hero.colision()):
@@ -330,6 +331,42 @@ def alienLife():
             alien.y -= alien.speed
 
 
+def colision_monstre():
+    global score, couldownMonstre
+    for alien in hero.map.aliens:
+        if alien.couldown == 0:
+            class_split1 = str(type(alien)).split("'")[1]
+            class_split = class_split1.split(".")[1]
+            if class_split=="MonstreCoureur":
+                if alien.x-28< hero.posx <alien.x+28 and alien.y-28< hero.posy <alien.y+28: # donnée basé sur la tailler des images
+                    score -= alien.degat
+                    alien.couldown = 20
+                    alien.timeCouldown = pygame.time.get_ticks()
+                    print(str(alien.couldown)+ " " + str(alien.timeCouldown))
+            elif class_split=="MonstreTireur":
+                if alien.x - 42 < hero.posx < alien.x + 42 and alien.y - 37 < hero.posy < alien.y + 37: # donnée basé sur la tailler des images
+                    score -= alien.degat
+                    alien.couldown = 20
+                    alien.timeCouldown = pygame.time.get_ticks()
+                    print(str(alien.couldown) + " " + str(alien.timeCouldown))
+            elif class_split=="Monstre":
+                x1 = alien.x - 76
+                x2 = alien.x + 76
+                y1 = alien.y - 59
+                y2 = alien.y + 59
+                if x1 < hero.posx < x2 and y1 < hero.posy < y2: # donnée basé sur la tailler des images
+                    score -= alien.degat
+                    alien.couldown = 20
+                    alien.timeCouldown = pygame.time.get_ticks()
+                    print(str(alien.couldown) + " " + str(alien.timeCouldown))
+        else:
+            alien.couldown = alien.couldown - int((pygame.time.get_ticks()-alien.timeCouldown)/1000)
+            if alien.couldown<=0:
+                alien.couldown = 0
+                alien.timeCouldown = 0
+
+
+
 
 ################
 # MAIN PROG JEUX
@@ -536,6 +573,8 @@ def game():
         rebond_ressort(keys)
         interaction_item(keys)
         alienLife()
+
+        colision_monstre()
 
         redraw()
     return score
