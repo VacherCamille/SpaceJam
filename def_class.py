@@ -194,7 +194,6 @@ class Map(object):
         print (self.grille)
 
 
-
 class Asteroide ():
     def __init__(self, posx, posy, type):
         self.posx = posx
@@ -252,3 +251,20 @@ class Asteroide ():
             self.grille[1][2] = 1
             self.grille[2][1] = 1
             self.grille[2][2] = 1
+
+class Object:
+    def __init__(self, nom, x, y, point):
+        self.posx = x
+        self.posy = y
+        self.points = point
+        self.nom = nom
+
+class Ressource(Object):
+    def __init__(self, x, y, point, quantite):
+        Object.__init__("cobalt", x, y, point)
+        self.quantite = quantite
+
+class Piece(Object):
+    def __init__(self, nom, x, y, point):
+        Object.__init__(nom, x, y, point)
+
