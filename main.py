@@ -1,12 +1,14 @@
 import pygame
 from pygame import *
 from def_class import *
+from random import *
 
 # Fonctions
 pygame.init()
 
 def redraw():
     #print(hero.posx, hero.posy)
+    print(hero.map.num, hero.posx, hero.posy)
     hero.map.draw(fenetre, hero.map.bordure)
     hero.draw(fenetre)
     if not (hero.colision()):
@@ -24,9 +26,13 @@ def redraw():
     font = pygame.font.Font('American_Captain.ttf', 25)
     sacTxt = font.render("sac", True, (250, 128, 114))
     cobaltSacTxt = font.render("cobalt : " + str(hero.cobalt), True, (250, 128, 114))
-    itemSacTxt = font.render("item : " + str(hero.unePiece), True, (250, 128, 114))
+    if hero.unePiece == None:
+        nom_piece = "vide"
+    else:
+        nom_piece = hero.unePiece.nom
+    itemSacTxt = font.render("piece : " + nom_piece, True, (250, 128, 114))
 
-    pygame.draw.rect(fenetre, (115, 194, 251), (5, 45, 150, 75))
+    pygame.draw.rect(fenetre, (115, 194, 251), (5, 45, 200, 75))
     fenetre.blit(sacTxt, (60, 50))
     fenetre.blit(itemSacTxt, (10, 75))
     fenetre.blit(cobaltSacTxt, (10, 95))
@@ -35,13 +41,21 @@ def redraw():
     if hero.map.num == 0:
         font = pygame.font.Font('American_Captain.ttf', 25)
         vaisseauTxt = font.render("vaisseau", True, (250, 128, 114))
-        itemVaisseauTxt = font.render("item : " + str(hero.vaisseau.items), True, (250, 128, 114))
-        cobaltVaisseauTxt = font.render("cobalt : " + str(hero.vaisseau.cobalt), True, (250, 128, 114))
 
-        pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75))
+        pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75 + (len(hero.vaisseau.items) * 20)))
+        cobaltVaisseauTxt = font.render("cobalt : " + str(hero.vaisseau.cobalt), True, (250, 128, 114))
+        itemVaisseauTxt = font.render("item : ", True, (250, 128, 114))
         fenetre.blit(vaisseauTxt, (40, 130))
-        fenetre.blit(itemVaisseauTxt, (10, 155))
-        fenetre.blit(cobaltVaisseauTxt, (10, 175))
+        fenetre.blit(itemVaisseauTxt, (10, 175))
+        fenetre.blit(cobaltVaisseauTxt, (10, 155))
+
+        n=0
+        for obj in hero.vaisseau.items:
+            n += 1
+            itemTxt = font.render("   "+obj.nom, True, (250, 128, 114))
+            fenetre.blit(itemTxt, (10, 175+(n*20)))
+
+
 
     for bullet in bullets:
         if (bullet.colision(hero.map.grille)):
@@ -63,11 +77,102 @@ def initialisation_jeu():
     imageVaisseau = pygame.transform.scale(imageVaisseau, (768,768))
 
     asteroides_map1 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(250, 630, 3), Asteroide(850, 50, 4), Asteroide(830, 620, 1)]
-    asteroides_map2 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map3 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map4 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map2 = [Asteroide(220, 668, 1), Asteroide(900, 150, 2), Asteroide(100, 400, 3), Asteroide(500, 300, 4), Asteroide(800, 600, 1),Asteroide(200, 200, 2)]
+    asteroides_map3 = [Asteroide(400, 200, 1), Asteroide(650, 500, 2), Asteroide(600, 50, 3), Asteroide(80, 668, 4), Asteroide(400, 400, 1),Asteroide(300, 250, 2)]
+    asteroides_map4 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(00, 450, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map6 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+
+## aliens
+    alien_map1 = []
+    alien_map2 = []
+    alien_map3 = []
+    alien_map4 = []
+    alien_map5 = []
+    alien_map6 = []
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map1.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map1.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map1.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map2.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map2.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map2.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map3.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map3.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map3.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map4.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map4.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map4.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map5.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map5.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map5.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map6.append(Monstre(xAliens[i], yAliens[i]))
+        elif typeAlien == 2:
+            alien_map6.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map6.append(MonstreTireur(xAliens[i], yAliens[i]))
 
     cobalt_map1 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
     cobalt_map2 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
@@ -83,13 +188,15 @@ def initialisation_jeu():
     piece_map5 = [Piece("tube incubation", 500, 500, 30)]
     piece_map6 = [Piece("reserve helium", 500, 500, 30)]
 
-    map0 = Map(0, "images/vaisseau.png", [], [], [])
-    map1 = Map(1, "images/vaisseau.png", asteroides_map1, cobalt_map1, piece_map1)
-    map2 = Map(2, "images/map2.png", asteroides_map2, cobalt_map2, piece_map2)
-    map3 = Map(3, "images/map3.png", asteroides_map3, cobalt_map3, piece_map3)
-    map4 = Map(4, "images/map4.png", asteroides_map4, cobalt_map4, piece_map4)
-    map5 = Map(5, "images/map5.png", asteroides_map5, cobalt_map5, piece_map5)
-    map6 = Map(6, "images/map6.png", asteroides_map6, cobalt_map6, piece_map6)
+    map0 = Map(0, "images/vaisseau.png", [], [], [], [])
+    map1 = Map(1, "images/vaisseau.png", asteroides_map1, cobalt_map1, piece_map1, alien_map1)
+    map2 = Map(2, "images/map2.png", asteroides_map2, cobalt_map2, piece_map2, alien_map2)
+    map3 = Map(3, "images/map3.png", asteroides_map3, cobalt_map3, piece_map3, alien_map3)
+    map4 = Map(4, "images/map4.png", asteroides_map4, cobalt_map4, piece_map4, alien_map4)
+    map5 = Map(5, "images/map5.png", asteroides_map5, cobalt_map5, piece_map5, alien_map5)
+    map6 = Map(6, "images/map6.png", asteroides_map6, cobalt_map6, piece_map6, alien_map6)
+
+
 
     map1.init_bordures()
     map2.init_bordures()
@@ -170,7 +277,20 @@ def rebond_ressort(keys):
         hero.vitessex = -25
         hero.applique_mouvements()
 
-
+def interaction_item(keys):
+    global score
+    if keys[pygame.K_x] and hero.map.num != 0:
+        numItem = 0
+        for obj in hero.map.item_a_ramasser:
+            if obj.posx-50< hero.posx<obj.posx+50 and obj.posy-50< hero.posy<obj.posy+50:
+                hero.recuperer(obj, numItem)
+                break
+            numItem += 1
+    elif keys[pygame.K_x] and hero.map.num == 0:
+        if hero.unePiece != None:
+            score += hero.unePiece.point
+        score += hero.cobalt * 5
+        hero.depot()
 
 
 ################
@@ -181,7 +301,7 @@ def rebond_ressort(keys):
 def game():
     pygame.mixer.stop()
     # son jeu
-    son = pygame.mixer.Sound("jeu.wav")
+    son = pygame.mixer.Sound("jeu2.wav")
     son.play(1000)
 
     global run, text, score, timerTxt
@@ -190,12 +310,44 @@ def game():
     # Boucle principale
 
     while run:
-        score += 1 # à enlever quand systeme de point mis en place
+        #score += 1 # à enlever quand systeme de point mis en place
+
         #chronomètre
         seconds = int(180 - (pygame.time.get_ticks() - beginTime)/1000)
         min = int(seconds/60)
         seconds = int(seconds % 60)
+        if seconds == 15 and min == 0 :
+            a = pygame.mixer.Sound("beep.wav")
+            a.play()
+
+        if seconds == 10 and min == 0 :
+            b = pygame.mixer.Sound("beep.wav")
+            b.play()
+
+        if seconds == 5 and min == 0 :
+            c = pygame.mixer.Sound("beep.wav")
+            c.play()
+
+        if seconds == 4 and min == 0 :
+            d = pygame.mixer.Sound("beep.wav")
+            d.play()
+
+        if seconds == 3 and min == 0 :
+            e = pygame.mixer.Sound("beep.wav")
+            e.play()
+
+        if seconds == 2 and min == 0 :
+            f = pygame.mixer.Sound("beep.wav")
+            f.play()
+
+        if seconds == 1 and min == 0 :
+            g = pygame.mixer.Sound("beep.wav")
+            g.play()
+
         if seconds == 0 and min == 0:
+            son.stop()
+            h = pygame.mixer.Sound("fin.wav")
+            h.play()
             run = False
         font = pygame.font.Font('American_Captain.ttf', 50)
 
@@ -302,6 +454,7 @@ def game():
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
                                          (120, 154, 66), 45, lastKey))
                 hero.recul(lastKey)
+
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
             print("up-right")
             if len(bullets) < 25:
@@ -327,6 +480,7 @@ def game():
                 hero.recul("down-left")
 
         rebond_ressort(keys)
+        interaction_item(keys)
 
         redraw()
     return score

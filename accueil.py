@@ -7,11 +7,13 @@ import operator
 from operator import itemgetter
 
 pygame.init()
+icon = pygame.image.load("icon.png")
+pygame.display.set_icon(icon)
 fenetre = pygame.display.set_mode((1024,768))
 
 input_text = 'entrer votre nom'
 
-def redraw():
+def redraw(img1="bouton.png", img2="bouton.png", img3="bouton.png", img4='bouton2.png' , img5='bouton2.png' , img6='bouton2.png' ):
     global input_text, nameTxt, start, histoire, hscores, quiter, font, sortir, aide
 
     #image de fond
@@ -37,38 +39,38 @@ def redraw():
     fenetre.blit(font.render(input_text, True, (0, 0, 0)), (390, 152))
 
     #affichage du bouton start
-    start = pygame.image.load("bouton.png").convert()
+    start = pygame.image.load(img1).convert() # start bouton img1
     fenetre.blit(start ,  ( 390,200))
     fenetre.blit(font.render("start", True, (250, 128, 114)), (480, 235))
 
     #affichage du bouton highscore
-    hscores = pygame.image.load("bouton.png").convert()
+    hscores = pygame.image.load(img2).convert() # hscores bouton img2
     fenetre.blit(hscores ,  (390, 350))
     fenetre.blit(font.render(" highscore", True, (250, 128, 114)), (445, 385))
 
     # affichage du bouton histoire
-    histoire = pygame.image.load("bouton.png").convert()
+    histoire = pygame.image.load(img3).convert() # histoire bouton img3
     fenetre.blit(histoire, (390, 500))
     fenetre.blit(font.render("histoire", True, (250, 128, 114)), (460, 535))
 
     # affichage du bouton quitter
-    sortir = pygame.image.load("bouton2.png").convert()
-    quiter = pygame.image.load("bouton2.png").convert()
+    sortir = pygame.image.load(img4).convert()# a ne pas afficher : fait expres
+    quiter = pygame.image.load(img5).convert()# quiter bouton2 img5
     fenetre.blit(quiter ,  (825, 650))
     fenetre.blit(font.render("quitter", True, (0, 0, 0)), (856, 670))
 
     # affichage du bouton aide
-    aide = pygame.image.load("bouton2.png").convert()
+    aide = pygame.image.load(img6).convert()# aide bouton2 img6
     fenetre.blit(aide, (20, 650))
     fenetre.blit(font.render("aide", True, (0, 0, 0)), (70, 670))
 
     # son menu start
     s_start = pygame.mixer.Sound("start.wav")
-    s_start.play()
+    s_start.play(1000)
 
     pygame.display.flip()
 
-def drawHScore():
+def drawHScore(img1="bouton2.png"):
     global sortir
     # image de fond
     fond = pygame.image.load("images/fond.png").convert()
@@ -76,8 +78,8 @@ def drawHScore():
 
     pygame.display.set_caption('Menu Start : Highscore')
 
-    # affichage du bouton quitter
-    sortir = pygame.image.load("bouton2.png").convert()
+    # affichage du bouton sortir
+    sortir = pygame.image.load(img1).convert()
     fenetre.blit(sortir, (825, 650))
     fenetre.blit(font.render("sortir", True, (0, 0, 0)), (860, 670))
 
@@ -92,12 +94,12 @@ def drawHScore():
         fenetre.blit(font.render(lineToScreen, True, (250, 128, 114)), (250, 20 + (60*n)))
     pygame.display.flip()
 
-def drawStory():
+def drawStory(img1="bouton2.png"):
     fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0, 0))
     pygame.display.set_caption('Menu Start : aide')
 
-    sortir = pygame.image.load("bouton2.png").convert()
+    sortir = pygame.image.load(img1).convert()
     fenetre.blit(sortir, (825, 650))
     fenetre.blit(font.render("sortir", True, (0, 0, 0)), (860, 670))
 
@@ -110,12 +112,12 @@ def drawStory():
 
     pygame.display.flip()
 
-def drawHelp():
+def drawHelp(img1="bouton2.png"):
     fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0, 0))
     pygame.display.set_caption('Menu Start : crédits')
 
-    sortir = pygame.image.load("bouton2.png").convert()
+    sortir = pygame.image.load(img1).convert()
     fenetre.blit(sortir, (825, 650))
     fenetre.blit(font.render("sortir", True, (0, 0, 0)), (860, 670))
 
@@ -160,10 +162,16 @@ score = None
 redraw()
 running = True
 accueil = True
+aideB = False
+storyB = False
+hScoreB = False
 clickEnterName = False
 
 #son bouton
-ss = pygame.mixer.Sound("bouton2.wav")
+ss = pygame.mixer.Sound("clic.wav")
+shs = pygame.mixer.Sound("bg.wav")
+shsT = pygame.mixer.Sound("hs.wav")
+sq = pygame.mixer.Sound("quit.wav")
 
 while (running):
     for event in pygame.event.get():
@@ -173,6 +181,7 @@ while (running):
             x, y = event.pos
             if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
                 ss.play()
+                redraw(img1="boutonINV.png")
                 pygame.time.delay(500)
                 print('start')
                 score = game()
@@ -184,29 +193,48 @@ while (running):
                 break
             if histoire.get_rect(topleft=(390, 500)).collidepoint(x, y):
                 ss.play()
+                redraw(img3="boutonINV.png")
                 pygame.time.delay(500)
                 accueil = False
                 drawStory()
+                storyB = True
 
             if hscores.get_rect(topleft=(390,350)).collidepoint(x, y):
-                ss.play()
+                shs.play()
+                redraw(img2="boutonINV.png")
                 pygame.time.delay(500)
+                pygame.mixer.stop()
+                shsT.play()
                 accueil = False
                 drawHScore()
+                hScoreB = True
 
             if aide.get_rect(topleft=(20, 650)).collidepoint(x, y):
                 ss.play()
+                redraw(img6="bouton2INV.png")
                 pygame.time.delay(500)
                 accueil = False
                 drawHelp()
+                aideB = True
 
             if sortir.get_rect(topleft=(825,650)).collidepoint(x, y) and not accueil:
                 ss.play()
+                if storyB == True :
+                    storyB = False
+                    drawStory(img1="bouton2INV.png")
+                if aideB == True :
+                    aideB = False
+                    drawHelp(img1="bouton2INV.png")
+                if hScoreB == True :
+                    hScoreB = False
+                    drawHScore(img1="bouton2INV.png")
                 pygame.time.delay(500)
+                shsT.stop()
                 redraw()
                 accueil = True
             elif quiter.get_rect(topleft=(825,650)).collidepoint(x, y) and accueil:
-                ss.play()
+                sq.play()
+                redraw(img5="bouton2INV.png")
                 pygame.time.delay(500)
                 running = False
 

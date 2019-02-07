@@ -9,7 +9,7 @@ class Vaisseau:
         self.cobalt = 0
 
     def depotItem(self, nomPiece):
-        self.items.pop(nomPiece)
+        self.items.append(nomPiece)
 
     def depotCobalt(self, nbCobalt):
         self.cobalt += nbCobalt
@@ -42,7 +42,7 @@ class Joueur(object):
 
         fenetre.blit(self.perso, (self.posx-15, self.posy))
         self.hitbox = (self.posx, self.posy, 30, 75)
-        pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
+        #pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
     def recul(self, dir):
         if dir == "right":
@@ -73,12 +73,27 @@ class Joueur(object):
             self.mouvement_vertical(-6)
             self.mouvement_horizontal(-6)
 
+    def recuperer(self, objet, numItem):
+        class_split1 = str(type(objet)).split("'")[1]
+        class_split = class_split1.split(".")[1]
+        if class_split=="Ressource":
+            print("l'objet est une ressource")
+            self.cobalt = self.cobalt + objet.quantite
+            self.map.item_a_ramasser.pop(numItem)
+        elif class_split=="Piece":
+            print("l'objet est une piece")
+            if self.unePiece == None:
+                self.unePiece = objet
+                self.map.item_a_ramasser.pop(numItem)
+
     def depot(self):
-        if self.map == 0:
+        if self.map.num == 0:
             if self.unePiece != None:
                 self.vaisseau.depotItem(self.unePiece)
+                self.unePiece = None
             if self.cobalt > 0:
                 self.vaisseau.depotCobalt(self.cobalt)
+                self.cobalt = 0
 
     def colision (self):
         varx = self.posx//20
@@ -158,43 +173,60 @@ class Projectil(object):
 
 
 class Monstre(object):
-    def __init__(self, map):
+    def __init__(self, x, y):
         # # Sprites du monstre
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
         # self.haut = pygame.image.load(haut).convert_alpha()
         # self.bas = pygame.image.load(bas).convert_alpha()
-        self.pv = 100
-        self.speed = 10
-        self.degat = 1  # nombre de point qu'enlève le monstre au score du joueur
-        self.distance = 10
-        self.x = 0
-        self.y = 0
-        self.hitbox = (self.posx, self.posy, 50, 75)
-        self.skin = pygame.image.load("perso.png")
-        self.map = map
+        self.pv = 1000
+        self.speed = 13
+        self.degat = 100  # nombre de point qu'enlève le monstre au score du joueur
+        self.distance = 150
+        self.x = x
+        self.y = y
+        self.hitbox = (self.x, self.y, 50, 75)
+        self.skin = pygame.image.load("images/gros.png")
+
 
 
     def draw(self, fenetre):
         fenetre.blit(self.skin, (self.x, self.y))
         self.hitbox = (self.x, self.y, 50, 75)
-        pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
+        #pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
-    #def attack(self):
 
+
+class MonstreTireur(Monstre):
+     def __init__(self, x, y):
+         super().__init__(x, y)
+         self.pv = 200
+         self.speed = 5
+         self.degat = 20
+         self.skin = pygame.image.load("images/tireur.png")
+
+class MonstreCoureur(Monstre):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.pv = 500
+        self.speed = 20
+        self.degat = 10
+        self.skin = pygame.image.load("images/coureur2.png")
+        self.distance = 50
 
 class Map(object):
-    def __init__(self, num, bg, asteroides, piece, ressource):
+    def __init__(self, num, bg, asteroides, pieces, ressources, aliens):
         self.num = num
         self.bordure = pygame.image.load(bg)
         self.fond = pygame.image.load("images/fond.png")
         self.asteroides = asteroides
         self.grille = 39 * [0]
+        self.aliens =aliens
+
         for i in range(len(self.grille)):
             self.grille[i] = 51 * [0]
         self.init_grille()
-        self.pieces = piece
-        self.ressources = ressource
+        self.item_a_ramasser = pieces + ressources
 
     def draw(self, fenetre, bordure):
         fenetre.blit(self.fond, (0, 0))
@@ -202,11 +234,13 @@ class Map(object):
         for aster in self.asteroides :
             aster.draw(fenetre)
 
-        for piece in self.pieces:
-            piece.draw(fenetre)
+        for item in self.item_a_ramasser:
+            item.draw(fenetre)
 
-        for coba in self.ressources:
-            coba.draw(fenetre)
+        for alien in self.aliens :
+            alien.draw(fenetre)
+
+
 
     def init_grille(self):
         for aster in self.asteroides :
@@ -357,10 +391,9 @@ class Asteroide ():
             self.grille[2][2] = 1
 
 class Object:
-    def __init__(self, nom, x, y, point):
+    def __init__(self, nom, x, y):
         self.posx = x
         self.posy = y
-        self.points = point
         self.nom = nom
         self.image = ''
 
@@ -369,12 +402,13 @@ class Object:
 
 class Ressource(Object):
     def __init__(self, x, y, quantite):
-        super().__init__("cobalt", x, y, (quantite*1))
+        super().__init__("cobalt", x, y)
         self.quantite = quantite
         self.image = "images/cobalt.jpg"
 
 
 class Piece(Object):
     def __init__(self, nom, x, y, point):
-        super().__init__(nom, x, y, point)
+        super().__init__(nom, x, y)
         self.image = "images/boulon.jpg"
+        self.point = point
