@@ -1,8 +1,15 @@
-Bienvenu dans le jeu Space Walker.
+                    commande
+Utiliser les   fleches directionnel   pour vous diriger
+Utiliser   "ctrl"   pour tirer
+Utiliser   "x"   pour deposer et recuperer les objets
+Utiliser   "w"   pour utiliser les ressors et ce propulser d'une meteorite
 
-Vous incarnez un astraunote qui c'est ecrase sur une meteorite.
-
-Il doit recuperer les pieces de son vaisseau dispersees dans l'espace.
-
-Malheureusement pour lui il ne lui reste que 3 minute d'oxigene dans le vaisseau.
-Ainsi il doit decuperer du cobalt pour en recreer.
+                    credit
+Equipe Space Jam :
+    - Tom PLAGNAT (graphiste)
+    - Camille VACHIER
+    - Mamoune BELLATIF
+    - Florian DUBUIS
+    - Teva GEITNER
+    - Dorian BARET
+pour le developpement du jeux << Space Walker >>

@@ -157,8 +157,8 @@ class Projectil(object):
             return False
 
 
-class Monstreb:
-    def __init__(self):
+class Monstre(object):
+    def __init__(self, map):
         # # Sprites du monstre
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -172,15 +172,19 @@ class Monstreb:
         self.y = 0
         self.hitbox = (self.posx, self.posy, 50, 75)
         self.skin = pygame.image.load("perso.png")
+        self.map = map
+
 
     def draw(self, fenetre):
         fenetre.blit(self.skin, (self.x, self.y))
         self.hitbox = (self.x, self.y, 50, 75)
         pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
+    #def attack(self):
+
 
 class Map(object):
-    def __init__(self, num, bg, asteroides):
+    def __init__(self, num, bg, asteroides, piece, ressource):
         self.num = num
         self.bordure = pygame.image.load(bg)
         self.fond = pygame.image.load("images/fond.png")
@@ -189,6 +193,8 @@ class Map(object):
         for i in range(len(self.grille)):
             self.grille[i] = 51 * [0]
         self.init_grille()
+        self.pieces = piece
+        self.ressources = ressource
 
     def draw(self, fenetre, bordure):
         fenetre.blit(self.fond, (0, 0))
@@ -196,6 +202,11 @@ class Map(object):
         for aster in self.asteroides :
             aster.draw(fenetre)
 
+        for piece in self.pieces:
+            piece.draw(fenetre)
+
+        for coba in self.ressources:
+            coba.draw(fenetre)
 
     def init_grille(self):
         for aster in self.asteroides :
@@ -205,7 +216,6 @@ class Map(object):
                 for j in range(len(aster.grille[0])):
                     self.grille[vary+i][varx+j] = aster.grille[i][j]
         print (self.grille)
-
 
 
 class Asteroide ():
@@ -265,3 +275,26 @@ class Asteroide ():
             self.grille[1][2] = 1
             self.grille[2][1] = 1
             self.grille[2][2] = 1
+
+class Object:
+    def __init__(self, nom, x, y, point):
+        self.posx = x
+        self.posy = y
+        self.points = point
+        self.nom = nom
+        self.image = ''
+
+    def draw(self, fenetre):
+        fenetre.blit(pygame.image.load(self.image), (self.posx, self.posy))
+
+class Ressource(Object):
+    def __init__(self, x, y, quantite):
+        super().__init__("cobalt", x, y, (quantite*1))
+        self.quantite = quantite
+        self.image = "images/cobalt.jpg"
+
+
+class Piece(Object):
+    def __init__(self, nom, x, y, point):
+        super().__init__(nom, x, y, point)
+        self.image = "images/boulon.jpg"

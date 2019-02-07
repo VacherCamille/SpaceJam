@@ -12,7 +12,7 @@ fenetre = pygame.display.set_mode((1024,768))
 input_text = 'entrer votre nom'
 
 def redraw():
-    global input_text, nameTxt, start, help, hscores, quiter, font, sortir, credit
+    global input_text, nameTxt, start, histoire, hscores, quiter, font, sortir, aide
 
     #image de fond
     fond = pygame.image.load("images/fond.png").convert()
@@ -46,21 +46,26 @@ def redraw():
     fenetre.blit(hscores ,  (390, 350))
     fenetre.blit(font.render(" highscore", True, (250, 128, 114)), (445, 385))
 
-    # affichage du bouton crédits
-    help = pygame.image.load("bouton.png").convert()
-    fenetre.blit(help, (390, 500))
-    fenetre.blit(font.render("aide", True, (250, 128, 114)), (485, 535))
+    # affichage du bouton histoire
+    histoire = pygame.image.load("bouton.png").convert()
+    fenetre.blit(histoire, (390, 500))
+    fenetre.blit(font.render("histoire", True, (250, 128, 114)), (460, 535))
 
-    # affichage du bouton quiter
+    # affichage du bouton quitter
     sortir = pygame.image.load("bouton2.png").convert()
     quiter = pygame.image.load("bouton2.png").convert()
     fenetre.blit(quiter ,  (825, 650))
     fenetre.blit(font.render("quitter", True, (0, 0, 0)), (856, 670))
 
-    # affichage du bouton credit
-    credit = pygame.image.load("bouton2.png").convert()
-    fenetre.blit(credit, (20, 650))
-    fenetre.blit(font.render("credits", True, (0, 0, 0)), (50, 670))
+    # affichage du bouton aide
+    aide = pygame.image.load("bouton2.png").convert()
+    fenetre.blit(aide, (20, 650))
+    fenetre.blit(font.render("aide", True, (0, 0, 0)), (70, 670))
+
+    # son menu start
+    s_start = pygame.mixer.Sound("start.wav")
+    s_start.play()
+
     pygame.display.flip()
 
 def drawHScore():
@@ -71,7 +76,7 @@ def drawHScore():
 
     pygame.display.set_caption('Menu Start : Highscore')
 
-    # affichage du bouton quiter
+    # affichage du bouton quitter
     sortir = pygame.image.load("bouton2.png").convert()
     fenetre.blit(sortir, (825, 650))
     fenetre.blit(font.render("sortir", True, (0, 0, 0)), (860, 670))
@@ -87,7 +92,7 @@ def drawHScore():
         fenetre.blit(font.render(lineToScreen, True, (250, 128, 114)), (250, 20 + (60*n)))
     pygame.display.flip()
 
-def drawHelp():
+def drawStory():
     fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0, 0))
     pygame.display.set_caption('Menu Start : aide')
@@ -96,7 +101,7 @@ def drawHelp():
     fenetre.blit(sortir, (825, 650))
     fenetre.blit(font.render("sortir", True, (0, 0, 0)), (860, 670))
 
-    fichier_credit = open("help.txt", "r")
+    fichier_credit = open("histoire.txt", "r")
     n = 0
     for line in fichier_credit:
         n += 1
@@ -105,7 +110,7 @@ def drawHelp():
 
     pygame.display.flip()
 
-def drawCredit():
+def drawHelp():
     fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0, 0))
     pygame.display.set_caption('Menu Start : crédits')
@@ -114,7 +119,7 @@ def drawCredit():
     fenetre.blit(sortir, (825, 650))
     fenetre.blit(font.render("sortir", True, (0, 0, 0)), (860, 670))
 
-    fichier_credit = open("credit.txt", "r")
+    fichier_credit = open("help.txt", "r")
     n = 0
     for line in fichier_credit:
         n += 1
@@ -156,6 +161,10 @@ redraw()
 running = True
 accueil = True
 clickEnterName = False
+
+#son bouton
+ss = pygame.mixer.Sound("bouton2.wav")
+
 while (running):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -163,6 +172,8 @@ while (running):
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
             if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 print('start')
                 score = game()
                 #####pour tout fermer à la fin du jeux
@@ -171,22 +182,32 @@ while (running):
                 #####
                 gameover()
                 break
-            if help.get_rect(topleft=(390, 500)).collidepoint(x, y):
+            if histoire.get_rect(topleft=(390, 500)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 accueil = False
-                drawHelp()
+                drawStory()
 
             if hscores.get_rect(topleft=(390,350)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 accueil = False
                 drawHScore()
 
-            if credit.get_rect(topleft=(20, 650)).collidepoint(x, y):
+            if aide.get_rect(topleft=(20, 650)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 accueil = False
-                drawCredit()
+                drawHelp()
 
             if sortir.get_rect(topleft=(825,650)).collidepoint(x, y) and not accueil:
+                ss.play()
+                pygame.time.delay(500)
                 redraw()
                 accueil = True
             elif quiter.get_rect(topleft=(825,650)).collidepoint(x, y) and accueil:
+                ss.play()
+                pygame.time.delay(500)
                 running = False
 
             if nameTxt.collidepoint(x, y):
