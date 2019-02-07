@@ -16,7 +16,7 @@ class Vaisseau:
 
 
 class Joueur(object):
-    def __init__(self, x, y, width, height, vel, map, vaisseau):
+    def __init__(self, x, y, width, height, vel, map, vaisseau, skin):
         # # Sprites du personnage
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -33,7 +33,7 @@ class Joueur(object):
         self.map = map
         self.points = 0
         self.hitbox = (self.posx -15, self.posy, 30, 75)
-        self.perso = pygame.image.load("perso.png")
+        self.perso = skin
         self.unePiece = None  # il ne peut transporter qu'une pièce
         self.cobalt = 0 # est une quantité donc un nombre
         self.vaisseau = vaisseau
@@ -180,12 +180,15 @@ class Monstre(object):
         # self.haut = pygame.image.load(haut).convert_alpha()
         # self.bas = pygame.image.load(bas).convert_alpha()
         self.pv = 1000
-        self.speed = 13
+        self.speed = 3
         self.degat = 100  # nombre de point qu'enlève le monstre au score du joueur
         self.distance = 150
         self.x = x
         self.y = y
         self.hitbox = (self.x, self.y, 50, 75)
+        self.skin = pygame.image.load("images/gros2.png")
+        self.dirx ="plus"
+        self.diry ="plus"
         self.skin = pygame.image.load("images/gros.png")
         self.couldown = 0
         self.timeCouldown = 0
@@ -203,15 +206,15 @@ class MonstreTireur(Monstre):
      def __init__(self, x, y):
          super().__init__(x, y)
          self.pv = 200
-         self.speed = 5
+         self.speed = 2
          self.degat = 20
-         self.skin = pygame.image.load("images/tireur.png")
+         self.skin = pygame.image.load("images/tireur2.png")
 
 class MonstreCoureur(Monstre):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.pv = 500
-        self.speed = 20
+        self.speed = 5
         self.degat = 10
         self.skin = pygame.image.load("images/coureur2.png")
         self.distance = 50

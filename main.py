@@ -13,7 +13,7 @@ def redraw():
     hero.draw(fenetre)
     if not (hero.colision()):
         hero.applique_mouvements()
-    fenetre.blit(text,(700,10))
+    #fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
     pygame.display.set_caption('Space Walker')
 
@@ -67,6 +67,7 @@ def redraw():
 def initialisation_jeu():
     global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, timerTxt, imageVaisseau, score
     global map0, map1, map2, map3, map4, map5, map6
+    global hg, hd, bg, bd
 
     score = 0
 
@@ -90,6 +91,11 @@ def initialisation_jeu():
     alien_map4 = []
     alien_map5 = []
     alien_map6 = []
+
+    hg = pygame.image.load("images/perso-haut-gauche.png")
+    bg = pygame.image.load("images/perso-bas-gauche.png")
+    hd = pygame.image.load("images/perso-haut-droit.png")
+    bd = pygame.image.load("images/perso-bas-droit.png")
 
     nbAliens = randint(2,5)
     xAliens = sample(range(10, 990), nbAliens)
@@ -206,7 +212,7 @@ def initialisation_jeu():
     map6.init_bordures()
 
     vassal = Vaisseau("Aurora")
-    hero = Joueur(400, 350, 30, 68, 5, map1, vassal)
+    hero = Joueur(400, 350, 30, 68, 5, map1, vassal, hd)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
@@ -291,6 +297,35 @@ def interaction_item(keys):
             score += hero.unePiece.point
         score += hero.cobalt * 5
         hero.depot()
+
+def alienLife():
+
+
+    for alien in hero.map.aliens:
+        changex = randint(0, 25)
+        if changex==4:
+            if alien.dirx == "plus":
+               alien.dirx = "moins"
+            elif alien.dirx == "moins":
+               alien.dirx = "plus"
+
+        changey = randint(0, 20)
+        if changey == 2:
+            if alien.diry == "plus":
+                alien.diry = "moins"
+            elif alien.diry == "moins":
+               alien.diry = "plus"
+
+        if alien.dirx == "plus" and alien.x < 990:
+            alien.x += alien.speed
+        elif alien.dirx == "moins" and alien.x > 50:
+            alien.x -= alien.speed
+
+        if alien.diry == "plus" and alien.y < 680 :
+            alien.y += alien.speed
+        elif alien.diry == "moins" and alien.y > 50 :
+            alien.y -= alien.speed
+
 
 def colision_monstre():
     global score, couldownMonstre
@@ -486,30 +521,40 @@ def game():
 
         if keys[pygame.K_LCTRL] and not ( keys[pygame.K_UP] and keys[pygame.K_RIGHT]) and not (keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]) and not (keys[pygame.K_LEFT] and keys[pygame.K_UP]) and not (keys[pygame.K_LEFT] and keys[pygame.K_DOWN]):
             #print(lastKey)
+            if lastKey == "right":
+                hero.perso = hd
+            elif lastKey == "left":
+                hero.perso = hg
+
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
                                          (120, 154, 66), 45, lastKey))
                 hero.recul(lastKey)
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
+            hero.perso = hd
             print("up-right")
+
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "up-right")) #vitesse 45
                 hero.recul("up-right")
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
+            hero.perso = hg
             print("up-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "up-left"))  # vitesse 45
                 hero.recul("up-left")
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+            hero.perso = bd
             print("down right")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "down-right")) #vitesse 45
                 hero.recul("down-right")
 
         elif keys[pygame.K_LCTRL] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
+            hero.perso = bg
             print("down-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
@@ -517,6 +562,7 @@ def game():
 
         rebond_ressort(keys)
         interaction_item(keys)
+        alienLife()
 
         colision_monstre()
 
