@@ -61,6 +61,11 @@ def redraw():
     credit = pygame.image.load("bouton2.png").convert()
     fenetre.blit(credit, (20, 650))
     fenetre.blit(font.render("credits", True, (0, 0, 0)), (50, 670))
+
+    # son menu start
+    s_start = pygame.mixer.Sound("start.wav")
+    s_start.play()
+
     pygame.display.flip()
 
 def drawHScore():
@@ -156,6 +161,10 @@ redraw()
 running = True
 accueil = True
 clickEnterName = False
+
+#son bouton
+ss = pygame.mixer.Sound("bouton2.wav")
+
 while (running):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -163,6 +172,8 @@ while (running):
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
             if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 print('start')
                 score = game()
                 #####pour tout fermer à la fin du jeux
@@ -172,21 +183,31 @@ while (running):
                 gameover()
                 break
             if help.get_rect(topleft=(390, 500)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 accueil = False
                 drawHelp()
 
             if hscores.get_rect(topleft=(390,350)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 accueil = False
                 drawHScore()
 
             if credit.get_rect(topleft=(20, 650)).collidepoint(x, y):
+                ss.play()
+                pygame.time.delay(500)
                 accueil = False
                 drawCredit()
 
             if sortir.get_rect(topleft=(825,650)).collidepoint(x, y) and not accueil:
+                ss.play()
+                pygame.time.delay(500)
                 redraw()
                 accueil = True
             elif quiter.get_rect(topleft=(825,650)).collidepoint(x, y) and accueil:
+                ss.play()
+                pygame.time.delay(500)
                 running = False
 
             if nameTxt.collidepoint(x, y):

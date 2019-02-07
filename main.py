@@ -124,6 +124,11 @@ def shoot(bullets):
 
 
 def game():
+    pygame.mixer.stop()
+    # son jeu
+    son = pygame.mixer.Sound("jeu.wav")
+    son.play(1000)
+
     global run, text, score, timerTxt
     initialisation_jeu()
     lastKey = "right"
