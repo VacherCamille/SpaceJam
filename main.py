@@ -26,9 +26,13 @@ def redraw():
     font = pygame.font.Font('American_Captain.ttf', 25)
     sacTxt = font.render("sac", True, (250, 128, 114))
     cobaltSacTxt = font.render("cobalt : " + str(hero.cobalt), True, (250, 128, 114))
-    itemSacTxt = font.render("item : " + str(hero.unePiece), True, (250, 128, 114))
+    if hero.unePiece == None:
+        nom_piece = "vide"
+    else:
+        nom_piece = hero.unePiece.nom
+    itemSacTxt = font.render("piece : " + nom_piece, True, (250, 128, 114))
 
-    pygame.draw.rect(fenetre, (115, 194, 251), (5, 45, 150, 75))
+    pygame.draw.rect(fenetre, (115, 194, 251), (5, 45, 200, 75))
     fenetre.blit(sacTxt, (60, 50))
     fenetre.blit(itemSacTxt, (10, 75))
     fenetre.blit(cobaltSacTxt, (10, 95))
@@ -37,13 +41,21 @@ def redraw():
     if hero.map.num == 0:
         font = pygame.font.Font('American_Captain.ttf', 25)
         vaisseauTxt = font.render("vaisseau", True, (250, 128, 114))
-        itemVaisseauTxt = font.render("item : " + str(hero.vaisseau.items), True, (250, 128, 114))
-        cobaltVaisseauTxt = font.render("cobalt : " + str(hero.vaisseau.cobalt), True, (250, 128, 114))
 
-        pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75))
+        pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75 + (len(hero.vaisseau.items) * 20)))
+        cobaltVaisseauTxt = font.render("cobalt : " + str(hero.vaisseau.cobalt), True, (250, 128, 114))
+        itemVaisseauTxt = font.render("item : ", True, (250, 128, 114))
         fenetre.blit(vaisseauTxt, (40, 130))
-        fenetre.blit(itemVaisseauTxt, (10, 155))
-        fenetre.blit(cobaltVaisseauTxt, (10, 175))
+        fenetre.blit(itemVaisseauTxt, (10, 175))
+        fenetre.blit(cobaltVaisseauTxt, (10, 155))
+
+        n=0
+        for obj in hero.vaisseau.items:
+            n += 1
+            itemTxt = font.render("   "+obj.nom, True, (250, 128, 114))
+            fenetre.blit(itemTxt, (10, 175+(n*20)))
+
+
 
     for bullet in bullets:
         if (bullet.colision(hero.map.grille)):
@@ -65,9 +77,9 @@ def initialisation_jeu():
     imageVaisseau = pygame.transform.scale(imageVaisseau, (768,768))
 
     asteroides_map1 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map2 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map3 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map4 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map2 = [Asteroide(220, 668, 1), Asteroide(900, 150, 2), Asteroide(100, 400, 3), Asteroide(500, 300, 4), Asteroide(800, 600, 1),Asteroide(200, 200, 2)]
+    asteroides_map3 = [Asteroide(400, 200, 1), Asteroide(650, 500, 2), Asteroide(600, 50, 3), Asteroide(80, 668, 4), Asteroide(400, 400, 1),Asteroide(300, 250, 2)]
+    asteroides_map4 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(00, 450, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map6 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
 
@@ -266,65 +278,21 @@ def rebond_ressort(keys):
         hero.vitessex = -25
         hero.applique_mouvements()
 
+def interaction_item(keys):
+    global score
+    if keys[pygame.K_x] and hero.map.num != 0:
+        numItem = 0
+        for obj in hero.map.item_a_ramasser:
+            if obj.posx-50< hero.posx<obj.posx+50 and obj.posy-50< hero.posy<obj.posy+50:
+                hero.recuperer(obj, numItem)
+                break
+            numItem += 1
+    elif keys[pygame.K_x] and hero.map.num == 0:
+        if hero.unePiece != None:
+            score += hero.unePiece.point
+        score += hero.cobalt * 5
+        hero.depot()
 
-# def controlMap(map):
-#     if map == 0:
-#         if hero.posx > 1024:
-#             hero.map = map1
-#             hero.posx = 310
-#     elif map == 1:
-#         if hero.posx >= 280 and hero.posx <= 340 and hero.posy <= 340 and hero.posy >= 310:
-#             hero.map = map0
-#             hero.posx = 0
-#         elif hero.posx > 1024:
-#             hero.map = map4
-#             hero.posx = 0
-#         elif hero.posy < 0:
-#             hero.map = map2
-#             hero.posy = 728
-#         elif hero.posy > 728:
-#             hero.map = map6
-#             hero.posy = 0
-#     elif map == 2:
-#         if hero.posx > 1024:
-#             hero.map = map3
-#             hero.posx = 0
-#         elif hero.posy > 768:
-#             hero.map = map4
-#             hero.posy = 0
-#     elif map == 3:
-#         if hero.posx < 0:
-#             hero.map = map2
-#             hero.posx = 1024
-#         elif hero.posy > 768:
-#             hero.map = map4
-#             hero.posy = 0
-#     elif map == 4:
-#         if hero.posx < 0:
-#             hero.map = map1
-#             hero.posx = 1024
-#         elif hero.posy > 768:
-#             hero.map = map5
-#             hero.posy = 0
-#         elif hero.posy < 0:
-#             hero.map = map3
-#             hero.posy = 768
-#     elif map == 5:
-#         if hero.posx < 0:
-#             hero.map = map6
-#             hero.posx = 1024
-#         elif hero.posy < 0:
-#             hero.map = map4
-#             hero.posy = 768
-#     else:
-#         if hero.posx > 1024:
-#             hero.map = map5
-#             hero.posx = 0
-#         elif hero.posy < 0:
-#             hero.map = map1
-#             hero.posy = 768
-#
-#     redraw()
 
 ################
 # MAIN PROG JEUX
@@ -343,12 +311,44 @@ def game():
     # Boucle principale
 
     while run:
-        score += 1 # à enlever quand systeme de point mis en place
+        #score += 1 # à enlever quand systeme de point mis en place
+
         #chronomètre
         seconds = int(180 - (pygame.time.get_ticks() - beginTime)/1000)
         min = int(seconds/60)
         seconds = int(seconds % 60)
+        if seconds == 15 and min == 0 :
+            a = pygame.mixer.Sound("beep.wav")
+            a.play()
+
+        if seconds == 10 and min == 0 :
+            b = pygame.mixer.Sound("beep.wav")
+            b.play()
+
+        if seconds == 5 and min == 0 :
+            c = pygame.mixer.Sound("beep.wav")
+            c.play()
+
+        if seconds == 4 and min == 0 :
+            d = pygame.mixer.Sound("beep.wav")
+            d.play()
+
+        if seconds == 3 and min == 0 :
+            e = pygame.mixer.Sound("beep.wav")
+            e.play()
+
+        if seconds == 2 and min == 0 :
+            f = pygame.mixer.Sound("beep.wav")
+            f.play()
+
+        if seconds == 1 and min == 0 :
+            g = pygame.mixer.Sound("beep.wav")
+            g.play()
+
         if seconds == 0 and min == 0:
+            son.stop()
+            h = pygame.mixer.Sound("fin.wav")
+            h.play()
             run = False
         font = pygame.font.Font('American_Captain.ttf', 50)
 
@@ -503,6 +503,7 @@ def game():
                 hero.recul("down-left")
 
         rebond_ressort(keys)
+        interaction_item(keys)
 
         redraw()
     return score
