@@ -156,6 +156,7 @@ def game():
         pygame.time.delay(15)
         for event in pygame.event.get():
             if event.type == QUIT:
+                pygame.mixer.stop()
                 run = False
 
 
