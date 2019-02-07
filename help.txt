@@ -1,0 +1,15 @@
+                    commande
+Utiliser les   fleches directionnel   pour vous diriger
+Utiliser   "ctrl"   pour tirer
+Utiliser   "x"   pour deposer et recuperer les objets
+Utiliser   "w"   pour utiliser les ressors et se propulser d'une meteorite
+
+                    credit
+Equipe Space Jam :
+    - Tom PLAGNAT (graphiste)
+    - Camille VACHIER
+    - Mamoune BELLATIF
+    - Florian DUBUIS
+    - Teva GEITNER
+    - Dorian BARET
+pour le developpement du jeux << Space Walker >>

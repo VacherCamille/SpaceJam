@@ -1,0 +1,8 @@
+Bienvenu dans le jeu Space Walker.
+
+Vous incarnez un astraunote qui s'est ecrase sur une meteorite.
+
+Il doit recuperer les pieces de son vaisseau dispersees dans l'espace.
+
+Malheureusement pour lui il ne lui reste que 3 minute d'oxigene dans
+le vaisseau. Ainsi il doit decuperer du cobalt pour en recreer.
