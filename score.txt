@@ -1,2 +1,2 @@
 dorian|12000
-teva|0
+teva|-12000

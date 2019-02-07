@@ -6,3 +6,11 @@ Il doit recuperer les pieces de son vaisseau dispersees dans l'espace.
 
 Malheureusement pour lui il ne lui reste que 3 minute d'oxigene dans
 le vaisseau. Ainsi il doit decuperer du cobalt pour en recreer.
+
+Vous pouvez cumuler autant de cobalt que vous voulez mais vous pouvez
+avoir qu'une seule pieces dans votre sac.
+Ainsi pour augmenter votre score, il faut ramener le plus de materiel
+que possible au vaisseau dans le temps imparti.
+
+Enfin gagner encore plus de score en tuant tous les aliens que vous
+rencontrerez.
