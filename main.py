@@ -50,7 +50,7 @@ def redraw():
 
 
 def initialisation_jeu():
-    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, timerTxt, imageVaisseau, score
+    global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, timerTxt, imageVaisseau, score, aliens
     global map0, map1, map2, map3, map4, map5, map6
 
     score = 0
@@ -82,6 +82,13 @@ def initialisation_jeu():
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
+
+    #mobs
+
+    aliens = []
+
+
+
     run = True
 
 
@@ -162,7 +169,7 @@ def initialisation_jeu():
 #             hero.map = map4
 #             hero.posy = 768
 #
-#     if keys[pygame.K_LSHIFT]:
+#     if keys[pygame.K_LCTRL]:
 #         print(lastKey)
 #         if len(bullets) < 25:
 #             bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , lastKey))
@@ -319,33 +326,33 @@ def game():
                 hero.posy = 768
 
 
-        if keys[pygame.K_LSHIFT] and not ( keys[pygame.K_UP] and keys[pygame.K_RIGHT]) and not (keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]) and not (keys[pygame.K_LEFT] and keys[pygame.K_UP]) and not (keys[pygame.K_LEFT] and keys[pygame.K_DOWN]):
+        if keys[pygame.K_LCTRL] and not ( keys[pygame.K_UP] and keys[pygame.K_RIGHT]) and not (keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]) and not (keys[pygame.K_LEFT] and keys[pygame.K_UP]) and not (keys[pygame.K_LEFT] and keys[pygame.K_DOWN]):
             print(lastKey)
-            if len(bullets) < 25:
+            if len(bullets) < 5:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
                                          (120, 154, 66), 45, lastKey))
                 hero.recul(lastKey)
-        if keys[pygame.K_LSHIFT] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
+        if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
             print("up-right")
-            if len(bullets) < 25:
+            if len(bullets) < 5:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "up-right")) #vitesse 45
                 hero.recul("up-right")
 
-        if keys[pygame.K_LSHIFT] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+        if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
             print("down right")
-            if len(bullets) < 25:
+            if len(bullets) < 5:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "down-right")) #vitesse 45
                 hero.recul("down-right")
 
-        if keys[pygame.K_LSHIFT] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
+        if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
             print("up-left")
-            if len(bullets) < 25:
+            if len(bullets) < 5:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "up-left"))  # vitesse 45
                 hero.recul("up-left")
 
-        if keys[pygame.K_LSHIFT] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
+        if keys[pygame.K_LCTRL] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
             print("down-left")
-            if len(bullets) < 25:
+            if len(bullets) < 5:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
                 hero.recul("down-left")
 

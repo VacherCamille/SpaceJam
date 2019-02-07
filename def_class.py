@@ -125,8 +125,8 @@ class Projectil(object):
         pygame.draw.circle(fenetre, self.color, (self.posx, self.posy), self.radius)
 
 
-class Monstreb:
-    def __init__(self):
+class Monstre(object):
+    def __init__(self, map):
         # # Sprites du monstre
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -140,12 +140,15 @@ class Monstreb:
         self.y = 0
         self.hitbox = (self.posx, self.posy, 50, 75)
         self.skin = pygame.image.load("perso.png")
+        self.map = map
+
 
     def draw(self, fenetre):
         fenetre.blit(self.skin, (self.x, self.y))
         self.hitbox = (self.x, self.y, 50, 75)
         pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
+    def attack(self):
 
 class Map(object):
     def __init__(self, num, bg, asteroides):
