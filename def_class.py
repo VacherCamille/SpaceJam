@@ -196,7 +196,7 @@ class MonstreCoureur(Monstre):
         self.pv = 500
         self.speed = 20
         self.degat = 10
-        self.skin = pygame.image.load("images/coureur.png")
+        self.skin = pygame.image.load("images/coureur2.png")
         self.distance = 50
 
 class Map(object):
