@@ -18,7 +18,7 @@ def redraw():
     fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0,0))
 
-    pygame.display.set_caption('Menu Start')
+    pygame.display.set_caption('Space Walker : High')
 
     if score != None:
         font = pygame.font.Font('American_Captain.ttf', 20)
@@ -52,6 +52,23 @@ def redraw():
     fenetre.blit(font.render("quitter", True, (0, 0, 0)), (860, 670))
 
     pygame.display.flip()
+
+def drawHScore():
+    # image de fond
+    fond = pygame.image.load("images/fond.png").convert()
+    fenetre.blit(fond, (0, 0))
+
+    pygame.display.set_caption('Menu Start : Hightscore')
+    fichier_score = open("score.txt", "r")
+    n = 0
+    print("fichier ouvert")
+    for line in fichier_score:
+        n += 1
+        line_split = line.split("|")
+        lineToScreen = str(n) + "  |  "+line_split[0]+" : "+line_split[1]
+        print(lineToScreen)
+        fenetre.blit(font.render(lineToScreen, True, (250, 128, 114)), (200, 80 + (20*n)))
+
 
 #fin D'UNE partie du jeux
 def gameover():
@@ -104,7 +121,7 @@ while (running):
                 print('crédits')
 
             if hscores.get_rect(topleft=(390,500)).collidepoint(x, y):
-                print('hscores')
+                drawHScore()
 
             if quiter.get_rect(topleft=(825,650)).collidepoint(x, y):
                 running = False
