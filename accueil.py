@@ -7,6 +7,8 @@ import operator
 from operator import itemgetter
 
 pygame.init()
+icon = pygame.image.load("icon.png")
+pygame.display.set_icon(icon)
 fenetre = pygame.display.set_mode((1024,768))
 
 input_text = 'entrer votre nom'
