@@ -160,6 +160,9 @@ score = None
 redraw()
 running = True
 accueil = True
+aideB = False
+storyB = False
+hScoreB = False
 clickEnterName = False
 
 #son bouton
@@ -192,6 +195,7 @@ while (running):
                 pygame.time.delay(500)
                 accueil = False
                 drawStory()
+                storyB = True
 
             if hscores.get_rect(topleft=(390,350)).collidepoint(x, y):
                 shs.play()
@@ -201,6 +205,7 @@ while (running):
                 shsT.play()
                 accueil = False
                 drawHScore()
+                hScoreB = True
 
             if aide.get_rect(topleft=(20, 650)).collidepoint(x, y):
                 ss.play()
@@ -208,9 +213,19 @@ while (running):
                 pygame.time.delay(500)
                 accueil = False
                 drawHelp()
+                aideB = True
 
             if sortir.get_rect(topleft=(825,650)).collidepoint(x, y) and not accueil:
                 ss.play()
+                if storyB == True :
+                    storyB = False
+                    drawStory(img1="bouton2INV.png")
+                if aideB == True :
+                    aideB = False
+                    drawHelp(img1="bouton2INV.png")
+                if hScoreB == True :
+                    hScoreB = False
+                    drawHScore(img1="bouton2INV.png")
                 pygame.time.delay(500)
                 shsT.stop()
                 redraw()
