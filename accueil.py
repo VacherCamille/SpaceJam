@@ -3,6 +3,9 @@ from pygame import *
 
 from main import *
 
+import operator
+from operator import itemgetter
+
 pygame.init()
 fenetre = pygame.display.set_mode((1024,768))
 
@@ -12,10 +15,16 @@ def redraw():
     global input_text, nameTxt, start, credits, hscores, quiter, font
 
     #image de fond
-    fond = pygame.image.load("fond.png").convert()
+    fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0,0))
 
     pygame.display.set_caption('Menu Start')
+
+    if score != None:
+        font = pygame.font.Font('American_Captain.ttf', 20)
+        fenetre.blit(font.render(input_text + ",", True, (250, 128, 114)), (10, 300))
+        fenetre.blit(font.render("votre dernier score est : ", True, (250, 128, 114)), (10, 320))
+        fenetre.blit(font.render(str(score), True, (250, 128, 114)), (50, 350))
 
     font = pygame.font.Font('American_Captain.ttf', 40)
     #affichage zone de text
@@ -44,6 +53,35 @@ def redraw():
 
     pygame.display.flip()
 
+#fin D'UNE partie du jeux
+def gameover():
+    fichier_score = open("score.txt", "r")
+    n = 0
+    tab_score = []
+    for line in fichier_score:
+        n += 1
+        line_split = line.split("|")
+        line_split[1] = int(line_split[1].split("\n")[0])
+        tab_score.append(line_split)
+
+    tab_score = sorted(tab_score, key=itemgetter(1), reverse=True)
+    for val in tab_score:
+        if val[1]<score:
+            tab_score.insert(tab_score.index(val), [input_text,score])
+            break
+
+    if len(tab_score) >10:
+        tab_score.pop()
+
+    fichier_score = open("score.txt", "w")
+    for val in tab_score:
+        fichier_score.write(val[0]+"|"+str(val[1])+"\n")
+
+    fichier_score.close()
+    fenetre = pygame.display.set_mode((1024, 768))
+    redraw()
+
+score = None
 redraw()
 running = True
 clickEnterName = False
@@ -55,8 +93,13 @@ while (running):
             x, y = event.pos
             if start.get_rect(topleft=(390, 200)).collidepoint(x, y):
                 print('start')
-                game()
-
+                score = game()
+                #####pour tout fermer à la fin du jeux
+                # running = False
+                # break
+                #####
+                gameover()
+                break
             if credits.get_rect(topleft=(390,350)).collidepoint(x, y):
                 print('crédits')
 
@@ -64,7 +107,6 @@ while (running):
                 print('hscores')
 
             if quiter.get_rect(topleft=(825,650)).collidepoint(x, y):
-                print('quitter')
                 running = False
 
             if nameTxt.collidepoint(x, y):
