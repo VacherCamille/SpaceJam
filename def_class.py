@@ -16,7 +16,7 @@ class Vaisseau:
 
 
 class Joueur(object):
-    def __init__(self, x, y, width, height, vel, map, vaisseau):
+    def __init__(self, x, y, width, height, vel, map, vaisseau, skin):
         # # Sprites du personnage
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -33,7 +33,7 @@ class Joueur(object):
         self.map = map
         self.points = 0
         self.hitbox = (self.posx -15, self.posy, 30, 75)
-        self.perso = pygame.image.load("perso.png")
+        self.perso = skin
         self.unePiece = None  # il ne peut transporter qu'une pièce
         self.cobalt = 0 # est une quantité donc un nombre
         self.vaisseau = vaisseau
@@ -46,32 +46,32 @@ class Joueur(object):
 
     def recul(self, dir):
         if dir == "right":
-            self.posx -= 10
+            self.mouvement_horizontal(-8)
 
         elif dir == "down":
-            self.posy -= 10
+            self.mouvement_vertical(-8)
 
         elif dir == "left":
-            self.posx += 10
+            self.mouvement_horizontal(8)
 
         elif dir == "up":
-            self.posy += 10
+            self.mouvement_vertical(8)
 
         elif dir == "up-right":
-            self.posy += 10
-            self.posx -= 10
+            self.mouvement_vertical(6)
+            self.mouvement_horizontal(-6)
 
         elif dir == "up-left":
-            self.posy += 10
-            self.posx += 10
+            self.mouvement_vertical(6)
+            self.mouvement_horizontal(6)
 
         elif dir == "down-left":
-            self.posy -= 10
-            self.posx += 10
+            self.mouvement_vertical(-6)
+            self.mouvement_horizontal(6)
 
         elif dir == "down-right":
-            self.posy -= 10
-            self.posx -= 10
+            self.mouvement_vertical(-6)
+            self.mouvement_horizontal(-6)
 
     def recuperer(self, objet, numItem):
         class_split1 = str(type(objet)).split("'")[1]
@@ -186,7 +186,7 @@ class Monstre(object):
         self.x = x
         self.y = y
         self.hitbox = (self.x, self.y, 50, 75)
-        self.skin = pygame.image.load("images/gros.png")
+        self.skin = pygame.image.load("images/gros2.png")
         self.dirx ="plus"
         self.diry ="plus"
 
@@ -205,7 +205,7 @@ class MonstreTireur(Monstre):
          self.pv = 200
          self.speed = 2
          self.degat = 20
-         self.skin = pygame.image.load("images/tireur.png")
+         self.skin = pygame.image.load("images/tireur2.png")
 
 class MonstreCoureur(Monstre):
     def __init__(self, x, y):
@@ -222,7 +222,7 @@ class Map(object):
         self.bordure = pygame.image.load(bg)
         self.fond = pygame.image.load("images/fond.png")
         self.asteroides = asteroides
-        self.grille = 38 * [0]
+        self.grille = 39 * [0]
         self.aliens =aliens
 
         for i in range(len(self.grille)):
@@ -251,7 +251,87 @@ class Map(object):
             for i in range(len(aster.grille)) :
                 for j in range(len(aster.grille[0])):
                     self.grille[vary+i][varx+j] = aster.grille[i][j]
-        print (self.grille)
+
+
+    def init_bordures(self):
+        if self.num == 1 :
+            for i in range(0,len(self.grille)-1):
+                for j in range (0,2):
+                    self.grille[i][j] = 1
+            for i in range(12,23):
+                for j in range (2,9):
+                    self.grille[i][j] = 1
+            for i in range(6,11):
+                for j in range (2,4):
+                    self.grille[i][j] = 1
+            for i in range(24,28):
+                for j in range (2,6):
+                    self.grille[i][j] = 1
+        if self.num == 2:
+            for i in range(0,3):
+                for j in range (0,len(self.grille[0])-1):
+                    self.grille[i][j] = 1
+            for i in range(0,17):
+                for j in range (0,2):
+                    self.grille[i][j] = 1
+            for i in range(17,len(self.grille)-1):
+                for j in range (0,3):
+                    self.grille[i][j] = 1
+            for i in range(3,4):
+                for j in range (6,26):
+                    self.grille[i][j] = 1
+            for i in range(4,7):
+                for j in range (6,10):
+                    self.grille[i][j] = 1
+        if self.num == 3:
+            for i in range(0,3):
+                for j in range (0,len(self.grille[0])-1):
+                    self.grille[i][j] = 1
+            for i in range(3,4):
+                for j in range (26,45):
+                    self.grille[i][j] = 1
+            for i in range(5,7):
+                for j in range (39,45):
+                    self.grille[i][j] = 1
+            for i in range(0,18):
+                for j in range (49,len(self.grille[0])-1):
+                    self.grille[i][j] = 1
+            for i in range(19,len(self.grille)-1):
+                for j in range (48,len(self.grille[0])-1):
+                    self.grille[i][j] = 1
+        if self.num == 4:
+            for i in range(0,len(self.grille)-1):
+                for j in range (49,len(self.grille[0])-1):
+                    self.grille[i][j] = 1
+            for i in range(7,20):
+                for j in range (47,len(self.grille[0])-1):
+                    self.grille[i][j] = 1
+        if self.num == 5:
+            for i in range(0,len(self.grille)-1):
+                for j in range (49,len(self.grille[0])-1):
+                    self.grille[i][j] = 1
+            for i in range(29,len(self.grille)-1):
+                for j in range (45,len(self.grille[0])-1):
+                    self.grille[i][j] = 1
+            for i in range(35,len(self.grille)-1):
+                for j in range (8,len(self.grille[0])-1):
+                    self.grille[i][j] = 1
+            for i in range(37,len(self.grille)-1):
+                for j in range (0,7):
+                    self.grille[i][j] = 1
+        if self.num == 6:
+            for i in range(0,len(self.grille)-1):
+                for j in range (0,2):
+                    self.grille[i][j] = 1
+            for i in range(29,len(self.grille)-1):
+                for j in range (0,6):
+                    self.grille[i][j] = 1
+            for i in range(35,len(self.grille)-1):
+                for j in range (0,43):
+                    self.grille[i][j] = 1
+            for i in range(37,len(self.grille)-1):
+                for j in range (44,51):
+                    self.grille[i][j] = 1
 
 
 class Asteroide ():
@@ -332,5 +412,5 @@ class Ressource(Object):
 class Piece(Object):
     def __init__(self, nom, x, y, point):
         super().__init__(nom, x, y)
-        self.image = "images/boulon.jpg"
+        self.image = "images/"+self.nom+".png"
         self.point = point

@@ -1,6 +1,6 @@
 Bienvenu dans le jeu Space Walker.
 
-Vous incarnez un astraunote qui c'est ecrase sur une meteorite.
+Vous incarnez un astraunote qui s'est ecrase sur une meteorite.
 
 Il doit recuperer les pieces de son vaisseau dispersees dans l'espace.
 

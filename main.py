@@ -8,7 +8,6 @@ pygame.init()
 
 def redraw():
     #print(hero.posx, hero.posy)
-    print(hero.map.num, hero.posx, hero.posy)
     hero.map.draw(fenetre, hero.map.bordure)
     hero.draw(fenetre)
     if not (hero.colision()):
@@ -67,6 +66,7 @@ def redraw():
 def initialisation_jeu():
     global hero, maps, lastKey, bullets, run, fenetre, fond, beginTime, timerTxt, imageVaisseau, score
     global map0, map1, map2, map3, map4, map5, map6
+    global hg, hd, bg, bd
 
     score = 0
 
@@ -76,12 +76,12 @@ def initialisation_jeu():
     imageVaisseau = pygame.image.load("images/vaisseau.png")
     imageVaisseau = pygame.transform.scale(imageVaisseau, (768,768))
 
-    asteroides_map1 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map1 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(250, 630, 3), Asteroide(850, 50, 4), Asteroide(830, 620, 1)]
     asteroides_map2 = [Asteroide(220, 668, 1), Asteroide(900, 150, 2), Asteroide(100, 400, 3), Asteroide(500, 300, 4), Asteroide(800, 600, 1),Asteroide(200, 200, 2)]
-    asteroides_map3 = [Asteroide(400, 200, 1), Asteroide(650, 500, 2), Asteroide(600, 50, 3), Asteroide(80, 668, 4), Asteroide(400, 400, 1),Asteroide(300, 250, 2)]
-    asteroides_map4 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(00, 450, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map6 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map3 = [Asteroide(182, 415, 1), Asteroide(650, 500, 2), Asteroide(100, 150, 3), Asteroide(80, 668, 4), Asteroide(606, 244, 1),Asteroide(300, 250, 2)]
+    asteroides_map4 = [Asteroide(450, 350, 1), Asteroide(350, 250, 2), Asteroide(400, 550, 3), Asteroide(650, 450, 4), Asteroide(700, 200, 1),Asteroide(300, 100, 2)]
+    asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(350, 250, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2),Asteroide(750, 400, 2)]
+    asteroides_map6 = [Asteroide(100, 500, 1), Asteroide(900, 150, 2), Asteroide(400, 200, 3), Asteroide(700, 500, 4), Asteroide(250, 650, 1),Asteroide(400, 400, 2)]
 
 ## aliens
     alien_map1 = []
@@ -90,6 +90,11 @@ def initialisation_jeu():
     alien_map4 = []
     alien_map5 = []
     alien_map6 = []
+
+    hg = pygame.image.load("images/perso-haut-gauche.png")
+    bg = pygame.image.load("images/perso-bas-gauche.png")
+    hd = pygame.image.load("images/perso-haut-droit.png")
+    bd = pygame.image.load("images/perso-bas-droit.png")
 
     nbAliens = randint(2,5)
     xAliens = sample(range(10, 990), nbAliens)
@@ -181,12 +186,12 @@ def initialisation_jeu():
     cobalt_map5 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
     cobalt_map6 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
 
-    piece_map1 = [Piece("filtre à air", 500, 500, 30)]
-    piece_map2 = [Piece("durite moteur", 500, 500, 30)]
-    piece_map3 = [Piece("generateur hydrogene", 500, 500, 30)]
-    piece_map4 = [Piece("filtre à eau", 500, 500, 30)]
-    piece_map5 = [Piece("tube incubation", 500, 500, 30)]
-    piece_map6 = [Piece("reserve helium", 500, 500, 30)]
+    piece_map1 = [Piece("cle", 500, 500, 30)]
+    piece_map2 = [Piece("durite", 500, 500, 30)]
+    piece_map3 = [Piece("ecrou", 500, 500, 30)]
+    piece_map4 = [Piece("extincteur", 500, 500, 30)]
+    piece_map5 = [Piece("piston", 500, 500, 30)]
+    piece_map6 = [Piece("volant", 500, 500, 30)]
 
     map0 = Map(0, "images/vaisseau.png", [], [], [], [])
     map1 = Map(1, "images/vaisseau.png", asteroides_map1, cobalt_map1, piece_map1, alien_map1)
@@ -198,8 +203,15 @@ def initialisation_jeu():
 
 
 
+    map1.init_bordures()
+    map2.init_bordures()
+    map3.init_bordures()
+    map4.init_bordures()
+    map5.init_bordures()
+    map6.init_bordures()
+
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 7, map1, vassal)
+    hero = Joueur(400, 350, 30, 68, 5, map1, vassal, hd)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
@@ -242,39 +254,31 @@ def shoot(bullets):
 
 def rebond_ressort(keys):
     if hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
-        print ("saut haut droite")
         hero.vitessex = 17
         hero.vitessey = -17
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
-        print ("saut haut gauche")
         hero.vitessex = -17
         hero.vitessey = -17
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]:
-        print ("saut bas droite")
         hero.vitessex = 17
         hero.vitessey = 17
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
-        print ("saut bas gauche")
         hero.vitessex = -17
         hero.vitessey = 17
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] :
-        print ("saut bas")
         hero.vitessey = 25
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] :
-        print ("saut haut")
         hero.vitessey = -25
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_RIGHT] :
-        print ("saut droite")
         hero.vitessex = 25
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_LEFT]:
-        print ("saut gauche")
         hero.vitessex = -25
         hero.applique_mouvements()
 
@@ -400,28 +404,6 @@ def game():
         shoot(bullets)
         keys = pygame.key.get_pressed()
         # definition des changement de maps
-
-        # Code pour fonction controlMap -> marche pas
-        # if keys[pygame.K_LEFT]:
-        #     hero.mouvement_horizontal(-hero.vel)
-        #     lastKey = "left"
-        #     controlMap(hero.map)
-        #
-        # if keys[pygame.K_RIGHT]:
-        #     hero.mouvement_horizontal(+hero.vel)
-        #     lastKey = "right"
-        #     controlMap(hero.map)
-        #
-        # if keys[pygame.K_UP]:
-        #     hero.mouvement_vertical(-hero.vel)
-        #     lastKey = "up"
-        #     controlMap(hero.map)
-        #
-        # if keys[pygame.K_DOWN]:
-        #     hero.mouvement_vertical(+hero.vel)
-        #     lastKey = "down"
-        #     controlMap(hero.map)
-
         if keys[pygame.K_LEFT] and hero.map.num == 1:
             if hero.posx >= 280 and hero.posx <= 340 and hero.posy <= 340 and hero.posy >= 310:
                 hero.map = map0
@@ -430,7 +412,7 @@ def game():
                 hero.mouvement_horizontal(-hero.vel)
                 lastKey = "left"
         elif keys[pygame.K_LEFT] and hero.posx > 0:
-            hero.posx -= hero.vel
+            hero.mouvement_horizontal(-hero.vel)
             lastKey = "left"
         elif keys[pygame.K_LEFT]:
             lastKey = "left"
@@ -452,7 +434,7 @@ def game():
             lastKey="right"
             if hero.map.num == 0:
                 hero.map = map1
-                hero.posx = 0
+                hero.posx = 350
             elif hero.map.num == 1:
                 hero.map = map4
                 hero.posx = 0
@@ -502,32 +484,40 @@ def game():
 
         if keys[pygame.K_LCTRL] and not ( keys[pygame.K_UP] and keys[pygame.K_RIGHT]) and not (keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]) and not (keys[pygame.K_LEFT] and keys[pygame.K_UP]) and not (keys[pygame.K_LEFT] and keys[pygame.K_DOWN]):
             #print(lastKey)
+            if lastKey == "right":
+                hero.perso = hd
+            elif lastKey == "left":
+                hero.perso = hg
+
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
                                          (120, 154, 66), 45, lastKey))
                 hero.recul(lastKey)
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
+            hero.perso = hd
             print("up-right")
+
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "up-right")) #vitesse 45
                 hero.recul("up-right")
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
+            hero.perso = hg
             print("up-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "up-left"))  # vitesse 45
                 hero.recul("up-left")
 
         if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+            hero.perso = bd
             print("down right")
             if len(bullets) < 25:
-                bullets.append(
-                    Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
-                              (120, 154, 66), 45, "down-right"))  # vitesse 45
+                bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "down-right")) #vitesse 45
                 hero.recul("down-right")
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+        elif keys[pygame.K_LCTRL] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
+            hero.perso = bg
             print("down-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
