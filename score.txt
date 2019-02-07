@@ -1,4 +1,7 @@
 dorian|12000
+entrer votre nom|3300
+entrer votre nom|1078
+entrer votre nom|61
 mamoune|43
 qhqeh|33
 entrer votre nom|27

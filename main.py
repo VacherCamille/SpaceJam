@@ -19,7 +19,6 @@ def redraw():
     scoreTxt = font.render("score : " + str(score), True, (250, 128, 114))
     fenetre.blit(scoreTxt, (10, 10))
 
-
     #affichage sac
     font = pygame.font.Font('American_Captain.ttf', 25)
     sacTxt = font.render("sac", True, (250, 128, 114))
@@ -30,7 +29,6 @@ def redraw():
     fenetre.blit(sacTxt, (60, 50))
     fenetre.blit(itemSacTxt, (10, 75))
     fenetre.blit(cobaltSacTxt, (10, 95))
-
 
     #affichage du contenu du vaisseau quand il est dedans
     if hero.map.num == 0:
@@ -83,90 +81,6 @@ def initialisation_jeu():
     bullets = []
     lastKey = "right"
     run = True
-
-
-# def deplacement(hero, lastKey, keys):
-#
-#     keys = pygame.key.get_pressed()
-#
-#     # definition des changement de maps
-#     if keys[pygame.K_LEFT] and hero.posx > 0:
-#         hero.posx -= hero.vel
-#         lastKey = "left"
-#     elif keys[pygame.K_LEFT] and hero.posx < 768 and hero.posy < 550 and hero.posy > 350:
-#         lastKey = "left"
-#         if hero.map.num == 1:
-#             hero.map = map0
-#             hero.posx = 1024
-#         elif hero.map.num == 3:
-#             hero.map = map2
-#             hero.posx = 1024
-#         elif hero.map.num == 4:
-#             hero.map = map1
-#             hero.posx = 1024
-#         elif hero.map.num == 5:
-#             hero.map= map6
-#             hero.posx = 1024
-#
-#     if keys[pygame.K_RIGHT] and hero.posx < 1024-50:
-#         hero.posx += hero.vel
-#         lastKey="right"
-#     elif keys[pygame.K_RIGHT]:
-#         lastKey="right"
-#         if hero.map.num == 0:
-#             hero.map = map1
-#             hero.posx = 0
-#         elif hero.map.num == 1:
-#             hero.map = map4
-#             hero.posx = 0
-#         elif hero.map.num == 2:
-#             hero.map = map3
-#             hero.posx = 0
-#         elif hero.map.num == 6:
-#             hero.map = map5
-#             hero.posx = 0
-#
-#     if keys[pygame.K_DOWN] and hero.posy < 768-  hero.height:
-#         hero.posy += hero.vel
-#         lastKey = "down"
-#     elif keys[pygame.K_DOWN]:
-#         lastKey = "down"
-#         if hero.map.num == 1:
-#             hero.map = map6
-#             hero.posy = 0
-#         elif hero.map.num == 2:
-#             hero.map = map1
-#             hero.posy = 0
-#         elif hero.map.num == 3:
-#             hero.map = map4
-#             hero.posy = 0
-#         elif hero.map.num == 4:
-#             hero.map = map5
-#             hero.posy = 0
-#
-#     if keys[pygame.K_UP] and hero.posy > 0:
-#         hero.posy -= hero.vel
-#         lastKey="up"
-#     elif keys[pygame.K_UP]:
-#         lastKey="up"
-#         if hero.map.num == 1:
-#             hero.map = map2
-#             hero.posy = 768
-#         elif hero.map.num == 4:
-#             hero.map = map3
-#             hero.posy = 768
-#         elif hero.map.num == 6:
-#             hero.map = map1
-#             hero.posy = 768
-#         elif hero.map.num == 5:
-#             hero.map = map4
-#             hero.posy = 768
-#
-#     if keys[pygame.K_LSHIFT]:
-#         print(lastKey)
-#         if len(bullets) < 25:
-#             bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , lastKey))
-#             hero.recul(lastKey)
 
 def shoot(bullets):
     for bullet in bullets:
@@ -245,7 +159,7 @@ def game():
             if hero.posx >= 280 and hero.posx <= 340 and hero.posy <= 340 and hero.posy >= 310:
                 hero.map = map0
                 hero.posx = 1024
-            else:
+            elif hero.posx > 0:
                 hero.mouvement_horizontal(-hero.vel)
                 lastKey = "left"
         elif keys[pygame.K_LEFT] and hero.posx > 0:
