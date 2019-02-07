@@ -9,6 +9,7 @@ def redraw():
     print(hero.posx, hero.posy)
     hero.map.draw(fenetre, hero.map.bordure)
     hero.draw(fenetre)
+    hero.colision()
     fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
     pygame.display.set_caption('Space Walker')
@@ -60,18 +61,24 @@ def initialisation_jeu():
     imageVaisseau = pygame.image.load("images/vaisseau.png")
     imageVaisseau = pygame.transform.scale(imageVaisseau, (768,768))
 
-    asteroides_map1 = [Asteroide(10, 10, 2)]
+    asteroides_map1 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map2 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map3 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map4 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map6 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
 
-    map0 = Map(0,"images/vaisseau.png",asteroides_map1)
+
+    map0 = Map(0,"images/vaisseau.png",[])
     map1 = Map(1,"images/vaisseau.png",asteroides_map1)
-    map2 = Map(2,"images/map2.png",asteroides_map1)
-    map3 = Map(3,"images/map3.png",asteroides_map1)
-    map4 = Map(4,"images/map4.png",asteroides_map1)
-    map5 = Map(5,"images/map5.png",asteroides_map1)
-    map6 = Map(6,"images/map6.png",asteroides_map1)
+    map2 = Map(2,"images/map2.png",asteroides_map2)
+    map3 = Map(3,"images/map3.png",asteroides_map3)
+    map4 = Map(4,"images/map4.png",asteroides_map4)
+    map5 = Map(5,"images/map5.png",asteroides_map5)
+    map6 = Map(6,"images/map6.png",asteroides_map6)
 
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 30, map1, vassal)
+    hero = Joueur(100, 400, 30, 68, 7, map1, vassal)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
@@ -155,7 +162,7 @@ def initialisation_jeu():
 #             hero.map = map4
 #             hero.posy = 768
 #
-#     if keys[pygame.K_SPACE]:
+#     if keys[pygame.K_LSHIFT]:
 #         print(lastKey)
 #         if len(bullets) < 25:
 #             bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , lastKey))
@@ -225,7 +232,7 @@ def game():
         font = pygame.font.Font('American_Captain.ttf', 50)
         text = font.render("Numero map:"+str(hero.map.num),True,(255,0,0))
 
-        pygame.time.delay(100)
+        pygame.time.delay(15)
         for event in pygame.event.get():
             if event.type == QUIT:
                 run = False
@@ -239,7 +246,7 @@ def game():
                 hero.map = map0
                 hero.posx = 1024
             else:
-                hero.posx -= hero.vel
+                hero.mouvement_horizontal(-hero.vel)
                 lastKey = "left"
         elif keys[pygame.K_LEFT] and hero.posx > 0:
             hero.posx -= hero.vel
@@ -258,7 +265,7 @@ def game():
 
 
         if keys[pygame.K_RIGHT] and hero.posx < 1024-50:
-            hero.posx += hero.vel
+            hero.mouvement_horizontal(hero.vel)
             lastKey="right"
         elif keys[pygame.K_RIGHT]:
             lastKey="right"
@@ -276,7 +283,7 @@ def game():
                 hero.posx = 0
 
         if keys[pygame.K_DOWN] and hero.posy < 768-  hero.height:
-            hero.posy += hero.vel
+            hero.mouvement_vertical(hero.vel)
             lastKey = "down"
         elif keys[pygame.K_DOWN]:
             lastKey = "down"
@@ -294,7 +301,7 @@ def game():
                 hero.posy = 0
 
         if keys[pygame.K_UP] and hero.posy > 0:
-            hero.posy -= hero.vel
+            hero.mouvement_vertical(-hero.vel)
             lastKey="up"
         elif keys[pygame.K_UP]:
             lastKey="up"
@@ -312,35 +319,36 @@ def game():
                 hero.posy = 768
 
 
-
-        if keys[pygame.K_SPACE] and not ( keys[pygame.K_UP] and keys[pygame.K_RIGHT]) and not (keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]) and not (keys[pygame.K_LEFT] and keys[pygame.K_UP]) and not (keys[pygame.K_LEFT] and keys[pygame.K_DOWN]):
+        if keys[pygame.K_LSHIFT] and not ( keys[pygame.K_UP] and keys[pygame.K_RIGHT]) and not (keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]) and not (keys[pygame.K_LEFT] and keys[pygame.K_UP]) and not (keys[pygame.K_LEFT] and keys[pygame.K_DOWN]):
             print(lastKey)
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6,
                                          (120, 154, 66), 45, lastKey))
                 hero.recul(lastKey)
-        if keys[pygame.K_SPACE] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
+        if keys[pygame.K_LSHIFT] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
             print("up-right")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "up-right")) #vitesse 45
                 hero.recul("up-right")
 
-        if keys[pygame.K_SPACE] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+        if keys[pygame.K_LSHIFT] and keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
             print("down right")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 //2), round(hero.posy + hero.height//2), 6, (120,154,66),45 , "down-right")) #vitesse 45
                 hero.recul("down-right")
 
-        if keys[pygame.K_SPACE] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
+        if keys[pygame.K_LSHIFT] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
             print("up-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "up-left"))  # vitesse 45
                 hero.recul("up-left")
 
-        if keys[pygame.K_SPACE] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
+        if keys[pygame.K_LSHIFT] and keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
             print("down-left")
             if len(bullets) < 25:
                 bullets.append(Projectil(round(hero.posx + hero.width + 20 // 2), round(hero.posy + hero.height // 2), 6, (120, 154, 66), 45, "down-left"))  # vitesse 45
                 hero.recul("down-left")
+
+
         redraw()
     return score

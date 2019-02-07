@@ -1,5 +1,6 @@
 import pygame
 from pygame import *
+from math import *
 
 class Vaisseau:
     def __init__(self, name):
@@ -26,6 +27,8 @@ class Joueur(object):
         self.width = width
         self.height = height
         self.vel = vel
+        self.vitessex =0
+        self.vitessey =0
         # self.arme = Arme()
         self.map = map
         self.points = 0
@@ -54,6 +57,22 @@ class Joueur(object):
         elif dir == "up":
             self.posy += 10
 
+        elif dir == "up-right":
+            self.posy += 10
+            self.posx -= 10
+
+        elif dir == "up-left":
+            self.posy += 10
+            self.posx += 10
+
+        elif dir == "down-left":
+            self.posy -= 10
+            self.posx += 10
+
+        elif dir == "down-right":
+            self.posy -= 10
+            self.posx -= 10
+
     def depot(self):
         if self.map == 0:
             if self.unePiece != None:
@@ -61,6 +80,36 @@ class Joueur(object):
             if self.cobalt > 0:
                 self.vaisseau.depotCobalt(self.cobalt)
 
+    def colision (self):
+        varx = self.posx//20
+        vary = self.posy//20
+        varx2 = ceil((self.posx+self.width)/20)
+        vary2 = ceil((self.posy + self.height) / 20)
+        coli = False
+
+        for i in range(vary,vary2) :
+            for j in range (varx, varx2):
+                if self.map.grille[i][j] == 1 :
+                    coli = True
+
+        #print (coli)
+        return coli
+
+    def mouvement_horizontal(self, vel) :
+        if self.vitessex != 0 :
+            vel /= 2
+        if not(self.colision()):
+            self.posx+=vel
+
+
+    def mouvement_vertical(self, vel):
+        print("mouv")
+        if self.vitessey != 0 :
+            vel /= 2
+        if not(self.colision()):
+            self.posy+=vel
+        else :
+            print("non")
 
 
 class Projectil(object):
