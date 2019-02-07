@@ -62,7 +62,7 @@ def initialisation_jeu():
     imageVaisseau = pygame.image.load("images/vaisseau.png")
     imageVaisseau = pygame.transform.scale(imageVaisseau, (768,768))
 
-    asteroides_map1 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map1 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(250, 630, 3), Asteroide(850, 50, 4), Asteroide(830, 620, 1)]
     asteroides_map2 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map3 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map4 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
@@ -91,8 +91,15 @@ def initialisation_jeu():
     map5 = Map(5, "images/map5.png", asteroides_map5, cobalt_map5, piece_map5)
     map6 = Map(6, "images/map6.png", asteroides_map6, cobalt_map6, piece_map6)
 
+    map1.init_bordures()
+    map2.init_bordures()
+    map3.init_bordures()
+    map4.init_bordures()
+    map5.init_bordures()
+    map6.init_bordures()
+
     vassal = Vaisseau("Aurora")
-    hero = Joueur(100, 400, 30, 68, 5, map1, vassal)
+    hero = Joueur(400, 350, 30, 68, 5, map1, vassal)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
@@ -135,39 +142,31 @@ def shoot(bullets):
 
 def rebond_ressort(keys):
     if hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
-        print ("saut haut droite")
         hero.vitessex = 17
         hero.vitessey = -17
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] and keys[pygame.K_LEFT]:
-        print ("saut haut gauche")
         hero.vitessex = -17
         hero.vitessey = -17
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]:
-        print ("saut bas droite")
         hero.vitessex = 17
         hero.vitessey = 17
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
-        print ("saut bas gauche")
         hero.vitessex = -17
         hero.vitessey = 17
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_DOWN] :
-        print ("saut bas")
         hero.vitessey = 25
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_UP] :
-        print ("saut haut")
         hero.vitessey = -25
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_RIGHT] :
-        print ("saut droite")
         hero.vitessex = 25
         hero.applique_mouvements()
     elif hero.colision() and keys[pygame.K_w] and keys[pygame.K_LEFT]:
-        print ("saut gauche")
         hero.vitessex = -25
         hero.applique_mouvements()
 
@@ -227,7 +226,7 @@ def game():
                 hero.mouvement_horizontal(-hero.vel)
                 lastKey = "left"
         elif keys[pygame.K_LEFT] and hero.posx > 0:
-            hero.posx -= hero.vel
+            hero.mouvement_horizontal(-hero.vel)
             lastKey = "left"
         elif keys[pygame.K_LEFT]:
             lastKey = "left"
@@ -249,7 +248,7 @@ def game():
             lastKey="right"
             if hero.map.num == 0:
                 hero.map = map1
-                hero.posx = 0
+                hero.posx = 350
             elif hero.map.num == 1:
                 hero.map = map4
                 hero.posx = 0
