@@ -163,7 +163,8 @@ class Monstre(object):
         self.hitbox = (self.x, self.y, 50, 75)
         pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
-    def attack(self):
+    #def attack(self):
+
 
 class Map(object):
     def __init__(self, num, bg, asteroides):
