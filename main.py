@@ -1,6 +1,7 @@
 import pygame
 from pygame import *
 from def_class import *
+from random import *
 
 # Fonctions
 pygame.init()
@@ -68,20 +69,117 @@ def initialisation_jeu():
     asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map6 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
 
+## aliens
+    alien_map1 = []
+    alien_map2 = []
+    alien_map3 = []
+    alien_map4 = []
+    alien_map5 = []
+    alien_map6 = []
 
-    map0 = Map(0,"images/vaisseau.png",[])
-    map1 = Map(1,"images/vaisseau.png",asteroides_map1)
-    map2 = Map(2,"images/map2.png",asteroides_map2)
-    map3 = Map(3,"images/map3.png",asteroides_map3)
-    map4 = Map(4,"images/map4.png",asteroides_map4)
-    map5 = Map(5,"images/map5.png",asteroides_map5)
-    map6 = Map(6,"images/map6.png",asteroides_map6)
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map1.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map1.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map1.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map2.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map2.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map2.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map3.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map3.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map3.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map4.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map4.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map4.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map5.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map5.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map5.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+    nbAliens = randint(2,5)
+    xAliens = sample(range(10, 990), nbAliens)
+    yAliens = sample(range(10,620), nbAliens)
+    for i in range(0,nbAliens):
+        typeAlien = randint(1,3)
+        if typeAlien == 1:
+            alien_map6.append(Monstre(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 2:
+            alien_map6.append(MonstreCoureur(xAliens[i], yAliens[i]))
+
+        elif typeAlien == 3:
+            alien_map6.append(MonstreTireur(xAliens[i], yAliens[i]))
+
+
+
+    map0 = Map(0,"images/vaisseau.png",[],[])
+    map1 = Map(1,"images/vaisseau.png",asteroides_map1, alien_map1)
+    map2 = Map(2,"images/map2.png",asteroides_map2, alien_map2)
+    map3 = Map(3,"images/map3.png",asteroides_map3, alien_map3)
+    map4 = Map(4,"images/map4.png",asteroides_map4, alien_map4)
+    map5 = Map(5,"images/map5.png",asteroides_map5, alien_map5)
+    map6 = Map(6,"images/map6.png",asteroides_map6, alien_map6)
 
     vassal = Vaisseau("Aurora")
     hero = Joueur(100, 400, 30, 68, 7, map1, vassal)
     beginTime = pygame.time.get_ticks()
     bullets = []
     lastKey = "right"
+
+
+
+
     run = True
 
 def shoot(bullets):

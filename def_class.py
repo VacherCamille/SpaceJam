@@ -141,21 +141,21 @@ class Projectil(object):
 
 
 class Monstre(object):
-    def __init__(self, map):
+    def __init__(self, x, y):
         # # Sprites du monstre
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
         # self.haut = pygame.image.load(haut).convert_alpha()
         # self.bas = pygame.image.load(bas).convert_alpha()
-        self.pv = 100
-        self.speed = 10
-        self.degat = 1  # nombre de point qu'enlève le monstre au score du joueur
-        self.distance = 10
-        self.x = 0
-        self.y = 0
-        self.hitbox = (self.posx, self.posy, 50, 75)
-        self.skin = pygame.image.load("perso.png")
-        self.map = map
+        self.pv = 1000
+        self.speed = 13
+        self.degat = 100  # nombre de point qu'enlève le monstre au score du joueur
+        self.distance = 150
+        self.x = x
+        self.y = y
+        self.hitbox = (self.x, self.y, 50, 75)
+        self.skin = pygame.image.load("images/gros.png")
+
 
 
     def draw(self, fenetre):
@@ -163,16 +163,34 @@ class Monstre(object):
         self.hitbox = (self.x, self.y, 50, 75)
         pygame.draw.rect(fenetre, (255, 0, 0), self.hitbox, 2)
 
-    #def attack(self):
 
+
+class MonstreTireur(Monstre):
+     def __init__(self, x, y):
+         super().__init__(x, y)
+         self.pv = 200
+         self.speed = 5
+         self.degat = 20
+         self.skin = pygame.image.load("images/tireur.png")
+
+class MonstreCoureur(Monstre):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.pv = 500
+        self.speed = 20
+        self.degat = 10
+        self.skin = pygame.image.load("images/coureur.png")
+        self.distance = 50
 
 class Map(object):
-    def __init__(self, num, bg, asteroides):
+    def __init__(self, num, bg, asteroides, aliens):
         self.num = num
         self.bordure = pygame.image.load(bg)
         self.fond = pygame.image.load("images/fond.png")
         self.asteroides = asteroides
         self.grille = 38 * [0]
+        self.aliens =aliens
+
         for i in range(len(self.grille)):
             self.grille[i] = 51 * [0]
         self.init_grille()
@@ -183,6 +201,10 @@ class Map(object):
         for aster in self.asteroides :
             aster.draw(fenetre)
 
+        for alien in self.aliens :
+            alien.draw(fenetre)
+
+
 
     def init_grille(self):
         for aster in self.asteroides :
@@ -191,6 +213,7 @@ class Map(object):
             for i in range(len(aster.grille)) :
                 for j in range(len(aster.grille[0])):
                     self.grille[vary+i][varx+j] = aster.grille[i][j]
+
         print (self.grille)
 
 
