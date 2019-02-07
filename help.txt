@@ -1,7 +1,8 @@
                     commande
-Utilisez les   fleches directionnel   pour vous diriger
-Utilisez   "espace"   pour tirer
-Utiliser   "f"   pour deposer les objets dans le vaisseau
+Utiliser les   fleches directionnel   pour vous diriger
+Utiliser   "ctrl"   pour tirer
+Utiliser   "x"   pour deposer et recuperer les objets
+Utiliser   "w"   pour utiliser les ressors et ce propulser d'une meteorite
 
                     credit
 Equipe Space Jam :
