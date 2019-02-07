@@ -16,7 +16,7 @@ class Vaisseau:
 
 
 class Joueur(object):
-    def __init__(self, x, y, width, height, vel, map, vaisseau):
+    def __init__(self, x, y, width, height, vel, map, vaisseau, skin):
         # # Sprites du personnage
         # self.droite = pygame.image.load(droite).convert_alpha()
         # self.gauche = pygame.image.load(gauche).convert_alpha()
@@ -33,7 +33,7 @@ class Joueur(object):
         self.map = map
         self.points = 0
         self.hitbox = (self.posx -15, self.posy, 30, 75)
-        self.perso = pygame.image.load("perso.png")
+        self.perso = skin
         self.unePiece = None  # il ne peut transporter qu'une pièce
         self.cobalt = 0 # est une quantité donc un nombre
         self.vaisseau = vaisseau
@@ -186,7 +186,7 @@ class Monstre(object):
         self.x = x
         self.y = y
         self.hitbox = (self.x, self.y, 50, 75)
-        self.skin = pygame.image.load("images/gros.png")
+        self.skin = pygame.image.load("images/gros2.png")
 
 
 
@@ -203,7 +203,7 @@ class MonstreTireur(Monstre):
          self.pv = 200
          self.speed = 5
          self.degat = 20
-         self.skin = pygame.image.load("images/tireur.png")
+         self.skin = pygame.image.load("images/tireur2.png")
 
 class MonstreCoureur(Monstre):
     def __init__(self, x, y):
