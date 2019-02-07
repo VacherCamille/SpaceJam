@@ -240,7 +240,7 @@ def rebond_ressort(keys):
 def game():
     pygame.mixer.stop()
     # son jeu
-    son = pygame.mixer.Sound("jeu.wav")
+    son = pygame.mixer.Sound("jeu2.wav")
     son.play(1000)
 
     global run, text, score, timerTxt
