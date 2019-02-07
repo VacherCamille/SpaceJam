@@ -12,7 +12,7 @@ fenetre = pygame.display.set_mode((1024,768))
 input_text = 'entrer votre nom'
 
 def redraw():
-    global input_text, nameTxt, start, credits, hscores, quiter, font
+    global input_text, nameTxt, start, credits, hscores, quiter, font, sortir
 
     #image de fond
     fond = pygame.image.load("images/fond.png").convert()
@@ -49,9 +49,10 @@ def redraw():
     #affichage du bouton highscore
     hscores = pygame.image.load("bouton.png").convert()
     fenetre.blit(hscores ,  (390, 500))
-    fenetre.blit(font.render("hightscore", True, (250, 128, 114)), (440, 535))
+    fenetre.blit(font.render(" highscore", True, (250, 128, 114)), (440, 535))
 
     #affichage du bouton quiter
+    sortir = pygame.image.load("bouton2.png").convert()
     quiter = pygame.image.load("bouton2.png").convert()
     fenetre.blit(quiter ,  (825, 650))
     fenetre.blit(font.render("quitter", True, (0, 0, 0)), (860, 670))
@@ -64,7 +65,7 @@ def drawHScore():
     fond = pygame.image.load("images/fond.png").convert()
     fenetre.blit(fond, (0, 0))
 
-    pygame.display.set_caption('Menu Start : Hightscore')
+    pygame.display.set_caption('Menu Start : Highscore')
 
     # affichage du bouton quiter
     sortir = pygame.image.load("bouton2.png").convert()
