@@ -1,7 +1,0 @@
-Equipe Space Jam :
-    - Camille VACHIER
-    - Mamoune BELLATIF
-    - Florian DUBUIS
-    - Teva GEITNER
-    - Dorian BARET
-pour le developpement du jeux Space Walker
