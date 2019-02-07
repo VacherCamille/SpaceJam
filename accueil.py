@@ -183,7 +183,6 @@ while (running):
                 gameover()
                 break
             if histoire.get_rect(topleft=(390, 500)).collidepoint(x, y):
-            if help.get_rect(topleft=(390, 500)).collidepoint(x, y):
                 ss.play()
                 pygame.time.delay(500)
                 accueil = False
@@ -196,7 +195,6 @@ while (running):
                 drawHScore()
 
             if aide.get_rect(topleft=(20, 650)).collidepoint(x, y):
-            if credit.get_rect(topleft=(20, 650)).collidepoint(x, y):
                 ss.play()
                 pygame.time.delay(500)
                 accueil = False
