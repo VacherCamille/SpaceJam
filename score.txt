@@ -6,5 +6,5 @@ entrer votre nom|1012
 entrer votre nom|962
 entrer votre nom|764
 entrer votre nom|652
-entrer votre nom|304
-entrer votre nom|134
+entrer votre nom|527
+entrer votre nom|378

@@ -13,7 +13,7 @@ def redraw():
     hero.draw(fenetre)
     if not (hero.colision()):
         hero.applique_mouvements()
-    fenetre.blit(text,(700,10))
+    #fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
     pygame.display.set_caption('Space Walker')
 
