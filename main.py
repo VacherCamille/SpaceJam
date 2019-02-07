@@ -64,8 +64,8 @@ def initialisation_jeu():
     imageVaisseau = pygame.transform.scale(imageVaisseau, (768,768))
 
     asteroides_map1 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map2 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
-    asteroides_map3 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
+    asteroides_map2 = [Asteroide(220, 700, 1), Asteroide(900, 150, 2), Asteroide(100, 400, 3), Asteroide(850, 150, 4), Asteroide(1000, 300, 1),Asteroide(100, 100, 2)]
+    asteroides_map3 = [Asteroide(400, 200, 1), Asteroide(650, 500, 2), Asteroide(600, 50, 3), Asteroide(80, 750, 4), Asteroide(400, 400, 1),Asteroide(300, 250, 2)]
     asteroides_map4 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map6 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
