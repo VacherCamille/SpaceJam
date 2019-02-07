@@ -187,6 +187,8 @@ class Monstre(object):
         self.y = y
         self.hitbox = (self.x, self.y, 50, 75)
         self.skin = pygame.image.load("images/gros.png")
+        self.couldown = 0
+        self.timeCouldown = 0
 
 
 
@@ -221,7 +223,7 @@ class Map(object):
         self.fond = pygame.image.load("images/fond.png")
         self.asteroides = asteroides
         self.grille = 39 * [0]
-        self.aliens =aliens
+        self.aliens = aliens
 
         for i in range(len(self.grille)):
             self.grille[i] = 51 * [0]
