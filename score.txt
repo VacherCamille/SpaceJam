@@ -1,2 +1,4 @@
 dorian|12000
+dorian|57
+dorian|42
 teva|0

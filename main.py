@@ -10,7 +10,7 @@ def redraw():
     hero.draw(fenetre)
     fenetre.blit(text,(700,10))
     fenetre.blit(timerTxt,(512,10))
-
+    pygame.display.set_caption('Space Walker')
 
     # affichage score
     font = pygame.font.Font('American_Captain.ttf', 30)
