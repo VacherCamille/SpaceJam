@@ -167,7 +167,7 @@ class Monstre(object):
 
 
 class Map(object):
-    def __init__(self, num, bg, asteroides):
+    def __init__(self, num, bg, asteroides, piece, ressource):
         self.num = num
         self.bordure = pygame.image.load(bg)
         self.fond = pygame.image.load("images/fond.png")
@@ -176,6 +176,8 @@ class Map(object):
         for i in range(len(self.grille)):
             self.grille[i] = 51 * [0]
         self.init_grille()
+        self.pieces = piece
+        self.ressources = ressource
 
     def draw(self, fenetre, bordure):
         fenetre.blit(self.fond, (0, 0))
@@ -183,6 +185,11 @@ class Map(object):
         for aster in self.asteroides :
             aster.draw(fenetre)
 
+        for piece in self.pieces:
+            piece.draw(fenetre)
+
+        for coba in self.ressources:
+            coba.draw(fenetre)
 
     def init_grille(self):
         for aster in self.asteroides :
@@ -258,13 +265,19 @@ class Object:
         self.posy = y
         self.points = point
         self.nom = nom
+        self.image = ''
+
+    def draw(self, fenetre):
+        fenetre.blit(pygame.image.load(self.image), (self.posx, self.posy))
 
 class Ressource(Object):
-    def __init__(self, x, y, point, quantite):
-        Object.__init__("cobalt", x, y, point)
+    def __init__(self, x, y, quantite):
+        super().__init__("cobalt", x, y, (quantite*1))
         self.quantite = quantite
+        self.image = "images/cobalt.jpg"
+
 
 class Piece(Object):
     def __init__(self, nom, x, y, point):
-        Object.__init__(nom, x, y, point)
-
+        super().__init__(nom, x, y, point)
+        self.image = "images/boulon.jpg"

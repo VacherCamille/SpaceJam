@@ -68,14 +68,27 @@ def initialisation_jeu():
     asteroides_map5 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
     asteroides_map6 = [Asteroide(550, 500, 1), Asteroide(650, 150, 2), Asteroide(150, 550, 3), Asteroide(850, 50, 4), Asteroide(900, 650, 1),Asteroide(100, 100, 2)]
 
+    cobalt_map1 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map2 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map3 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map4 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map5 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
+    cobalt_map6 = [Ressource(600, 500, 13), Ressource(500, 650, 13)]
 
-    map0 = Map(0,"images/vaisseau.png",[])
-    map1 = Map(1,"images/vaisseau.png",asteroides_map1)
-    map2 = Map(2,"images/map2.png",asteroides_map2)
-    map3 = Map(3,"images/map3.png",asteroides_map3)
-    map4 = Map(4,"images/map4.png",asteroides_map4)
-    map5 = Map(5,"images/map5.png",asteroides_map5)
-    map6 = Map(6,"images/map6.png",asteroides_map6)
+    piece_map1 = [Piece("filtre à air", 500, 500, 30)]
+    piece_map2 = [Piece("durite moteur", 500, 500, 30)]
+    piece_map3 = [Piece("generateur hydrogene", 500, 500, 30)]
+    piece_map4 = [Piece("filtre à eau", 500, 500, 30)]
+    piece_map5 = [Piece("tube incubation", 500, 500, 30)]
+    piece_map6 = [Piece("reserve helium", 500, 500, 30)]
+
+    map0 = Map(0, "images/vaisseau.png", [], [], [])
+    map1 = Map(1, "images/vaisseau.png", asteroides_map1, cobalt_map1, piece_map1)
+    map2 = Map(2, "images/map2.png", asteroides_map2, cobalt_map2, piece_map2)
+    map3 = Map(3, "images/map3.png", asteroides_map3, cobalt_map3, piece_map3)
+    map4 = Map(4, "images/map4.png", asteroides_map4, cobalt_map4, piece_map4)
+    map5 = Map(5, "images/map5.png", asteroides_map5, cobalt_map5, piece_map5)
+    map6 = Map(6, "images/map6.png", asteroides_map6, cobalt_map6, piece_map6)
 
     vassal = Vaisseau("Aurora")
     hero = Joueur(100, 400, 30, 68, 7, map1, vassal)
