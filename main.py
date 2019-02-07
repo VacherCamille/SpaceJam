@@ -24,9 +24,13 @@ def redraw():
     font = pygame.font.Font('American_Captain.ttf', 25)
     sacTxt = font.render("sac", True, (250, 128, 114))
     cobaltSacTxt = font.render("cobalt : " + str(hero.cobalt), True, (250, 128, 114))
-    itemSacTxt = font.render("item : " + str(hero.unePiece), True, (250, 128, 114))
+    if hero.unePiece == None:
+        nom_piece = "vide"
+    else:
+        nom_piece = hero.unePiece.nom
+    itemSacTxt = font.render("piece : " + nom_piece, True, (250, 128, 114))
 
-    pygame.draw.rect(fenetre, (115, 194, 251), (5, 45, 150, 75))
+    pygame.draw.rect(fenetre, (115, 194, 251), (5, 45, 200, 75))
     fenetre.blit(sacTxt, (60, 50))
     fenetre.blit(itemSacTxt, (10, 75))
     fenetre.blit(cobaltSacTxt, (10, 95))
@@ -35,13 +39,21 @@ def redraw():
     if hero.map.num == 0:
         font = pygame.font.Font('American_Captain.ttf', 25)
         vaisseauTxt = font.render("vaisseau", True, (250, 128, 114))
-        itemVaisseauTxt = font.render("item : " + str(hero.vaisseau.items), True, (250, 128, 114))
-        cobaltVaisseauTxt = font.render("cobalt : " + str(hero.vaisseau.cobalt), True, (250, 128, 114))
 
-        pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75))
+        pygame.draw.rect(fenetre, (115, 194, 251), (5, 125, 150, 75 + (len(hero.vaisseau.items) * 40)))
+        cobaltVaisseauTxt = font.render("cobalt : " + str(hero.vaisseau.cobalt), True, (250, 128, 114))
+        itemVaisseauTxt = font.render("item : ", True, (250, 128, 114))
         fenetre.blit(vaisseauTxt, (40, 130))
-        fenetre.blit(itemVaisseauTxt, (10, 155))
-        fenetre.blit(cobaltVaisseauTxt, (10, 175))
+        fenetre.blit(itemVaisseauTxt, (10, 175))
+        fenetre.blit(cobaltVaisseauTxt, (10, 155))
+
+        n=0
+        for obj in hero.vaisseau.items:
+            n += 1
+            itemTxt = font.render("   "+obj.nom, True, (250, 128, 114))
+            fenetre.blit(itemTxt, (10, 175+(n*20)))
+
+
 
     for bullet in bullets:
         if (bullet.colision(hero.map.grille)):
@@ -171,7 +183,20 @@ def rebond_ressort(keys):
         hero.vitessex = -25
         hero.applique_mouvements()
 
-
+def interaction_item(keys):
+    global score
+    if keys[pygame.K_x] and hero.map.num != 0:
+        numItem = 0
+        for obj in hero.map.item_a_ramasser:
+            if obj.posx-50< hero.posx<obj.posx+50 and obj.posy-50< hero.posy<obj.posy+50:
+                hero.recuperer(obj, numItem)
+                break
+            numItem += 1
+    elif keys[pygame.K_x] and hero.map.num == 0:
+        if hero.unePiece != None:
+            score += hero.unePiece.point
+        score += hero.cobalt * 5
+        hero.depot()
 
 
 ################
@@ -191,7 +216,8 @@ def game():
     # Boucle principale
 
     while run:
-        score += 1 # à enlever quand systeme de point mis en place
+        #score += 1 # à enlever quand systeme de point mis en place
+
         #chronomètre
         seconds = int(180 - (pygame.time.get_ticks() - beginTime)/1000)
         min = int(seconds/60)
@@ -328,6 +354,7 @@ def game():
                 hero.recul("down-left")
 
         rebond_ressort(keys)
+        interaction_item(keys)
 
         redraw()
     return score
