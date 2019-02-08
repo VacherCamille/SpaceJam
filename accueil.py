@@ -65,7 +65,7 @@ def redraw(img1="bouton.png", img2="bouton.png", img3="bouton.png", img4='bouton
     fenetre.blit(font.render("aide", True, (0, 0, 0)), (70, 670))
 
     # son menu start
-    s_start = pygame.mixer.Sound("start.wav")
+    s_start = pygame.mixer.Sound("jeu2.wav")
     s_start.play(1000)
 
     pygame.display.flip()
