@@ -7,7 +7,7 @@ import operator
 from operator import itemgetter
 
 pygame.init()
-icon = pygame.image.load("icon.png")
+icon = pygame.image.load("perso.png")
 pygame.display.set_icon(icon)
 fenetre = pygame.display.set_mode((1024,768))
 
@@ -170,7 +170,7 @@ clickEnterName = False
 #son bouton
 ss = pygame.mixer.Sound("clic.wav")
 shs = pygame.mixer.Sound("bg.wav")
-shsT = pygame.mixer.Sound("hs.wav")
+#shsT = pygame.mixer.Sound("hs.wav")
 sq = pygame.mixer.Sound("quit.wav")
 
 while (running):
@@ -203,8 +203,8 @@ while (running):
                 shs.play()
                 redraw(img2="boutonINV.png")
                 pygame.time.delay(500)
-                pygame.mixer.stop()
-                shsT.play()
+                #pygame.mixer.stop()
+                #shsT.play()
                 accueil = False
                 drawHScore()
                 hScoreB = True
@@ -229,7 +229,7 @@ while (running):
                     hScoreB = False
                     drawHScore(img1="bouton2INV.png")
                 pygame.time.delay(500)
-                shsT.stop()
+                #shsT.stop()
                 redraw()
                 accueil = True
             elif quiter.get_rect(topleft=(825,650)).collidepoint(x, y) and accueil:
