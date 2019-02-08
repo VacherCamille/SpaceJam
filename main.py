@@ -401,38 +401,38 @@ def game():
         seconds = int(180 - (pygame.time.get_ticks() - beginTime)/1000)
         min = int(seconds/60)
         seconds = int(seconds % 60)
-        if seconds == 15 and min == 0 :
-            a = pygame.mixer.Sound("beep.wav")
-            a.play()
-
-        if seconds == 10 and min == 0 :
-            b = pygame.mixer.Sound("beep.wav")
-            b.play()
-
-        if seconds == 5 and min == 0 :
-            c = pygame.mixer.Sound("beep.wav")
-            c.play()
-
-        if seconds == 4 and min == 0 :
-            d = pygame.mixer.Sound("beep.wav")
-            d.play()
-
-        if seconds == 3 and min == 0 :
-            e = pygame.mixer.Sound("beep.wav")
-            e.play()
-
-        if seconds == 2 and min == 0 :
-            f = pygame.mixer.Sound("beep.wav")
-            f.play()
-
-        if seconds == 1 and min == 0 :
-            g = pygame.mixer.Sound("beep.wav")
-            g.play()
+        # if seconds == 15 and min == 0 :
+        #     a = pygame.mixer.Sound("beep.wav")
+        #     a.play()
+        #
+        # if seconds == 10 and min == 0 :
+        #     b = pygame.mixer.Sound("beep.wav")
+        #     b.play()
+        #
+        # if seconds == 5 and min == 0 :
+        #     c = pygame.mixer.Sound("beep.wav")
+        #     c.play()
+        #
+        # if seconds == 4 and min == 0 :
+        #     d = pygame.mixer.Sound("beep.wav")
+        #     d.play()
+        #
+        # if seconds == 3 and min == 0 :
+        #     e = pygame.mixer.Sound("beep.wav")
+        #     e.play()
+        #
+        # if seconds == 2 and min == 0 :
+        #     f = pygame.mixer.Sound("beep.wav")
+        #     f.play()
+        #
+        # if seconds == 1 and min == 0 :
+        #     g = pygame.mixer.Sound("beep.wav")
+        #     g.play()
 
         if seconds == 0 and min == 0:
             son.stop()
-            h = pygame.mixer.Sound("fin.wav")
-            h.play()
+            # h = pygame.mixer.Sound("fin.wav")
+            # h.play()
             run = False
         font = pygame.font.Font('American_Captain.ttf', 50)
 
